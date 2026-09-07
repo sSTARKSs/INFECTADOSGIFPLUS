@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Bloques de 14 GIFs (8 Segundos)</title>
+    <title>Overlay de Infectados - Bloques de 14 GIFs Sin Repeticiones</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -60,9 +60,9 @@
             border: 2px solid #ff0055;
             animation: rgbBorde 10s linear infinite;
             border-radius: 16px; 
-            width: 170px;        /* Ancho exacto e igual para todas */
-            height: 250px;       /* Alto exacto e igual para todas */
-            flex-shrink: 0;      /* Bloquea por completo que TikTok altere sus tamaños */
+            width: 170px;        
+            height: 250px;       
+            flex-shrink: 0;      
             display: flex;
             align-items: center;
             justify-content: center;
@@ -79,13 +79,12 @@
         .image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Ajusta los 14 GIFs por igual al tamaño fijo */
+            object-fit: cover; 
         }
     </style>
 </head>
 <body>
 
-    <!-- El contenedor se genera vacío y JS insertará las 4 tarjetas fijas -->
     <div id="overlay-container"></div>
 
     <script>
@@ -97,7 +96,15 @@
 
         const container = document.getElementById('overlay-container');
         const totalColumnas = 4;
-        let indiceBase = 0; // Controla en qué número de GIF inicia el bloque actual
+        let bloqueActual = 0; // Controla los grupos de bloques fijos (0, 1, 2, 3)
+
+        // Definición estricta de los 4 bloques para evitar duplicados visuales en las transiciones
+        const bloquesFijos = [
+            ["1.gif", "2.gif", "3.gif", "4.gif"],   // Bloque 0
+            ["5.gif", "6.gif", "7.gif", "8.gif"],   // Bloque 1
+            ["9.gif", "10.gif", "11.gif", "12.gif"], // Bloque 2
+            ["11.gif", "12.gif", "13.gif", "14.gif"] // Bloque 3: Muestra los últimos y evita pisar el inicio del bloque 0
+        ];
 
         // 1. Inyectar la estructura de las 4 tarjetas idénticas en el HTML
         for (let i = 0; i < totalColumnas; i++) {
@@ -111,30 +118,25 @@
             container.appendChild(card);
         }
 
-        // 2. Función lógica corregida para evitar la repetición consecutiva de imágenes
+        // 2. Función lógica optimizada por matriz de bloques fijos
         function rotarBloqueCompleto() {
+            const grupoGifs = bloquesFijos[bloqueActual];
+
             for (let i = 0; i < totalColumnas; i++) {
-                const urlIndice = (indiceBase + i) % listaGifs.length;
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
-                    imgElement.src = listaGifs[urlIndice];
+                    imgElement.src = grupoGifs[i];
                 }
             }
 
-            // Avanza el bloque al siguiente grupo de 4
-            indiceBase += totalColumnas;
-
-            // CONTROL DE REINICIO LIMPIO: Si el próximo inicio alcanza o supera los 14,
-            // se fuerza el reinicio exacto a 0 sin arrastrar desfases matemáticos.
-            if (indiceBase >= listaGifs.length) {
-                indiceBase = 0;
-            }
+            // Cambia al siguiente bloque de forma secuencial
+            bloqueActual = (bloqueActual + 1) % bloquesFijos.length;
         }
 
-        // 3. Carga inmediata del primer bloque (1 al 4) al abrir la escena local
+        // 3. Carga inmediata del primer bloque al abrir la escena
         rotarBloqueCompleto();
 
-        // 4. Temporizador de rotación por bloques ajustado a 8 SEGUNDOS (8000ms)
+        // 4. Temporizador de rotación por bloques de 8 segundos (8000ms)
         setInterval(rotarBloqueCompleto, 8000);
     </script>
 </body>
