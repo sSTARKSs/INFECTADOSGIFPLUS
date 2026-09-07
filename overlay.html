@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados Rotatorio - Local</title>
+    <title>Overlay de Infectados - Bloques Exactos de 14 GIFs</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -89,7 +89,7 @@
     <div id="overlay-container"></div>
 
     <script>
-        // Genera automáticamente la lista enlazada local del 1.gif al 14.gif
+        // Lista exacta de tus 14 imágenes locales
         const listaGifs = [];
         for (let i = 1; i <= 14; i++) {
             listaGifs.push(`${i}.gif`);
@@ -97,7 +97,7 @@
 
         const container = document.getElementById('overlay-container');
         const totalColumnas = 4;
-        let indiceBase = 0; // Controla el primer GIF visible de la tanda
+        let indiceBase = 0; // Controla en qué número de GIF inicia el bloque actual
 
         // 1. Inyectar la estructura fija de las 4 tarjetas limpias en el HTML
         for (let i = 0; i < totalColumnas; i++) {
@@ -111,25 +111,32 @@
             container.appendChild(card);
         }
 
-        // 2. Función lógica para cambiar los archivos locales y reiniciar en bucle
-        function rotarImagenes() {
+        // 2. Función lógica para cambiar de 4 en 4 respetando los 14 elementos
+        function rotarBloqueCompleto() {
             for (let i = 0; i < totalColumnas; i++) {
-                // El operador % asegura que al pasar del GIF 14 regrese al 1 automáticamente
+                // El operador % asegura que los índices siempre estén dentro del rango 0-13 (los 14 GIFs)
                 const urlIndice = (indiceBase + i) % listaGifs.length;
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
                     imgElement.src = listaGifs[urlIndice];
                 }
             }
-            // Avanza el bloque para la siguiente transición
-            indiceBase = (indiceBase + 1) % listaGifs.length;
+
+            // Avanza el bloque sumando 4 posiciones
+            indiceBase += totalColumnas;
+
+            // Corrección matemática para reiniciar exactamente desde el 1.gif 
+            // cuando ya se han expuesto todos los 14 elementos en los bloques anteriores
+            if (indiceBase >= listaGifs.length) {
+                indiceBase = 0;
+            }
         }
 
-        // 3. Carga inmediata de las primeras imágenes al abrir el archivo local
-        rotarImagenes();
+        // 3. Carga inmediata del primer bloque (1 al 4) al abrir la escena local
+        rotarBloqueCompleto();
 
-        // 4. Temporizador de rotación automática (5000 = cada 5 segundos)
-        setInterval(rotarImagenes, 5000);
+        // 4. Temporizador de rotación por bloques (5000 = cada 5 segundos)
+        setInterval(rotarBloqueCompleto, 5000);
     </script>
 </body>
 </html>
