@@ -20,7 +20,7 @@ html<!DOCTYPE html>
         /* Contenedor compacto optimizado para el ancho de TikTok */
         #overlay-container {
             display: flex;
-            gap: 10px;          /* Espacio reducido entre tarjetas */
+            gap: 10px;          /* Espacio original entre tarjetas */
             padding: 10px;
             justify-content: center;
             align-items: center;
@@ -52,7 +52,7 @@ html<!DOCTYPE html>
             }
         }
 
-        /* Tarjetas rediseñadas para ser compactas a lo ancho */
+        /* Tarjetas con el tamaño original grande para que se vean perfectas */
         .card {
             background: rgba(16, 20, 26, 0.95);
             border: 2px solid #ff0055; 
@@ -92,7 +92,7 @@ html<!DOCTYPE html>
     <div id="overlay-container"></div>
 
     <script>
-        // LISTA DE TUS 12 FOTOS EN ORDEN ACTUALIZADAS A .GIF
+        // LISTA INTEGRAL PARA 12 INFECTADOS (PREPARADA PARA AGREGAR MÁS)
         const listaInfectados = [
             {img:"1.gif"}, {img:"2.gif"}, {img:"3.gif"}, {img: "4.gif"},
             {img: "5.gif"}, {img:"6.gif"}, {img: "7.gif"}, {img: "8.gif"},
@@ -100,7 +100,8 @@ html<!DOCTYPE html>
         ];
 
         let indiceActual = 0;
-        const itemsPorPagina = 4;
+        // SE QUEDA EN 4 TARJETAS: Para mantener la estética y el tamaño grande en TikTok
+        const itemsPorPagina = 4; 
         const contenedor = document.getElementById('overlay-container');
 
         function rotarInfectados() {
@@ -110,6 +111,7 @@ html<!DOCTYPE html>
             setTimeout(() => {
                 contenedor.innerHTML = '';
 
+                // El sistema solo dibuja 4 elementos en pantalla de forma estricta
                 for (let i = 0; i < itemsPorPagina; i++) {
                     let piezaIndex = (indiceActual + i) % listaInfectados.length;
                     let inf = listaInfectados[piezaIndex];
@@ -127,7 +129,7 @@ html<!DOCTYPE html>
         }
 
         rotarInfectados();
-        setInterval(rotarInfectados, 8000); // Cambia cada 8 segundos
+        setInterval(rotarInfectados, 8000); // Cambia de tanda cada 8 segundos
     </script>
 </body>
 </html>
