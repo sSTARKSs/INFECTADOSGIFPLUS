@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Bloques de 14 GIFs Sin Repeticiones</title>
+    <title>Overlay de Infectados - 14 GIFs Rotativos Secuenciales</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -85,6 +85,7 @@
 </head>
 <body>
 
+    <!-- El contenedor se genera vacío y JS insertará las 4 tarjetas fijas -->
     <div id="overlay-container"></div>
 
     <script>
@@ -96,15 +97,7 @@
 
         const container = document.getElementById('overlay-container');
         const totalColumnas = 4;
-        let bloqueActual = 0; // Controla los grupos de bloques fijos (0, 1, 2, 3)
-
-        // Definición estricta de los 4 bloques para evitar duplicados visuales en las transiciones
-        const bloquesFijos = [
-            ["1.gif", "2.gif", "3.gif", "4.gif"],   // Bloque 0
-            ["5.gif", "6.gif", "7.gif", "8.gif"],   // Bloque 1
-            ["9.gif", "10.gif", "11.gif", "12.gif"], // Bloque 2
-            ["11.gif", "12.gif", "13.gif", "14.gif"] // Bloque 3: Muestra los últimos y evita pisar el inicio del bloque 0
-        ];
+        let indiceBase = 0; // Controla la posición inicial de la cola global
 
         // 1. Inyectar la estructura de las 4 tarjetas idénticas en el HTML
         for (let i = 0; i < totalColumnas; i++) {
@@ -118,19 +111,19 @@
             container.appendChild(card);
         }
 
-        // 2. Función lógica optimizada por matriz de bloques fijos
+        // 2. Función de rotación secuencial estricta sin repetición por bloque
         function rotarBloqueCompleto() {
-            const grupoGifs = bloquesFijos[bloqueActual];
-
             for (let i = 0; i < totalColumnas; i++) {
+                // El operador matemático % mantiene el índice dentro de los 14 elementos sin romper la fila
+                const urlIndice = (indiceBase + i) % listaGifs.length;
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
-                    imgElement.src = grupoGifs[i];
+                    imgElement.src = listaGifs[urlIndice];
                 }
             }
 
-            // Cambia al siguiente bloque de forma secuencial
-            bloqueActual = (bloqueActual + 1) % bloquesFijos.length;
+            // Desplaza la cola 4 posiciones hacia adelante para el siguiente grupo entero
+            indiceBase = (indiceBase + totalColumnas) % listaGifs.length;
         }
 
         // 3. Carga inmediata del primer bloque al abrir la escena
