@@ -20,7 +20,7 @@ html<!DOCTYPE html>
         /* Contenedor compacto optimizado para el ancho de TikTok */
         #overlay-container {
             display: flex;
-            gap: 10px;          /* Espacio reducido entre tarjetas */
+            gap: 6px;           /* Espacio reducido para que quepan 6 elementos */
             padding: 10px;
             justify-content: center;
             align-items: center;
@@ -52,12 +52,12 @@ html<!DOCTYPE html>
             }
         }
 
-        /* Tarjetas rediseñadas para ser compactas a lo ancho */
+        /* Tarjetas optimizadas a 90px de ancho para soportar 6 espacios en horizontal */
         .card {
             background: rgba(16, 20, 26, 0.95);
             border: 2px solid #ff0055; 
             border-radius: 8px;
-            width: 105px;       
+            width: 90px;       
             padding: 4px;
             text-align: center;
             
@@ -100,7 +100,8 @@ html<!DOCTYPE html>
         ];
 
         let indiceActual = 0;
-        const itemsPorPagina = 4;
+        // CAMBIADO DE 4 A 6: Ahora genera 6 espacios simultáneos por tanda (Tanda 1: 1 al 6 | Tanda 2: 7 al 12)
+        const itemsPorPagina = 6; 
         const contenedor = document.getElementById('overlay-container');
 
         function rotarInfectados() {
