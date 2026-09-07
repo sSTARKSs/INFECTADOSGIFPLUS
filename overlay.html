@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados Rotatorio - TikTok</title>
+    <title>Overlay de Infectados Rotatorio - Local</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -54,7 +54,7 @@
             }
         }
 
-        /* Tarjetas con tamaño fijo y sin bordes aplastados */
+        /* Tarjetas blindadas contra deformaciones en TikTok */
         .card {
             background: rgba(16, 20, 26, 0.95);
             border: 2px solid #ff0055;
@@ -62,7 +62,7 @@
             border-radius: 14px;
             width: 140px;       
             height: 170px;      
-            flex-shrink: 0;
+            flex-shrink: 0;     /* Evita que TikTok altere el tamaño original */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -85,21 +85,21 @@
 </head>
 <body>
 
-    <!-- El contenedor iniciará vacío y JS creará las 4 tarjetas fijas -->
+    <!-- El contenedor se genera vacío y JS insertará las 4 tarjetas fijas -->
     <div id="overlay-container"></div>
 
     <script>
-        // Lista completa unificada con tus 14 imágenes GIF locales
-        const listaGifs = [
-            "1.gif", "2.gif", "3.gif", "4.gif", "5.gif", "6.gif", "7.gif",
-            "8.gif", "9.gif", "10.gif", "11.gif", "12.gif", "13.gif", "14.gif"
-        ];
+        // Genera automáticamente la lista enlazada local del 1.gif al 14.gif
+        const listaGifs = [];
+        for (let i = 1; i <= 14; i++) {
+            listaGifs.push(`${i}.gif`);
+        }
 
         const container = document.getElementById('overlay-container');
         const totalColumnas = 4;
-        let indiceBase = 0; // Controla qué GIF arranca en la primera tarjeta
+        let indiceBase = 0; // Controla el primer GIF visible de la tanda
 
-        // 1. Crear la estructura fija de las 4 tarjetas en pantalla (completamente limpias)
+        // 1. Inyectar la estructura fija de las 4 tarjetas limpias en el HTML
         for (let i = 0; i < totalColumnas; i++) {
             const card = document.createElement('div');
             card.className = 'card';
@@ -111,24 +111,24 @@
             container.appendChild(card);
         }
 
-        // 2. Función para actualizar las imágenes de forma rotatoria
+        // 2. Función lógica para cambiar los archivos locales y reiniciar en bucle
         function rotarImagenes() {
             for (let i = 0; i < totalColumnas; i++) {
-                // Calcula el índice correspondiente del array asegurando que vuelva a 0 al pasar el 14
+                // El operador % asegura que al pasar del GIF 14 regrese al 1 automáticamente
                 const urlIndice = (indiceBase + i) % listaGifs.length;
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
                     imgElement.src = listaGifs[urlIndice];
                 }
             }
-            // Avanza el índice base para la siguiente rotación
+            // Avanza el bloque para la siguiente transición
             indiceBase = (indiceBase + 1) % listaGifs.length;
         }
 
-        // 3. Ejecución inicial automática
+        // 3. Carga inmediata de las primeras imágenes al abrir el archivo local
         rotarImagenes();
 
-        // 4. Intervalo de rotación: cambia el valor (5000 = 5 segundos) a tu gusto
+        // 4. Temporizador de rotación automática (5000 = cada 5 segundos)
         setInterval(rotarImagenes, 5000);
     </script>
 </body>
