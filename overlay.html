@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Formato TikTok 4 Columnas</title>
+    <title>Overlay de Infectados Rotatorio - TikTok</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -17,67 +17,63 @@
             align-items: center;
         }
 
-        /* CONTENEDOR FORZADO A UNA SOLA FILA HORIZONTAL DE 4 COLUMNAS */
+        /* CONTENEDOR DE 4 COLUMNAS EN UNA SOLA FILA HORIZONTAL */
         #overlay-container {
             display: flex;
-            flex-direction: row; /* Orientación horizontal fija */
-            flex-wrap: nowrap;   /* Prohíbe terminantemente crear filas abajo */
-            gap: 10px;           /* Espacio entre las 4 tarjetas */
+            flex-direction: row; 
+            flex-wrap: nowrap;   
+            gap: 12px;          
             padding: 10px;
             justify-content: center;
             align-items: center;
-            width: 100%;        
+            width: auto;        
             box-sizing: border-box;
         }
 
-        /* ANIMACIÓN BORDES RGB - 10 SEGUNDOS SUAVE */
+        /* ANIMACIÓN PARA QUE LOS BORDES RGB CAMBIEN SUAVEMENTE */
         @keyframes rgbBorde {
             0% {
                 border-color: #ff0055;
-                box-shadow: 0px 0px 12px rgba(255, 0, 85, 0.6);
+                box-shadow: 0px 0px 14px rgba(255, 0, 85, 0.7);
             }
             25% {
                 border-color: #a000ff;
-                box-shadow: 0px 0px 12px rgba(160, 0, 255, 0.6);
+                box-shadow: 0px 0px 14px rgba(160, 0, 255, 0.7);
             }
             50% {
                 border-color: #00e5ff;
-                box-shadow: 0px 0px 12px rgba(0, 229, 255, 0.6);
+                box-shadow: 0px 0px 14px rgba(0, 229, 255, 0.7);
             }
             75% {
                 border-color: #00ff66;
-                box-shadow: 0px 0px 12px rgba(0, 255, 102, 0.6);
+                box-shadow: 0px 0px 14px rgba(0, 255, 102, 0.7);
             }
             100% {
                 border-color: #ff0055;
-                box-shadow: 0px 0px 12px rgba(255, 0, 85, 0.6);
+                box-shadow: 0px 0px 14px rgba(255, 0, 85, 0.7);
             }
         }
 
-        /* Tarjetas con tamaño original, blindadas contra deformaciones */
+        /* Tarjetas con tamaño fijo y sin bordes aplastados */
         .card {
             background: rgba(16, 20, 26, 0.95);
             border: 2px solid #ff0055;
-            animation: rgbBorde 10s linear infinite; 
-            border-radius: 12px;
+            animation: rgbBorde 10s linear infinite;
+            border-radius: 14px;
             width: 140px;       
             height: 170px;      
-            flex-shrink: 0;     /* Evita que TikTok las aplaste o achique */
+            flex-shrink: 0;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             position: relative;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            color: #fff;
             overflow: hidden;
         }
 
-        /* Contenedor de la imagen */
+        /* Contenedor de la imagen limpia al 100% */
         .image-container {
             width: 100%;
             height: 100%;
-            position: relative;
         }
 
         .image-container img {
@@ -85,74 +81,55 @@
             height: 100%;
             object-fit: cover;
         }
-
-        /* Texto base para tarjetas con nombres */
-        .overlay-text {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.75);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: bold;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .heart-icon {
-            font-size: 0.9rem;
-        }
     </style>
 </head>
 <body>
 
-    <div id="overlay-container">
-        <!-- Tarjeta 1: Infectado Rose con corazón rojo -->
-        <div class="card">
-            <div class="image-container">
-                <img src="https://giphy.com" alt="Infectado Rose">
-                <div class="overlay-text">
-                    <span>Rose</span>
-                    <span class="heart-icon" style="color: #ff3b30;">❤️</span>
+    <!-- El contenedor iniciará vacío y JS creará las 4 tarjetas fijas -->
+    <div id="overlay-container"></div>
+
+    <script>
+        // Lista completa unificada con tus 14 imágenes GIF locales
+        const listaGifs = [
+            "1.gif", "2.gif", "3.gif", "4.gif", "5.gif", "6.gif", "7.gif",
+            "8.gif", "9.gif", "10.gif", "11.gif", "12.gif", "13.gif", "14.gif"
+        ];
+
+        const container = document.getElementById('overlay-container');
+        const totalColumnas = 4;
+        let indiceBase = 0; // Controla qué GIF arranca en la primera tarjeta
+
+        // 1. Crear la estructura fija de las 4 tarjetas en pantalla (completamente limpias)
+        for (let i = 0; i < totalColumnas; i++) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <div class="image-container">
+                    <img id="gif-col-${i}" src="" alt="Infectado">
                 </div>
-            </div>
-        </div>
+            `;
+            container.appendChild(card);
+        }
 
-        <!-- Tarjeta 2: Infectado Perfume con corazón morado -->
-        <div class="card">
-            <div class="image-container">
-                <img src="https://giphy.com" alt="Infectado Perfume">
-                <div class="overlay-text">
-                    <span>Perfume</span>
-                    <span class="heart-icon" style="color: #af52de;">💜</span>
-                </div>
-            </div>
-        </div>
+        // 2. Función para actualizar las imágenes de forma rotatoria
+        function rotarImagenes() {
+            for (let i = 0; i < totalColumnas; i++) {
+                // Calcula el índice correspondiente del array asegurando que vuelva a 0 al pasar el 14
+                const urlIndice = (indiceBase + i) % listaGifs.length;
+                const imgElement = document.getElementById(`gif-col-${i}`);
+                if (imgElement) {
+                    imgElement.src = listaGifs[urlIndice];
+                }
+            }
+            // Avanza el índice base para la siguiente rotación
+            indiceBase = (indiceBase + 1) % listaGifs.length;
+        }
 
-        <!-- Tarjeta 3: Imagen GIF del 3 (TOTALMENTE LIMPIA) -->
-        <div class="card">
-            <div class="image-container">
-                <img src="https://giphy.com" alt="GIF 3">
-            </div>
-        </div>
+        // 3. Ejecución inicial automática
+        rotarImagenes();
 
-        <!-- Tarjeta 4: Nueva columna (Ajusta el texto y el corazón a tu gusto) -->
-        <div class="card">
-            <div class="image-container">
-                <img src="https://giphy.com" alt="Infectado 4">
-                <div class="overlay-text">
-                    <span>Infectado 4</span>
-                    <span class="heart-icon" style="color: #007aff;">💙</span>
-                </div>
-            </div>
-        </div>
-    </div>
-
+        // 4. Intervalo de rotación: cambia el valor (5000 = 5 segundos) a tu gusto
+        setInterval(rotarImagenes, 5000);
+    </script>
 </body>
 </html>
