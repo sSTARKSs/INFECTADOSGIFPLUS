@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Tamaño Idéntico y Fijo</title>
+    <title>Overlay de Infectados - Bloques de 14 GIFs Sin Repeticiones</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -111,10 +111,9 @@
             container.appendChild(card);
         }
 
-        // 2. Función lógica para cambiar de 4 en 4 respetando los 14 elementos
+        // 2. Función lógica corregida para evitar la repetición consecutiva de imágenes
         function rotarBloqueCompleto() {
             for (let i = 0; i < totalColumnas; i++) {
-                // El operador % asegura que los índices siempre estén dentro del rango de los 14 GIFs
                 const urlIndice = (indiceBase + i) % listaGifs.length;
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
@@ -122,11 +121,11 @@
                 }
             }
 
-            // Avanza el bloque sumando 4 posiciones
+            // Avanza el bloque al siguiente grupo de 4
             indiceBase += totalColumnas;
 
-            // Corrección matemática para reiniciar exactamente desde el 1.gif 
-            // cuando ya se han expuesto todos los 14 elementos en los bloques anteriores
+            // CONTROL DE REINICIO LIMPIO: Si el próximo inicio alcanza o supera los 14,
+            // se fuerza el reinicio exacto a 0 sin arrastrar desfases matemáticos.
             if (indiceBase >= listaGifs.length) {
                 indiceBase = 0;
             }
