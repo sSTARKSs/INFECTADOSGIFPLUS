@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Formato TikTok GIF</title>
+    <title>Overlay de Infectados - Formato TikTok 4 Columnas</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -17,18 +17,20 @@
             align-items: center;
         }
 
-        /* Contenedor compacto optimizado para el ancho de TikTok */
+        /* CONTENEDOR FORZADO A UNA SOLA FILA HORIZONTAL DE 4 COLUMNAS */
         #overlay-container {
             display: flex;
-            gap: 10px;          /* Espacio original entre tarjetas */
+            flex-direction: row; /* Orientación horizontal fija */
+            flex-wrap: nowrap;   /* Prohíbe terminantemente crear filas abajo */
+            gap: 10px;           /* Espacio entre las 4 tarjetas */
             padding: 10px;
             justify-content: center;
             align-items: center;
-            width: 100%;        /* Se adapta al ancho vertical de TikTok */
+            width: 100%;        
             box-sizing: border-box;
         }
 
-        /* ANIMACIÓN PARA QUE LOS BORDES CAMBIEN DE COLOR (RGB) */
+        /* ANIMACIÓN BORDES RGB - 10 SEGUNDOS SUAVE */
         @keyframes rgbBorde {
             0% {
                 border-color: #ff0055;
@@ -52,14 +54,15 @@
             }
         }
 
-        /* Tarjetas con el tamaño original grande para que se vean perfectas */
+        /* Tarjetas con tamaño original, blindadas contra deformaciones */
         .card {
             background: rgba(16, 20, 26, 0.95);
             border: 2px solid #ff0055;
-            animation: rgbBorde 10s linear infinite; /* Subido 2 segundos más para una transición más lenta */
+            animation: rgbBorde 10s linear infinite; 
             border-radius: 12px;
-            width: 140px;       /* Ancho original grande */
-            height: 170px;      /* Alto original grande */
+            width: 140px;       
+            height: 170px;      
+            flex-shrink: 0;     /* Evita que TikTok las aplaste o achique */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -83,7 +86,7 @@
             object-fit: cover;
         }
 
-        /* Texto base para tarjetas 1 y 2 */
+        /* Texto base para tarjetas con nombres */
         .overlay-text {
             position: absolute;
             bottom: 8px;
@@ -132,10 +135,21 @@
             </div>
         </div>
 
-        <!-- Tarjeta 3: Imagen GIF del 3 (Limpia, sin texto ni corazón) -->
+        <!-- Tarjeta 3: Imagen GIF del 3 (TOTALMENTE LIMPIA) -->
         <div class="card">
             <div class="image-container">
                 <img src="https://giphy.com" alt="GIF 3">
+            </div>
+        </div>
+
+        <!-- Tarjeta 4: Nueva columna (Ajusta el texto y el corazón a tu gusto) -->
+        <div class="card">
+            <div class="image-container">
+                <img src="https://giphy.com" alt="Infectado 4">
+                <div class="overlay-text">
+                    <span>Infectado 4</span>
+                    <span class="heart-icon" style="color: #007aff;">💙</span>
+                </div>
             </div>
         </div>
     </div>
