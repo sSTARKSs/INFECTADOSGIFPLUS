@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Bloques de 14 GIFs Sin Repeticiones</title>
+    <title>Overlay de Infectados - Bloques de 14 GIFs (8 Segundos)</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -134,8 +134,8 @@
         // 3. Carga inmediata del primer bloque (1 al 4) al abrir la escena local
         rotarBloqueCompleto();
 
-        // 4. Temporizador de rotación por bloques (5000 = cada 5 segundos)
-        setInterval(rotarBloqueCompleto, 5000);
+        // 4. Temporizador de rotación por bloques ajustado a 8 SEGUNDOS (8000ms)
+        setInterval(rotarBloqueCompleto, 8000);
     </script>
 </body>
 </html>
