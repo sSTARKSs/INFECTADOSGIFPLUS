@@ -1,4 +1,4 @@
-html<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -60,6 +60,7 @@ html<!DOCTYPE html>
             width: 105px;       
             padding: 4px;
             text-align: center;
+            position: relative; /* Necesario para posicionar textos encima */
             
             /* Animación RGB */
             animation: rgbBorde 6s linear infinite;
@@ -85,6 +86,70 @@ html<!DOCTYPE html>
             border-radius: 5px;
             display: block;
         }
+
+        /* --- DETALLES DE TEXTO EXCLUSIVOS PARA LA WITCH --- */
+        .witch-labels {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            font-family: 'Arial Black', sans-serif;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.9), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            z-index: 10;
+        }
+
+        .label-top {
+            font-size: 16px;
+            color: #ffffff;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .label-mid {
+            font-size: 14px;
+            color: #ff3333; /* Rojo para destacar el nombre del boss */
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* Contenedor del corazón azul abajo */
+        .blue-heart-container {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Icono de corazón azul brillante */
+        .heart-icon {
+            font-size: 34px;
+            color: #00bfff;
+            filter: drop-shadow(0px 0px 6px rgba(0, 191, 255, 0.8));
+            position: relative;
+        }
+
+        /* Texto 1K metido exactamente en el centro del corazón */
+        .heart-text {
+            position: absolute;
+            font-family: 'Arial Black', sans-serif;
+            font-size: 11px;
+            color: #ffffff;
+            font-weight: bold;
+            text-align: center;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            padding-bottom: 2px; /* Ajuste milimétrico vertical */
+        }
     </style>
 </head>
 <body>
@@ -93,15 +158,25 @@ html<!DOCTYPE html>
 
     <script>
         // LISTA INTEGRAL ACTUALIZADA CON TUS 14 INFECTADOS
+        // He configurado el elemento del "3.gif" como la Witch basándome en el orden de tu imagen
         const listaInfectados = [
-            {img:"1.gif"}, {img:"2.gif"}, {img:"3.gif"}, {img:"4.gif"},
-            {img:"5.gif"}, {img:"6.gif"}, {img:"7.gif"}, {img:"8.gif"},
-            {img:"9.gif"}, {img:"10.gif"}, {img:"11.gif"}, {img:"12.gif"},
-            {img:"13.gif"}, {img:"14.gif"}
+            {img:"1.gif"}, 
+            {img:"2.gif"}, 
+            {img:"3.gif", esWitch: true}, // Se activa la configuración especial de textos y corazón azul aquí
+            {img:"4.gif"},
+            {img:"5.gif"}, 
+            {img:"6.gif"}, 
+            {img:"7.gif"}, 
+            {img:"8.gif"},
+            {img:"9.gif"}, 
+            {img:"10.gif"}, 
+            {img:"11.gif"}, 
+            {img:"12.gif"},
+            {img:"13.gif"}, 
+            {img:"14.gif"}
         ];
 
         let indiceActual = 0;
-        // SE QUETA EN 4 TARJETAS SIMULTÁNEAS EN PANTALLA
         const itemsPorPagina = 4; 
         const contenedor = document.getElementById('overlay-container');
 
@@ -112,14 +187,31 @@ html<!DOCTYPE html>
             setTimeout(() => {
                 contenedor.innerHTML = '';
 
-                // El sistema dibuja solo 4 elementos grandes en pantalla
+                // El sistema dibuja solo 4 elementos grandes en pantalla centralizada
                 for (let i = 0; i < itemsPorPagina; i++) {
                     let piezaIndex = (indiceActual + i) % listaInfectados.length;
                     let inf = listaInfectados[piezaIndex];
 
                     const card = document.createElement('div');
                     card.className = 'card';
-                    card.innerHTML = `<img class="avatar" src="${inf.img}" alt="Infectado">`;
+                    
+                    // Condición para inyectar el diseño personalizado si es la Witch
+                    if (inf.esWitch) {
+                        card.innerHTML = `
+                            <div class="witch-labels">
+                                <span class="label-top">10</span>
+                                <span class="label-mid">WITCH</span>
+                            </div>
+                            <img class="avatar" src="${inf.img}" alt="Infectado">
+                            <div class="blue-heart-container">
+                                <span class="heart-icon">💙</span>
+                                <span class="heart-text">1K</span>
+                            </div>
+                        `;
+                    } else {
+                        card.innerHTML = `<img class="avatar" src="${inf.img}" alt="Infectado">`;
+                    }
+                    
                     contenedor.appendChild(card);
 
                     setTimeout(() => card.classList.add('visible'), i * 100);
