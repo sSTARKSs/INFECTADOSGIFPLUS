@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -55,174 +56,90 @@
         /* Tarjetas con el tamaño original grande para que se vean perfectas */
         .card {
             background: rgba(16, 20, 26, 0.95);
-            border: 2px solid #ff0055; 
-            border-radius: 8px;
-            width: 105px;       
-            padding: 4px;
-            text-align: center;
-            position: relative; /* Necesario para posicionar textos encima */
-            
-            /* Animación RGB */
-            animation: rgbBorde 6s linear infinite;
-            
-            /* Animación de entrada y salida */
-            opacity: 0;
-            transform: translateY(15px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
-
-        /* Activador de la animación */
-        .card.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Configuración de la imagen */
-        .avatar {
-            width: 100%;
-            height: auto;
-            aspect-ratio: 9 / 16; 
-            object-fit: cover;
-            border-radius: 5px;
-            display: block;
-        }
-
-        /* --- DETALLES DE TEXTO EXCLUSIVOS PARA LA WITCH --- */
-        .witch-labels {
-            position: absolute;
-            top: 10px;
-            left: 0;
-            width: 100%;
+            border: 2px solid #ff0055;
+            animation: rgbBorde 8s linear infinite;
+            border-radius: 12px;
+            width: 140px;       /* Ancho original grande */
+            height: 170px;      /* Alto original grande */
             display: flex;
             flex-direction: column;
             align-items: center;
-            pointer-events: none;
-            font-family: 'Arial Black', sans-serif;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9), -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            z-index: 10;
-        }
-
-        .label-top {
-            font-size: 16px;
-            color: #ffffff;
-            font-weight: bold;
-            line-height: 1;
-        }
-
-        .label-mid {
-            font-size: 14px;
-            color: #ff3333; /* Rojo para destacar el nombre del boss */
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 2px;
-        }
-
-        /* Contenedor del corazón azul abajo */
-        .blue-heart-container {
-            position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
             justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            z-index: 10;
+            position: relative;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #fff;
+            overflow: hidden;
         }
 
-        /* Icono de corazón azul brillante */
-        .heart-icon {
-            font-size: 34px;
-            color: #00bfff;
-            filter: drop-shadow(0px 0px 6px rgba(0, 191, 255, 0.8));
+        /* Contenedor de la imagen */
+        .image-container {
+            width: 100%;
+            height: 100%;
             position: relative;
         }
 
-        /* Texto 1K metido exactamente en el centro del corazón */
-        .heart-text {
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Texto base para tarjetas 1 y 2 */
+        .overlay-text {
             position: absolute;
-            font-family: 'Arial Black', sans-serif;
-            font-size: 11px;
-            color: #ffffff;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.75);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.85rem;
             font-weight: bold;
-            text-align: center;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-            padding-bottom: 2px; /* Ajuste milimétrico vertical */
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .heart-icon {
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <div id="overlay-container"></div>
+    <div id="overlay-container">
+        <!-- Tarjeta 1: Infectado Rose con corazón rojo -->
+        <div class="card">
+            <div class="image-container">
+                <img src="https://giphy.com" alt="Infectado Rose">
+                <div class="overlay-text">
+                    <span>Rose</span>
+                    <span class="heart-icon" style="color: #ff3b30;">❤️</span>
+                </div>
+            </div>
+        </div>
 
-    <script>
-        // LISTA INTEGRAL ACTUALIZADA CON TUS 14 INFECTADOS
-        // He configurado el elemento del "3.gif" como la Witch basándome en el orden de tu imagen
-        const listaInfectados = [
-            {img:"1.gif"}, 
-            {img:"2.gif"}, 
-            {img:"3.gif"}, 
-            {img:"4.gif"},
-            {img:"5.gif"}, 
-            {img:"6.gif"}, 
-            {img:"7.gif"}, 
-            {img:"8.gif"},
-            {img:"9.gif"}, 
-            {img:"10.gif"}, 
-            {img:"11.gif"}, 
-            {img:"12.gif"},
-            {img:"13.gif"}, 
-            {img:"14.gif"}
-        ];
+        <!-- Tarjeta 2: Infectado Perfume con corazón morado -->
+        <div class="card">
+            <div class="image-container">
+                <img src="https://giphy.com" alt="Infectado Perfume">
+                <div class="overlay-text">
+                    <span>Perfume</span>
+                    <span class="heart-icon" style="color: #af52de;">💜</span>
+                </div>
+            </div>
+        </div>
 
-        let indiceActual = 0;
-        const itemsPorPagina = 4; 
-        const contenedor = document.getElementById('overlay-container');
+        <!-- Tarjeta 3: Imagen GIF del 3 (Limpia, sin texto ni corazón) -->
+        <div class="card">
+            <div class="image-container">
+                <img src="https://giphy.com" alt="GIF 3">
+            </div>
+        </div>
+    </div>
 
-        function rotarInfectados() {
-            const tarjetasActuales = document.querySelectorAll('.card');
-            tarjetasActuales.forEach(card => card.classList.remove('visible'));
-
-            setTimeout(() => {
-                contenedor.innerHTML = '';
-
-                // El sistema dibuja solo 4 elementos grandes en pantalla centralizada
-                for (let i = 0; i < itemsPorPagina; i++) {
-                    let piezaIndex = (indiceActual + i) % listaInfectados.length;
-                    let inf = listaInfectados[piezaIndex];
-
-                    const card = document.createElement('div');
-                    card.className = 'card';
-                    
-                    // Condición para inyectar el diseño personalizado si es la Witch
-                    if (inf.esWitch) {
-                        card.innerHTML = `
-                            <div class="witch-labels">
-                                <span class="label-top">10</span>
-                                <span class="label-mid">WITCH</span>
-                            </div>
-                            <img class="avatar" src="${inf.img}" alt="Infectado">
-                            <div class="blue-heart-container">
-                                <span class="heart-icon">💙</span>
-                                <span class="heart-text">1K</span>
-                            </div>
-                        `;
-                    } else {
-                        card.innerHTML = `<img class="avatar" src="${inf.img}" alt="Infectado">`;
-                    }
-                    
-                    contenedor.appendChild(card);
-
-                    setTimeout(() => card.classList.add('visible'), i * 100);
-                }
-
-                indiceActual = (indiceActual + itemsPorPagina) % listaInfectados.length;
-            }, 500);
-        }
-
-        rotarInfectados();
-        setInterval(rotarInfectados, 8000); // Cambia de tanda cada 8 segundos
-    </script>
 </body>
 </html>
