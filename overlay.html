@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Bloques Exactos de 14 GIFs</title>
+    <title>Overlay de Infectados - Bloques Grandes de 14 GIFs</title>
     <style>
         /* Fondo transparente e ideal para transmisiones verticales (9:16) */
         body {
@@ -22,7 +22,7 @@
             display: flex;
             flex-direction: row; 
             flex-wrap: nowrap;   
-            gap: 12px;          
+            gap: 14px;          /* Espacio aumentado proporcionalmente entre tarjetas */
             padding: 10px;
             justify-content: center;
             align-items: center;
@@ -54,15 +54,15 @@
             }
         }
 
-        /* Tarjetas blindadas contra deformaciones en TikTok */
+        /* Tarjetas con TAMAÑO MÁS GRANDE para mejor visualización */
         .card {
             background: rgba(16, 20, 26, 0.95);
             border: 2px solid #ff0055;
             animation: rgbBorde 10s linear infinite;
-            border-radius: 14px;
-            width: 140px;       
-            height: 170px;      
-            flex-shrink: 0;     /* Evita que TikTok altere el tamaño original */
+            border-radius: 16px; /* Bordes ligeramente más curvos por el tamaño */
+            width: 170px;        /* Incrementado de 140px a 170px */
+            height: 205px;       /* Incrementado de 170px a 205px */
+            flex-shrink: 0;      /* Evita de manera absoluta que TikTok las deforme */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -114,7 +114,7 @@
         // 2. Función lógica para cambiar de 4 en 4 respetando los 14 elementos
         function rotarBloqueCompleto() {
             for (let i = 0; i < totalColumnas; i++) {
-                // El operador % asegura que los índices siempre estén dentro del rango 0-13 (los 14 GIFs)
+                // El operador % asegura que los índices siempre estén dentro del rango de los 14 GIFs
                 const urlIndice = (indiceBase + i) % listaGifs.length;
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
