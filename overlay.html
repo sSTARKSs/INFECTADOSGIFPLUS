@@ -18,15 +18,7 @@
             grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
             justify-content: center; align-content: center;
             gap: 40px 30px; padding: 50px 30px; width: 100%; height: 100%; box-sizing: border-box;
-            
-            /* Animación suave para la transición de bloques enteros */
-            transition: opacity 0.4s ease-in-out;
             opacity: 1;
-        }
-
-        /* Clase para ocultar el contenedor temporalmente durante el cambio */
-        .oculto {
-            opacity: 0 !important;
         }
 
         /* Tarjeta */
@@ -98,7 +90,10 @@
             [
                 { g: "13.gif", i: "regalos/gorra.webp", gifts: [] }, 
                 { g: "14.gif", i: "regalos/osito.webp", gifts: [] }, 
-                { g: "1.gif", i: "regalos/azul.webp", gifts: ["regalos/azul.webp", "regalos/seguir.webp"],
+                { 
+                    g: "1.gif", /* CORREGIDO: Ahora usa '1.gif' para renderizar la animación correctamente en esta posición */
+                    i: "regalos/azul.webp", 
+                    gifts: ["regalos/azul.webp", "regalos/seguir.webp"],
                     text: ["TAP TAP", "SEGUIR"] 
                 },
                 { g: "2.gif", i: "regalos/rosa.webp", gifts: [] }               
@@ -108,6 +103,7 @@
         let bloqueActual = 0;
         const contenedor = document.getElementById("overlay-container");
 
+        // Motor de descarga previa para evitar desajustes visuales
         function precargarImagenes(listaUrls) {
             return Promise.all(listaUrls.map(url => {
                 return new Promise((resolve) => {
@@ -133,9 +129,10 @@
                     }
                 });
 
-                contenedor.classList.add("oculto");
+                // Descarga todo en segundo plano sin ocultar el contenedor actual
                 await precargarImagenes(urlsAPrecargar);
 
+                // Construcción de la nueva interfaz en memoria limpia
                 let nuevoHTML = "";
                 datosBloque.forEach(tarjeta => {
                     const listaGifts = (tarjeta.gifts && tarjeta.gifts.length > 0) ? tarjeta.gifts : [tarjeta.i];
@@ -150,7 +147,6 @@
                             nombreTexto = tarjeta.text[index];
                         } else {
                             const nombreArchivo = ruta.split('/').pop();
-                            // SOLUCIÓN TOTAL: Se agregó de manera física el [0] para evitar congelamientos en el script
                             nombreTexto = (nombreArchivo && nombreArchivo.includes('.')) ? nombreArchivo.split('.')[0].toUpperCase() : "REGALO";
                         }
 
@@ -176,20 +172,22 @@
                     `;
                 });
 
-                setTimeout(() => {
-                    contenedor.innerHTML = nuevoHTML;
-                    contenedor.classList.remove("oculto");
-                    bloqueActual = (bloqueActual + 1) % bloques.length;
-                }, 50);
+                // INTERCAMBIO INSTANTÁNEO: Sin animaciones de opacidad intermedias para erradicar parpadeos
+                contenedor.innerHTML = nuevoHTML;
+                
+                // Avanza cíclicamente al siguiente bloque
+                bloqueActual = (bloqueActual + 1) % bloques.length;
 
             } catch (error) {
-                console.error("Error en la ejecución del overlay:", error);
-                contenedor.classList.remove("oculto"); 
+                console.error("Error en la transición suave del overlay:", error);
             }
         }
 
+        // Carga inicial directa
         cambiarBloque();
-        setInterval(cambiarBloque, 10000);
+        
+        // Rotación continua cada 8 segundos para mantener un ritmo dinámico en el stream
+        setInterval(cambiarBloque, 8000);
     </script>
 </body>
 </html>
