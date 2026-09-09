@@ -6,23 +6,12 @@
         body { margin:0; padding:0; background:transparent; overflow:hidden; width:100vw; height:100vh; display:flex; justify-content:center; align-items:center; font-family:Arial,sans-serif; }
         
         #overlay-container { 
-            display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box; position:relative;
+            display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box;
         }
         
-        /* Contenedor de ranura fija para mantener el espacio físico de cada una de las 4 posiciones */
-        .slot-posicion {
-            width: 210px; height: 340px; position: relative; overflow: visible; display: flex; justify-content: center; align-items: center;
-        }
-
-        /* Las tarjetas ahora usan transiciones de opacidad ultra fluidas y se apilan perfectamente */
         .card { 
-            background:rgba(10,12,16,0.85); border-radius:12px; width:100%; height:100%; position:absolute; top:0; left:0; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; 
-            opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; box-sizing:border-box; z-index: 1;
-        }
-        
-        /* Clase activa que muestra el bloque actual de golpe sin esperas */
-        .card.activa {
-            opacity: 1; pointer-events: auto; z-index: 5;
+            background:rgba(10,12,16,0.85); border-radius:12px; width:210px; height:340px; position:relative; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; 
+            box-sizing:border-box; transition: border-color 0.1s, box-shadow 0.1s;
         }
 
         .img-box { width:100%; height:100%; position:absolute; border-radius:10px; overflow:hidden; z-index:1; }
@@ -33,16 +22,11 @@
         .img-icon-flotante { width:68px; height:68px; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); position:relative; }
         .icon-especial-0 { width:72px; height:72px; filter:drop-shadow(2px 4px 6px #000); }
         
-        .gift-box { position:absolute; top:-48px; left:-30px; display:flex; gap:6px; align-items:center; z-index:20; }
-        .tiktok-gift { position:relative; width:56px; height:56px; display:flex; justify-content:center; align-items:center; }
-        .gift-img { width:56px; height:56px; object-fit:contain; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); }
-        .tap-tap-texto { position:absolute; top:36px!important; left:0; right:0; text-align:center; font-family:'Arial Black',Impact,sans-serif; font-size:11px; font-weight:900; color:#fff300; text-shadow:2px 2px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,0 0 10px #fff300; white-space:nowrap; z-index:35; letter-spacing:-0.3px; }
-        
-        /* Ajuste responsivo vertical para el Stream de TikTok */
+        /* Ajuste de pantalla vertical para TikTok */
         @media (max-width:768px) or (orientation:portrait) {
             #overlay-container { flex-direction:column; gap:55px; padding:60px 10px; }
-            .slot-posicion { width:140px; height:185px; }
-            .icon-container-flotante, .gift-box { transform:scale(0.75); transform-origin:top left; }
+            .card { width:140px; height:185px; }
+            .icon-container-flotante { transform:scale(0.75); transform-origin:top left; }
         }
     </style>
 </head>
@@ -52,113 +36,118 @@
         const container = document.getElementById('overlay-container'); 
         let bloqueActual = 0;
 
-        const estilosFijos = [{c:'#ca1aff',s:'rgba(202,26,255,0.7)'},{c:'#ff0050',s:'rgba(255,0,80,0.7)'},{c:'#ffffff',s:'rgba(255,255,255,0.9)'},{c:'#ff00aa',s:'rgba(255,0,170,0.7)'}];
-        const coloresRGBTarjeta3 = [{c:'#ffffff',s:'rgba(255,255,255,0.9)'},{c:'#ffcc00',s:'rgba(255,204,0,0.7)'},{c:'#00e5ff',s:'rgba(0,229,255,0.7)'},{c:'#00ff66',s:'rgba(0,255,102,0.7)'}];
-
-        const REGALOS_TIKTOK = {
-            "SEGUIR": { imagen: "regalos/seguir.webp" },
-            "CORAZON_AZUL": { imagen: "regalos/azul.webp", conTexto: true }, 
-            "ROSA_1M": { imagen: "regalos/rosa.webp" },   
-            "ROSA_BLANCA_METAL": { imagen: "regalos/blanca.webp" } 
-        };
+        // Colores fijos estables por posición para evitar parpadeos cromáticos
+        const estilosFijos = [
+            {c:'#ca1aff', s:'rgba(202,26,255,0.7)'}, // Tarjeta 1
+            {c:'#ff0050', s:'rgba(255,0,80,0.7)'},  // Tarjeta 2
+            {c:'#00e5ff', s:'rgba(0,229,255,0.7)'},  // Tarjeta 3
+            {c:'#ff00aa', s:'rgba(255,0,170,0.7)'}  // Tarjeta 4
+        ];
 
         const bloques = [
             [
-                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"], gifts: [] },
-                { g: "2.gif", i: "regalos/rosa.webp", gifts: [] },   
-                { g: "3.gif", i: "regalos/blanca.webp", gifts: [] }, 
-                { g: "4.gif", i: "regalos/tiktok.webp", gifts: [] }
+                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"] },
+                { g: "2.gif", i: ["regalos/rosa.webp"] },   
+                { g: "3.gif", i: ["regalos/blanca.webp"] }, 
+                { g: "4.gif", i: ["regalos/tiktok.webp"] }
             ],
             [
-                { g: "5.gif", i: "regalos/gg.webp", gifts: [] }, 
-                { g: "6.gif", i: "regalos/coreano.webp", gifts: [] }, 
-                { g: "7.gif", i: "regalos/rose.webp", gifts: [] }, 
-                { g: "8.gif", i: "regalos/rosquilla.webp", gifts: [] } 
+                { g: "5.gif", i: ["regalos/gg.webp"] }, 
+                { g: "6.gif", i: ["regalos/coreano.webp"] }, 
+                { g: "7.gif", i: ["regalos/rose.webp"] }, 
+                { g: "8.gif", i: ["regalos/rosquilla.webp"] } 
             ],
             [
-                { g: "9.gif", i: "regalos/gafas.webp", gifts: [] },    
-                { g: "10.gif", i: "regalos/confetti.webp", gifts: [] }, 
-                { g: "11.gif", i: "regalos/helado.webp", gifts: [] },   
-                { g: "12.gif", i: "regalos/perfume.webp", gifts: [] }   
+                { g: "9.gif", i: ["regalos/gafas.webp"] },    
+                { g: "10.gif", i: ["regalos/confetti.webp"] }, 
+                { g: "11.gif", i: ["regalos/helado.webp"] },   
+                { g: "12.gif", i: ["regalos/perfume.webp"] }   
             ],
             [
-                { g: "13.gif", i: "regalos/gorra.webp", gifts: [] }, 
-                { g: "14.gif", i: "regalos/osito.webp", gifts: [] }, 
-                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"], gifts: [] },       
-                { g: "2.gif", i: "regalos/rosa.webp", gifts: [] }               
+                { g: "13.gif", i: ["regalos/gorra.webp"] }, 
+                { g: "14.gif", i: ["regalos/osito.webp"] }, 
+                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"] },       
+                { g: "2.gif", i: ["regalos/rosa.webp"] }               
             ]
         ];
 
-        // 1. GENERAR ESTRUCTURA INICIAL DE RANURAS FÍSICAS (4 Posiciones en pantalla)
+        // Pixel transparente seguro de 1x1 para limpiar imágenes sin romper el DOM
+        const pixelTransparente = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
+
+        // 1. Crear las 4 tarjetas físicas permanentes una sola vez
         for (let i = 0; i < 4; i++) {
-            const slot = document.createElement('div');
-            slot.className = 'slot-posicion';
-            slot.id = `slot-${i}`;
-            container.appendChild(slot);
+            const card = document.createElement('div');
+            card.id = `card-${i}`;
+            card.className = 'card';
+            
+            // Asignar bordes fijos iniciales
+            let estilo = estilosFijos[i];
+            card.style.borderColor = estilo.c; 
+            card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
+
+            // Contenedores internos fijos con dos imágenes img preparadas para recibir rutas
+            card.innerHTML = `
+                <div class="img-box"><img id="gif-fondo-${i}" src="${pixelTransparente}"></div>
+                <div class="esq-izq">
+                    <div class="icon-container-flotante">
+                        <img id="icono-flotante-${i}-0" class="img-icon-flotante" src="${pixelTransparente}">
+                        <img id="icono-flotante-${i}-1" class="img-icon-flotante" src="${pixelTransparente}">
+                    </div>
+                </div>
+            `;
+            container.appendChild(card);
         }
 
-        // 2. CONSTRUIR TODAS LAS TARJETAS POSIBLES EN PARALELO DE ANTEMANO
-        bloques.forEach((grupo, bIndex) => {
+        // 2. Rotación por intercambio directo de atributos de imagen (0 cambios de estructura)
+        function rotarSincronizado() {
+            const grupo = bloques[bloqueActual];
+
             for (let i = 0; i < 4; i++) {
-                const slotDestino = document.getElementById(`slot-${i}`);
                 const dataTarjeta = grupo[i];
                 
-                const card = document.createElement('div'); 
-                card.className = `card card-bloque-${bIndex}`;
-                
-                // Aplicar estilo de color inicial fijo o dinámico para tarjeta 3
-                let estilo = (i === 2) ? coloresRGBTarjeta3[bIndex] : estilosFijos[i];
-                card.style.borderColor = estilo.c; 
-                card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
-
-                // Construcción del HTML interno de la tarjeta
-                let flotantesHtml = "";
-                if (dataTarjeta.i) {
-                    if (Array.isArray(dataTarjeta.i)) {
-                        dataTarjeta.i.forEach((srcImg, idx) => {
-                            let claseEspecial = (i === 0 && bIndex === 0 && idx === 0) ? 'icon-especial-0' : '';
-                            flotantesHtml += `<img class="img-icon-flotante ${claseEspecial}" src="${srcImg}">`;
-                        });
-                    } else {
-                        flotantesHtml += `<img class="img-icon-flotante" src="${dataTarjeta.i}">`;
-                    }
+                // Cambiar el GIF de fondo directamente
+                const imgFondo = document.getElementById(`gif-fondo-${i}`);
+                if(imgFondo.src !== dataTarjeta.g) {
+                    imgFondo.src = dataTarjeta.g;
                 }
 
-                let regalosHtml = "";
-                dataTarjeta.gifts.forEach(k => {
-                    if (REGALOS_TIKTOK[k]) {
-                        let textoHtml = REGALOS_TIKTOK[k].conTexto ? `<div class="tap-tap-texto">TAP TAP</div>` : '';
-                        regalosHtml += `<div class="tiktok-gift">${textoHtml}<img class="gift-img" src="${REGALOS_TIKTOK[k].imagen}"></div>`;
+                // Administrar los dos espacios de iconos flotantes posibles
+                const imgIcono0 = document.getElementById(`icono-flotante-${i}-0`);
+                const imgIcono1 = document.getElementById(`icono-flotante-${i}-1`);
+
+                // Resetear ID especial de la primera tarjeta para evitar conflictos
+                imgIcono0.removeAttribute('id-especial');
+                imgIcono0.className = "img-icon-flotante";
+
+                if (dataTarjeta.i && dataTarjeta.i.length > 0) {
+                    // Cargar primer icono
+                    imgIcono0.src = dataTarjeta.i[0];
+                    
+                    // Truco de tamaño especial si es el primer bloque, primera tarjeta
+                    if (i === 0 && bloqueActual === 0) {
+                        imgIcono0.className = "img-icon-flotante icon-especial-0";
                     }
-                });
 
-                card.innerHTML = `
-                    <div class="img-box"><img src="${dataTarjeta.g}"></div>
-                    <div class="esq-izq">
-                        <div class="gift-box">${regalosHtml}</div>
-                        <div class="icon-container-flotante">${flotantesHtml}</div>
-                    </div>
-                `;
-                
-                slotDestino.appendChild(card);
+                    // Cargar segundo icono si existe, si no, ponerlo transparente
+                    if (dataTarjeta.i.length > 1) {
+                        imgIcono1.src = dataTarjeta.i[1];
+                        imgIcono1.style.display = "block";
+                    } else {
+                        imgIcono1.src = pixelTransparente;
+                        imgIcono1.style.display = "none";
+                    }
+                } else {
+                    // Si no hay iconos en este bloque, limpiar ambos con el píxel transparente
+                    imgIcono0.src = pixelTransparente;
+                    imgIcono1.src = pixelTransparente;
+                }
             }
-        });
 
-        // 3. FUNCIÓN DE ROTACIÓN ULTRA RÁPIDA (Solo altera opacidades de tarjetas pre-renderizadas)
-        function rotarSincronizado() {
-            // Ocultar todas las tarjetas que estén visibles en pantalla
-            const todasLasTarjetas = document.querySelectorAll('.card');
-            todasLasTarjetas.forEach(c => c.classList.remove('activa'));
-
-            // Mostrar instantáneamente las 4 tarjetas pertenecientes al bloque actual
-            const tarjetasNuevas = document.querySelectorAll(`.card-bloque-${bloqueActual}`);
-            tarjetasNuevas.forEach(c => c.classList.add('activa'));
-
-            // Cambiar al siguiente índice de bloque de forma cíclica
+            // Cambiar de bloque de forma cíclica
             bloqueActual = (bloqueActual + 1) % bloques.length;
         }
 
-        // Ejecución inmediata al cargar la escena local
+        // Ejecutar sistema de inmediato
         rotarSincronizado(); 
         setInterval(rotarSincronizado, 12000);
     </script>
