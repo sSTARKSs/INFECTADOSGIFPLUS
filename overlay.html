@@ -2,9 +2,11 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Overlay de Infectados - Bloques de 14 GIFs Sin Repeticiones</title>
+    <title>Overlay de Infectados - Estilo Left 4 Dead</title>
     <style>
-        /* Fondo transparente e ideal para transmisiones verticales (9:16) */
+        /* Importar fuente de estilo gaming/retro */
+        @import url('https://googleapis.com');
+
         body {
             margin: 0;
             padding: 0;
@@ -15,71 +17,103 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Oswald', sans-serif;
         }
 
-        /* CONTENEDOR DE 4 COLUMNAS EN UNA SOLA FILA HORIZONTAL SIMÉTRICA */
+        /* CONTENEDOR DE 5 COLUMNAS HORIZONTALES */
         #overlay-container {
             display: flex;
             flex-direction: row; 
             flex-wrap: nowrap;   
-            gap: 14px;          
-            padding: 10px;
+            gap: 16px;          
+            padding: 15px;
             justify-content: center;
             align-items: center;
             width: auto;        
             box-sizing: border-box;
         }
 
-        /* ANIMACIÓN PARA QUE LOS BORDES RGB CAMBIEN SUAVEMENTE */
-        @keyframes rgbBorde {
-            0% {
-                border-color: #ff0055;
-                box-shadow: 0px 0px 14px rgba(255, 0, 85, 0.7);
-            }
-            25% {
-                border-color: #a000ff;
-                box-shadow: 0px 0px 14px rgba(160, 0, 255, 0.7);
-            }
-            50% {
-                border-color: #00e5ff;
-                box-shadow: 0px 0px 14px rgba(0, 229, 255, 0.7);
-            }
-            75% {
-                border-color: #00ff66;
-                box-shadow: 0px 0px 14px rgba(0, 255, 102, 0.7);
-            }
-            100% {
-                border-color: #ff0055;
-                box-shadow: 0px 0px 14px rgba(255, 0, 85, 0.7);
-            }
-        }
-
-        /* TARJETAS CON TAMAÑO IDÉNTICO, PROHIBIDO DEFORMARSE */
+        /* ESTILO BASE DE LAS TARJETAS VERTICALES */
         .card {
-            background: rgba(16, 20, 26, 0.95);
-            border: 2px solid #ff0055;
-            animation: rgbBorde 10s linear infinite;
-            border-radius: 16px; 
-            width: 170px;        
-            height: 250px;       
+            background: rgba(10, 12, 16, 0.85);
+            border-radius: 12px; 
+            width: 175px;        
+            height: 320px;       
             flex-shrink: 0;      
-            display: flex;
-            align-items: center;
-            justify-content: center;
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-sizing: border-box;
+            border: 2px solid #fff; /* Se sobrescribe por JS */
         }
 
-        /* Contenedor de la imagen limpia al 100% */
+        /* CAPAS DE TEXTO SUPERIORES (CONTADOR Y NOMBRE) */
+        .card-header {
+            position: absolute;
+            top: 8px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.9), 0px 0px 8px rgba(0,0,0,0.8);
+        }
+
+        .multiplier {
+            font-size: 26px;
+            line-height: 1;
+            margin-bottom: -2px;
+        }
+
+        .zombie-name {
+            font-size: 18px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CONTENEDOR DEL GIF DE FONDO */
         .image-container {
             width: 100%;
             height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
         }
 
         .image-container img {
             width: 100%;
             height: 100%;
-            object-fit: cover; 
+            object-fit: cover;
+            /* Tono oscuro para que resalten los textos e íconos */
+            filter: brightness(0.65) contrast(1.1); 
+        }
+
+        /* ÍCONO INFERIOR FLOTANTE */
+        .icon-container {
+            position: absolute;
+            bottom: 12px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* Estilo base para los íconos (pueden ser imágenes o textos con emojis/estilos) */
+        .neon-icon {
+            font-size: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            filter: drop-shadow(0px 0px 8px currentColor);
+        }
+
+        .neon-icon img {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
         }
     </style>
 </head>
@@ -89,48 +123,106 @@
 
     <script>
         const container = document.getElementById('overlay-container');
-        const totalColumnas = 4;
+        const totalColumnas = 5;
         let bloqueActual = 0; 
 
-        // MATRIZ DE BLOQUES FIJOS: Evita cruces matemáticos defectuosos en la pantalla
-        const bloquesFijos = [
-            ["1.gif", "2.gif", "3.gif", "4.gif"],
-            ["5.gif", "6.gif", "7.gif", "8.gif"],
-            ["9.gif", "10.gif", "11.gif", "12.gif"],
-            ["11.gif", "12.gif", "13.gif", "14.gif"] // Cuarto bloque: Reorganizado para no repetir con el inicio del Bloque 1
+        // CONFIGURACIÓN ESTÉTICA FIJA POR COLUMNA (Colores de neón de la imagen)
+        const estilosColumnas = [
+            { color: '#ca1aff', shadow: 'rgba(202, 26, 255, 0.7)' }, // Witch - Morado
+            { color: '#00e5ff', shadow: 'rgba(0, 229, 255, 0.7)' }, // Hunter - Azul/Cian
+            { color: '#ffcc00', shadow: 'rgba(255, 204, 0, 0.7)' },  // Boomer - Amarillo
+            { color: '#ff4500', shadow: 'rgba(255, 69, 0, 0.7)' },  // Tank - Naranja/Rojo
+            { color: '#ca1aff', shadow: 'rgba(202, 26, 255, 0.7)' }  // Charger - Morado
         ];
 
-        // 1. Inyectar la estructura fija de las 4 tarjetas idénticas en el HTML
+        /* 
+           MATRIZ DE BLOQUES: Cada bloque ahora contiene la información completa de las 5 columnas.
+           Puedes cambiar los nombres, multiplicadores, íconos y gifs aquí para configurar las rotaciones.
+        */
+        const bloquesFijos = [
+            // BLOQUE 1 (Tal cual la imagen de referencia)
+            [
+                { name: "Witch", mult: "3x", gif: "1.gif", icon: "👾" },
+                { name: "Hunter", mult: "1x", gif: "2.gif", icon: "👤" }, // Aquí irá tu nuevo ícono verde de agregar
+                { name: "Boomer", mult: "1x", gif: "3.gif", icon: "❤️" },
+                { name: "Tank", mult: "5x", gif: "4.gif", icon: "🫰" },
+                { name: "Charger", mult: "3x", gif: "5.gif", icon: "🌹" }
+            ],
+            // BLOQUE 2 (Ejemplo con rotación de GIFs del 6 al 10)
+            [
+                { name: "Witch", mult: "1x", gif: "6.gif", icon: "👾" },
+                { name: "Hunter", mult: "2x", gif: "7.gif", icon: "👤" },
+                { name: "Boomer", mult: "4x", gif: "8.gif", icon: "❤️" },
+                { name: "Tank", mult: "1x", gif: "9.gif", icon: "🫰" },
+                { name: "Charger", mult: "2x", gif: "10.gif", icon: "🌹" }
+            ],
+            // BLOQUE 3 (Ejemplo con rotación de GIFs del 11 al 15)
+            [
+                { name: "Witch", mult: "5x", gif: "11.gif", icon: "👾" },
+                { name: "Hunter", mult: "3x", gif: "12.gif", icon: "👤" },
+                { name: "Boomer", mult: "1x", gif: "13.gif", icon: "❤️" },
+                { name: "Tank", mult: "2x", gif: "14.gif", icon: "🫰" },
+                { name: "Charger", mult: "4x", gif: "15.gif", icon: "🌹" }
+            ]
+        ];
+
+        // 1. Inyectar de manera simétrica las 5 tarjetas con su respectivo color neón de borde permanente
         for (let i = 0; i < totalColumnas; i++) {
             const card = document.createElement('div');
             card.className = 'card';
+            
+            // Aplicar colores fijos de neón basados en la columna
+            card.style.borderColor = estilosColumnas[i].color;
+            card.style.boxShadow = `0px 0px 18px ${estilosColumnas[i].shadow}, inset 0px 0px 10px ${estilosColumnas[i].shadow}`;
+
             card.innerHTML = `
+                <div class="card-header" style="color: ${estilosColumnas[i].color};">
+                    <div id="mult-col-${i}" class="multiplier">0x</div>
+                    <div id="name-col-${i}" class="zombie-name">-</div>
+                </div>
                 <div class="image-container">
                     <img id="gif-col-${i}" src="" alt="Infectado">
+                </div>
+                <div class="icon-container">
+                    <div id="icon-col-${i}" class="neon-icon" style="color: ${estilosColumnas[i].color};"></div>
                 </div>
             `;
             container.appendChild(card);
         }
 
-        // 2. Función lógica optimizada por lectura directa de matriz estable
+        // 2. Función lógica que actualiza todo el contenido visual simultáneamente por bloque
         function rotarBloqueCompleto() {
-            const grupoGifs = bloquesFijos[bloqueActual];
+            const grupoActual = bloquesFijos[bloqueActual];
 
             for (let i = 0; i < totalColumnas; i++) {
+                const dataCol = grupoActual[i];
+
+                // Actualizar textos
+                document.getElementById(`mult-col-${i}`).innerText = dataCol.mult;
+                document.getElementById(`name-col-${i}`).innerText = dataCol.name;
+                
+                // Actualizar GIF
                 const imgElement = document.getElementById(`gif-col-${i}`);
                 if (imgElement) {
-                    imgElement.src = grupoGifs[i];
+                    imgElement.src = dataCol.gif;
+                }
+
+                // Actualizar Ícono (Soporta emojis directamente o puedes cambiarlo por etiquetas <img>)
+                const iconElement = document.getElementById(`icon-col-${i}`);
+                if (iconElement) {
+                    // Nota: Si usas imágenes locales para los iconos abajo, cambia la línea por: iconElement.innerHTML = `<img src="${dataCol.icon}.png">`;
+                    iconElement.innerText = dataCol.icon; 
                 }
             }
 
-            // Cambia al siguiente bloque de forma secuencial estricta
+            // Cambiar al siguiente bloque de forma secuencial cíclica
             bloqueActual = (bloqueActual + 1) % bloquesFijos.length;
         }
 
-        // 3. Carga inmediata del primer bloque al abrir la escena
+        // 3. Ejecución inicial inmediata
         rotarBloqueCompleto();
 
-        // 4. Temporizador de rotación por bloques de 8 segundos (8000ms)
+        // 4. Temporizador cíclico ajustado a 8 segundos (8000ms)
         setInterval(rotarBloqueCompleto, 8000);
     </script>
 </body>
