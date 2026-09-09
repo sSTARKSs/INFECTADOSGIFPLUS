@@ -21,15 +21,46 @@
             opacity: 1;
         }
 
-        /* Tarjeta */
+        /* Tarjeta base con Borde RGB Animado */
         .card { 
-            background: rgba(10,12,16,0.85); border-radius: 12px; 
-            width: 210px; height: 340px; position: relative; 
-            overflow: visible; display: flex; flex-direction: column; 
-            border: 2px solid #ffffff; 
+            background: rgba(10,12,16,0.85); 
+            border-radius: 12px; 
+            width: 210px; 
+            height: 340px; 
+            position: relative; 
+            overflow: visible; 
+            display: flex; 
+            flex-direction: column; 
+            
+            /* Configuración del borde cromático */
+            border: 3px solid transparent;
+            border-image: conic-gradient(from var(--angle), #ff0000, #ff7700, #ffea00, #00ff00, #00ffff, #0000ff, #9900ff, #ff00ff, #ff0000) 1;
+            animation: rgbBorder 4s linear infinite;
         }
 
-        .img-box { width: 100%; height: 100%; position: absolute; border-radius: 10px; overflow: hidden; z-index: 1; }
+        /* Registro de la variable de ángulo para que CSS pueda animar el degradado */
+        @property --angle {
+            syntax: '<angle>';
+            initial-value: 0deg;
+            inherits: false;
+        }
+
+        /* Animación que hace rotar el espectro RGB */
+        @keyframes rgbBorder {
+            to {
+                --angle: 360deg;
+            }
+        }
+
+        .img-box { 
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            border-radius: 9px; /* Un píxel menos que la tarjeta para encajar bien */
+            overflow: hidden; 
+            z-index: 1; 
+        }
+        
         .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) contrast(1.1); }
         .esq-izq { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; overflow: visible; pointer-events: none; }
 
@@ -90,12 +121,8 @@
             [
                 { g: "13.gif", i: "regalos/gorra.webp", gifts: [] }, 
                 { g: "14.gif", i: "regalos/osito.webp", gifts: [] }, 
-                { 
-                    g: "1.gif", /* CORREGIDO: Ahora usa '1.gif' para renderizar la animación correctamente en esta posición */
-                    i: "regalos/azul.webp", 
-                    gifts: ["regalos/azul.webp", "regalos/seguir.webp"],
-                    text: ["TAP TAP", "SEGUIR"] 
-                },
+                { g: "1.gif", i: "regalos/azul.webp", gifts: ["regalos/azul.webp", "regalos/seguir.webp"],
+                    text: ["TAP TAP", "SEGUIR"] },
                 { g: "2.gif", i: "regalos/rosa.webp", gifts: [] }               
             ]
         ];
@@ -103,7 +130,6 @@
         let bloqueActual = 0;
         const contenedor = document.getElementById("overlay-container");
 
-        // Motor de descarga previa para evitar desajustes visuales
         function precargarImagenes(listaUrls) {
             return Promise.all(listaUrls.map(url => {
                 return new Promise((resolve) => {
@@ -129,12 +155,10 @@
                     }
                 });
 
-                // Descarga todo en segundo plano sin ocultar el contenedor actual
                 await precargarImagenes(urlsAPrecargar);
 
-                // Construcción de la nueva interfaz en memoria limpia
                 let nuevoHTML = "";
-                datosBloque.forEach(tarjeta => {
+                datosBloque.forEach((tarjeta, cardIndex) => {
                     const listaGifts = (tarjeta.gifts && tarjeta.gifts.length > 0) ? tarjeta.gifts : [tarjeta.i];
                     
                     let regalosHTML = "";
@@ -158,8 +182,12 @@
                         `;
                     });
 
+                    // Añadimos un retraso de animación (delay) negativo según la posición de la tarjeta (cardIndex)
+                    // Esto hace que cada tarjeta empiece en un color RGB distinto del arcoíris
+                    const delayNegativo = -(cardIndex * 1); 
+
                     nuevoHTML += `
-                        <div class="card">
+                        <div class="card" style="animation-delay: ${delayNegativo}s;">
                             <div class="img-box">
                                 <img src="${tarjeta.g}" alt="Fondo">
                             </div>
@@ -172,10 +200,7 @@
                     `;
                 });
 
-                // INTERCAMBIO INSTANTÁNEO: Sin animaciones de opacidad intermedias para erradicar parpadeos
                 contenedor.innerHTML = nuevoHTML;
-                
-                // Avanza cíclicamente al siguiente bloque
                 bloqueActual = (bloqueActual + 1) % bloques.length;
 
             } catch (error) {
@@ -183,10 +208,7 @@
             }
         }
 
-        // Carga inicial directa
         cambiarBloque();
-        
-        // Rotación continua cada 8 segundos para mantener un ritmo dinámico en el stream
         setInterval(cambiarBloque, 8000);
     </script>
 </body>
