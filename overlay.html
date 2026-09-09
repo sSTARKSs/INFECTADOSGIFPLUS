@@ -1,134 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Overlay L4D - TikTok Studio</title>
+    <meta charset="UTF-8"><title>Overlay L4D - TikTok Studio</title>
     <style>
-        /* Base limpia y transparente para el stream */
-        body { 
-            margin: 0; padding: 0; background: transparent; 
-            width: 100vw; height: 100vh; display: flex; 
-            justify-content: center; align-items: center; font-family: Arial, sans-serif; 
-            box-sizing: border-box; overflow: hidden;
-        }
-
-        /* Contenedor responsivo para TikTok Studio (Horizontal y Vertical) */
+        body { margin:0; padding:0; background:transparent; overflow:hidden; width:100vw; height:100vh; display:flex; justify-content:center; align-items:center; font-family:Arial,sans-serif; }
+        
         #overlay-container { 
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(210px, max-content));
-            justify-content: center; align-content: center;
-            gap: 40px 30px; padding: 50px 30px; width: 100%; height: 100%; box-sizing: border-box;
-            opacity: 1;
+            display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box; position:relative;
+        }
+        
+        /* Contenedor de ranura fija para mantener el espacio físico de cada una de las 4 posiciones */
+        .slot-posicion {
+            width: 210px; height: 340px; position: relative; overflow: visible; display: flex; justify-content: center; align-items: center;
         }
 
-        /* Tarjeta base con Borde RGB Animado Tradicional (Máxima compatibilidad) */
+        /* Las tarjetas ahora usan transiciones de opacidad ultra fluidas y se apilan perfectamente */
         .card { 
-            background: rgba(10,12,16,0.85); 
-            border-radius: 12px; 
-            width: 210px; 
-            height: 340px; 
-            position: relative; 
-            display: flex; 
-            flex-direction: column; 
-            box-sizing: border-box;
-            z-index: 1;
-        }
-
-        /* Pseudo-elemento para el borde animado compatible con cualquier navegador/OBS */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: -4px; left: -4px; right: -4px; bottom: -4px;
-            background: linear-gradient(45deg, #ff0000, #ff7700, #ffea00, #00ff00, #00ffff, #0000ff, #9900ff, #ff00ff);
-            background-size: 400% 400%;
-            border-radius: 15px;
-            z-index: -1;
-            animation: rgbMove 4s ease infinite;
-        }
-
-        /* Animación fluida de gradiente */
-        @keyframes rgbMove {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .img-box { 
-            width: 100%; 
-            height: 100%; 
-            position: absolute; 
-            border-radius: 9px; 
-            overflow: hidden; 
-            z-index: 1;
-            top: 0;
-            left: 0;
+            background:rgba(10,12,16,0.85); border-radius:12px; width:100%; height:100%; position:absolute; top:0; left:0; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; 
+            opacity: 0; pointer-events: none; transition: opacity 0.4s ease-in-out; box-sizing:border-box; z-index: 1;
         }
         
-        .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.75) contrast(1.1); }
-        .esq-izq { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; overflow: visible; pointer-events: none; }
-
-        /* Contenedor de regalos reposicionado para el tamaño grande de 100px */
-        .gift-box { 
-            position: absolute; 
-            top: -55px;               /* Subido para que el regalo grande no tape la tarjeta */
-            left: -35px;              /* Desplazado a la izquierda para balancear el diseño */
-            display: flex; 
-            gap: 12px; 
-            align-items: center; 
-            z-index: 20; 
-            background: rgba(0, 0, 0, 0.5); 
-            padding: 6px 12px; 
-            border-radius: 25px; 
-            backdrop-filter: blur(2px);
+        /* Clase activa que muestra el bloque actual de golpe sin esperas */
+        .card.activa {
+            opacity: 1; pointer-events: auto; z-index: 5;
         }
 
-        /* TAMAÑO DE LOS REGALOS .WEBP INCREMENTADO A 100PX (Doble de grande que antes) */
-        .tiktok-gift { 
-            position: relative; 
-            width: 100px;             
-            height: 100px;            
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-        }
+        .img-box { width:100%; height:100%; position:absolute; border-radius:10px; overflow:hidden; z-index:1; }
+        .img-box img { width:100%; height:100%; object-fit:cover; filter:brightness(0.75) contrast(1.1); }
+        .esq-izq { position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; overflow:visible; pointer-events:none; }
         
-        .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.8)); }
-
-        /* Texto adaptado para quedar justo abajo del regalo de 100px */
-        .tap-tap-texto { 
-            position: absolute; 
-            top: 76px !important;     /* Ajustado abajo del regalo grande */
-            left: -10px; 
-            right: -10px; 
-            text-align: center; 
-            font-family: 'Arial Black', Impact, sans-serif; 
-            font-size: 12px;          /* Texto más legible en móviles */
-            font-weight: 900; 
-            color: #fff300; 
-            text-shadow: 2px 2px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000; 
-        }
-
-        /* Ajustes para pantalla vertical de TikTok Live Studio */
-        @media (max-width: 750px) or (orientation: portrait) {
-            #overlay-container { grid-template-columns: repeat(2, minmax(140px, 160px)); gap: 35px 20px; padding: 40px 15px; }
-            .card { width: 100%; height: 250px; }
-            .gift-box { transform: scale(0.75); top: -35px !important; left: -20px !important; }
+        .icon-container-flotante { position:absolute; top:-48px; left:-30px; display:flex; gap:8px; overflow:visible; }
+        .img-icon-flotante { width:68px; height:68px; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); position:relative; }
+        .icon-especial-0 { width:72px; height:72px; filter:drop-shadow(2px 4px 6px #000); }
+        
+        .gift-box { position:absolute; top:-48px; left:-30px; display:flex; gap:6px; align-items:center; z-index:20; }
+        .tiktok-gift { position:relative; width:56px; height:56px; display:flex; justify-content:center; align-items:center; }
+        .gift-img { width:56px; height:56px; object-fit:contain; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); }
+        .tap-tap-texto { position:absolute; top:36px!important; left:0; right:0; text-align:center; font-family:'Arial Black',Impact,sans-serif; font-size:11px; font-weight:900; color:#fff300; text-shadow:2px 2px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,0 0 10px #fff300; white-space:nowrap; z-index:35; letter-spacing:-0.3px; }
+        
+        /* Ajuste responsivo vertical para el Stream de TikTok */
+        @media (max-width:768px) or (orientation:portrait) {
+            #overlay-container { flex-direction:column; gap:55px; padding:60px 10px; }
+            .slot-posicion { width:140px; height:185px; }
+            .icon-container-flotante, .gift-box { transform:scale(0.75); transform-origin:top left; }
         }
     </style>
 </head>
 <body>
-
     <div id="overlay-container"></div>
-
     <script>
+        const container = document.getElementById('overlay-container'); 
+        let bloqueActual = 0;
+
+        const estilosFijos = [{c:'#ca1aff',s:'rgba(202,26,255,0.7)'},{c:'#ff0050',s:'rgba(255,0,80,0.7)'},{c:'#ffffff',s:'rgba(255,255,255,0.9)'},{c:'#ff00aa',s:'rgba(255,0,170,0.7)'}];
+        const coloresRGBTarjeta3 = [{c:'#ffffff',s:'rgba(255,255,255,0.9)'},{c:'#ffcc00',s:'rgba(255,204,0,0.7)'},{c:'#00e5ff',s:'rgba(0,229,255,0.7)'},{c:'#00ff66',s:'rgba(0,255,102,0.7)'}];
+
+        const REGALOS_TIKTOK = {
+            "SEGUIR": { imagen: "regalos/seguir.webp" },
+            "CORAZON_AZUL": { imagen: "regalos/azul.webp", conTexto: true }, 
+            "ROSA_1M": { imagen: "regalos/rosa.webp" },   
+            "ROSA_BLANCA_METAL": { imagen: "regalos/blanca.webp" } 
+        };
+
         const bloques = [
             [
-                { 
-                    g: "1.gif", 
-                    i: "regalos/azul.webp", 
-                    gifts: ["regalos/azul.webp", "regalos/seguir.webp"],
-                    text: ["TAP TAP", "SEGUIR"] 
-                },
+                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"], gifts: [] },
                 { g: "2.gif", i: "regalos/rosa.webp", gifts: [] },   
                 { g: "3.gif", i: "regalos/blanca.webp", gifts: [] }, 
                 { g: "4.gif", i: "regalos/tiktok.webp", gifts: [] }
@@ -148,71 +84,83 @@
             [
                 { g: "13.gif", i: "regalos/gorra.webp", gifts: [] }, 
                 { g: "14.gif", i: "regalos/osito.webp", gifts: [] }, 
-                { g: "1.gif", i: "regalos/azul.webp", gifts: ["regalos/azul.webp", "regalos/seguir.webp"],
-                    text: ["TAP TAP", "SEGUIR"] },
+                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"], gifts: [] },       
                 { g: "2.gif", i: "regalos/rosa.webp", gifts: [] }               
             ]
         ];
 
-        let bloqueActual = 0;
-        const contenedor = document.getElementById("overlay-container");
-
-        function cambiarBloque() {
-            try {
-                const datosBloque = bloques[bloqueActual];
-                let nuevoHTML = "";
-
-                datosBloque.forEach((tarjeta, cardIndex) => {
-                    const listaGifts = (tarjeta.gifts && tarjeta.gifts.length > 0) ? tarjeta.gifts : [tarjeta.i];
-                    
-                    let regalosHTML = "";
-                    listaGifts.forEach((ruta, index) => {
-                        if (!ruta) return;
-                        
-                        let nombreTexto = "";
-                        
-                        if (tarjeta.text && tarjeta.text[index]) {
-                            nombreTexto = tarjeta.text[index];
-                        } else {
-                            const nombreArchivo = ruta.split('/').pop();
-                            nombreTexto = (nombreArchivo && nombreArchivo.includes('.')) ? nombreArchivo.split('.')[0].toUpperCase() : "REGALO";
-                        }
-
-                        regalosHTML += `
-                            <div class="tiktok-gift">
-                                <img class="gift-img" src="${ruta}" alt="Regalo">
-                                <div class="tap-tap-texto">${nombreTexto}</div>
-                            </div>
-                        `;
-                    });
-
-                    const delayNegativo = -(cardIndex * 1); 
-
-                    nuevoHTML += `
-                        <div class="card" style="animation-delay: ${delayNegativo}s;">
-                            <div class="img-box">
-                                <img src="${tarjeta.g}" alt="Fondo">
-                            </div>
-                            <div class="esq-izq">
-                                <div class="gift-box">
-                                    ${regalosHTML}
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                contenedor.innerHTML = nuevoHTML;
-                bloqueActual = (bloqueActual + 1) % bloques.length;
-
-            } catch (error) {
-                console.error("Error al renderizar el bloque del overlay:", error);
-            }
+        // 1. GENERAR ESTRUCTURA INICIAL DE RANURAS FÍSICAS (4 Posiciones en pantalla)
+        for (let i = 0; i < 4; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'slot-posicion';
+            slot.id = `slot-${i}`;
+            container.appendChild(slot);
         }
 
-        // Carga inmediata sin esperar precarga de red externa
-        cambiarBloque();
-        setInterval(cambiarBloque, 8000);
+        // 2. CONSTRUIR TODAS LAS TARJETAS POSIBLES EN PARALELO DE ANTEMANO
+        bloques.forEach((grupo, bIndex) => {
+            for (let i = 0; i < 4; i++) {
+                const slotDestino = document.getElementById(`slot-${i}`);
+                const dataTarjeta = grupo[i];
+                
+                const card = document.createElement('div'); 
+                card.className = `card card-bloque-${bIndex}`;
+                
+                // Aplicar estilo de color inicial fijo o dinámico para tarjeta 3
+                let estilo = (i === 2) ? coloresRGBTarjeta3[bIndex] : estilosFijos[i];
+                card.style.borderColor = estilo.c; 
+                card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
+
+                // Construcción del HTML interno de la tarjeta
+                let flotantesHtml = "";
+                if (dataTarjeta.i) {
+                    if (Array.isArray(dataTarjeta.i)) {
+                        dataTarjeta.i.forEach((srcImg, idx) => {
+                            let claseEspecial = (i === 0 && bIndex === 0 && idx === 0) ? 'icon-especial-0' : '';
+                            flotantesHtml += `<img class="img-icon-flotante ${claseEspecial}" src="${srcImg}">`;
+                        });
+                    } else {
+                        flotantesHtml += `<img class="img-icon-flotante" src="${dataTarjeta.i}">`;
+                    }
+                }
+
+                let regalosHtml = "";
+                dataTarjeta.gifts.forEach(k => {
+                    if (REGALOS_TIKTOK[k]) {
+                        let textoHtml = REGALOS_TIKTOK[k].conTexto ? `<div class="tap-tap-texto">TAP TAP</div>` : '';
+                        regalosHtml += `<div class="tiktok-gift">${textoHtml}<img class="gift-img" src="${REGALOS_TIKTOK[k].imagen}"></div>`;
+                    }
+                });
+
+                card.innerHTML = `
+                    <div class="img-box"><img src="${dataTarjeta.g}"></div>
+                    <div class="esq-izq">
+                        <div class="gift-box">${regalosHtml}</div>
+                        <div class="icon-container-flotante">${flotantesHtml}</div>
+                    </div>
+                `;
+                
+                slotDestino.appendChild(card);
+            }
+        });
+
+        // 3. FUNCIÓN DE ROTACIÓN ULTRA RÁPIDA (Solo altera opacidades de tarjetas pre-renderizadas)
+        function rotarSincronizado() {
+            // Ocultar todas las tarjetas que estén visibles en pantalla
+            const todasLasTarjetas = document.querySelectorAll('.card');
+            todasLasTarjetas.forEach(c => c.classList.remove('activa'));
+
+            // Mostrar instantáneamente las 4 tarjetas pertenecientes al bloque actual
+            const tarjetasNuevas = document.querySelectorAll(`.card-bloque-${bloqueActual}`);
+            tarjetasNuevas.forEach(c => c.classList.add('activa'));
+
+            // Cambiar al siguiente índice de bloque de forma cíclica
+            bloqueActual = (bloqueActual + 1) % bloques.length;
+        }
+
+        // Ejecución inmediata al cargar la escena local
+        rotarSincronizado(); 
+        setInterval(rotarSincronizado, 12000);
     </script>
 </body>
 </html>
