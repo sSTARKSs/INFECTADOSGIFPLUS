@@ -4,29 +4,28 @@
     <meta charset="UTF-8"><title>Overlay L4D - TikTok Studio</title>
     <style>
         body { margin:0; padding:0; background:transparent; overflow:hidden; width:100vw; height:100vh; display:flex; justify-content:center; align-items:center; font-family:Arial,sans-serif; }
-        
-        #overlay-container { 
-            display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box;
-        }
+        #overlay-container { display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box; }
         
         .card { 
-            background:rgba(10,12,16,0.85); border-radius:12px; width:210px; height:340px; position:relative; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; 
-            box-sizing:border-box; transition: border-color 0.1s, box-shadow 0.1s;
+            background:rgba(10,12,16,0.85); border-radius:12px; width:210px; height:340px; position:relative; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; box-sizing:border-box; 
         }
-
         .img-box { width:100%; height:100%; position:absolute; border-radius:10px; overflow:hidden; z-index:1; }
         .img-box img { width:100%; height:100%; object-fit:cover; filter:brightness(0.75) contrast(1.1); }
         .esq-izq { position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; overflow:visible; pointer-events:none; }
         
-        .icon-container-flotante { position:absolute; top:-48px; left:-30px; display:flex; gap:8px; overflow:visible; }
-        .img-icon-flotante { width:68px; height:68px; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); position:relative; }
-        .icon-especial-0 { width:72px; height:72px; filter:drop-shadow(2px 4px 6px #000); }
+        /* Contenedor unificado de regalos e iconos en la esquina */
+        .gift-box { position:absolute; top:-48px; left:-30px; display:flex; gap:6px; align-items:center; z-index:20; overflow:visible; }
+        .tiktok-gift { position:relative; width:56px; height:56px; display:flex; justify-content:center; align-items:center; }
+        .gift-img { width:56px; height:56px; object-fit:contain; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); }
+        .tap-tap-texto { position:absolute; top:36px!important; left:0; right:0; text-align:center; font-family:'Arial Black',Impact,sans-serif; font-size:11px; font-weight:900; color:#fff300; text-shadow:2px 2px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,0 0 10px #fff300; white-space:nowrap; z-index:35; letter-spacing:-0.3px; }
         
-        /* Ajuste de pantalla vertical para TikTok */
+        /* Estilo de escala especial para el primer regalo si lo requieres */
+        .icon-especial-0 { width:72px; height:72px; }
+
         @media (max-width:768px) or (orientation:portrait) {
             #overlay-container { flex-direction:column; gap:55px; padding:60px 10px; }
             .card { width:140px; height:185px; }
-            .icon-container-flotante { transform:scale(0.75); transform-origin:top left; }
+            .gift-box { transform:scale(0.75); transform-origin:top left; }
         }
     </style>
 </head>
@@ -36,7 +35,6 @@
         const container = document.getElementById('overlay-container'); 
         let bloqueActual = 0;
 
-        // Colores fijos estables por posición para evitar parpadeos cromáticos
         const estilosFijos = [
             {c:'#ca1aff', s:'rgba(202,26,255,0.7)'}, // Tarjeta 1
             {c:'#ff0050', s:'rgba(255,0,80,0.7)'},  // Tarjeta 2
@@ -44,110 +42,112 @@
             {c:'#ff00aa', s:'rgba(255,0,170,0.7)'}  // Tarjeta 4
         ];
 
+        // Registro centralizado de imágenes y configuraciones de regalos
+        const REGALOS_TIKTOK = {
+            "SEGUIR": { imagen: "regalos/seguir.webp" },
+            "CORAZON_AZUL": { imagen: "regalos/azul.webp", conTexto: true }, 
+            "ROSA_1M": { imagen: "regalos/rosa.webp" },   
+            "ROSA_BLANCA_METAL": { imagen: "regalos/blanca.webp" },
+            "TIKTOK_3D": { imagen: "regalos/tiktok.webp" },
+            "GG_3D": { imagen: "regalos/gg.webp" },
+            "COREANO": { imagen: "regalos/coreano.webp" },
+            "ROSE_30M": { imagen: "regalos/rose.webp" },
+            "ROSQUILLA": { imagen: "regalos/rosquilla.webp" },
+            "GAFAS": { imagen: "regalos/gafas.webp" },
+            "CONFETTI": { imagen: "regalos/confetti.webp" },
+            "HELADO": { imagen: "regalos/helado.webp" },
+            "PERFUME": { imagen: "regalos/perfume.webp" },
+            "GORRA": { imagen: "regalos/gorra.webp" },
+            "OSITO": { imagen: "regalos/osito.webp" }
+        };
+
+        // Bloques unificados: Cada tarjeta contiene su GIF de infectado y su lista de regalos fija
         const bloques = [
             [
-                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"] },
-                { g: "2.gif", i: ["regalos/rosa.webp"] },   
-                { g: "3.gif", i: ["regalos/blanca.webp"] }, 
-                { g: "4.gif", i: ["regalos/tiktok.webp"] }
+                { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"] },
+                { g: "2.gif", gifts: ["ROSA_1M"] },   
+                { g: "3.gif", gifts: ["ROSA_BLANCA_METAL"] }, 
+                { g: "4.gif", gifts: ["TIKTOK_3D"] }
             ],
             [
-                { g: "5.gif", i: ["regalos/gg.webp"] }, 
-                { g: "6.gif", i: ["regalos/coreano.webp"] }, 
-                { g: "7.gif", i: ["regalos/rose.webp"] }, 
-                { g: "8.gif", i: ["regalos/rosquilla.webp"] } 
+                { g: "5.gif", gifts: ["GG_3D"] }, 
+                { g: "6.gif", gifts: ["COREANO"] }, 
+                { g: "7.gif", gifts: ["ROSE_30M"] }, 
+                { g: "8.gif", gifts: ["ROSQUILLA"] } 
             ],
             [
-                { g: "9.gif", i: ["regalos/gafas.webp"] },    
-                { g: "10.gif", i: ["regalos/confetti.webp"] }, 
-                { g: "11.gif", i: ["regalos/helado.webp"] },   
-                { g: "12.gif", i: ["regalos/perfume.webp"] }   
+                { g: "9.gif", gifts: ["GAFAS"] },    
+                { g: "10.gif", gifts: ["CONFETTI"] }, 
+                { g: "11.gif", gifts: ["HELADO"] },   
+                { g: "12.gif", gifts: ["PERFUME"] }   
             ],
             [
-                { g: "13.gif", i: ["regalos/gorra.webp"] }, 
-                { g: "14.gif", i: ["regalos/osito.webp"] }, 
-                { g: "1.gif", i: ["regalos/azul.webp", "regalos/seguir.webp"] },       
-                { g: "2.gif", i: ["regalos/rosa.webp"] }               
+                { g: "13.gif", gifts: ["GORRA"] }, 
+                { g: "14.gif", gifts: ["OSITO"] }, 
+                { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"] },       
+                { g: "2.gif", gifts: ["ROSA_1M"] }               
             ]
         ];
 
-        // Pixel transparente seguro de 1x1 para limpiar imágenes sin romper el DOM
         const pixelTransparente = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
 
-        // 1. Crear las 4 tarjetas físicas permanentes una sola vez
+        // 1. Inyectar las 4 estructuras físicas permanentes de las tarjetas
         for (let i = 0; i < 4; i++) {
             const card = document.createElement('div');
             card.id = `card-${i}`;
             card.className = 'card';
             
-            // Asignar bordes fijos iniciales
             let estilo = estilosFijos[i];
             card.style.borderColor = estilo.c; 
             card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
 
-            // Contenedores internos fijos con dos imágenes img preparadas para recibir rutas
             card.innerHTML = `
                 <div class="img-box"><img id="gif-fondo-${i}" src="${pixelTransparente}"></div>
                 <div class="esq-izq">
-                    <div class="icon-container-flotante">
-                        <img id="icono-flotante-${i}-0" class="img-icon-flotante" src="${pixelTransparente}">
-                        <img id="icono-flotante-${i}-1" class="img-icon-flotante" src="${pixelTransparente}">
-                    </div>
+                    <div class="gift-box" id="gifts-container-${i}"></div>
                 </div>
             `;
             container.appendChild(card);
         }
 
-        // 2. Rotación por intercambio directo de atributos de imagen (0 cambios de estructura)
+        // 2. Rotación sincronizada a través de contenedores unificados
         function rotarSincronizado() {
-            const grupo = bloques[bloqueActual];
+            const grupoContenedor = bloques[bloqueActual];
 
             for (let i = 0; i < 4; i++) {
-                const dataTarjeta = grupo[i];
+                const tarjetaDatos = grupoContenedor[i];
                 
-                // Cambiar el GIF de fondo directamente
+                // Actualizar el GIF del infectado de fondo
                 const imgFondo = document.getElementById(`gif-fondo-${i}`);
-                if(imgFondo.src !== dataTarjeta.g) {
-                    imgFondo.src = dataTarjeta.g;
+                if (imgFondo.src !== tarjetaDatos.g) {
+                    imgFondo.src = tarjetaDatos.g;
                 }
 
-                // Administrar los dos espacios de iconos flotantes posibles
-                const imgIcono0 = document.getElementById(`icono-flotante-${i}-0`);
-                const imgIcono1 = document.getElementById(`icono-flotante-${i}-1`);
+                // Limpiar y actualizar los regalos de forma sincronizada
+                const contenedorRegalos = document.getElementById(`gifts-container-${i}`);
+                contenedorRegalos.innerHTML = ''; 
 
-                // Resetear ID especial de la primera tarjeta para evitar conflictos
-                imgIcono0.removeAttribute('id-especial');
-                imgIcono0.className = "img-icon-flotante";
-
-                if (dataTarjeta.i && dataTarjeta.i.length > 0) {
-                    // Cargar primer icono
-                    imgIcono0.src = dataTarjeta.i[0];
-                    
-                    // Truco de tamaño especial si es el primer bloque, primera tarjeta
-                    if (i === 0 && bloqueActual === 0) {
-                        imgIcono0.className = "img-icon-flotante icon-especial-0";
+                tarjetaDatos.gifts.forEach((key, index) => {
+                    if (REGALOS_TIKTOK[key]) {
+                        const el = document.createElement('div');
+                        el.className = 'tiktok-gift';
+                        
+                        // Añadir texto "TAP TAP" solo si el regalo lo requiere
+                        let textoHtml = REGALOS_TIKTOK[key].conTexto ? `<div class="tap-tap-texto">TAP TAP</div>` : '';
+                        
+                        // Truco visual por si quieres agrandar el primer icono del bloque 1
+                        let claseImg = (i === 0 && bloqueActual === 0 && index === 0) ? 'gift-img icon-especial-0' : 'gift-img';
+                        
+                        el.innerHTML = `${textoHtml}<img class="${claseImg}" src="${REGALOS_TIKTOK[key].imagen}">`;
+                        contenedorRegalos.appendChild(el);
                     }
-
-                    // Cargar segundo icono si existe, si no, ponerlo transparente
-                    if (dataTarjeta.i.length > 1) {
-                        imgIcono1.src = dataTarjeta.i[1];
-                        imgIcono1.style.display = "block";
-                    } else {
-                        imgIcono1.src = pixelTransparente;
-                        imgIcono1.style.display = "none";
-                    }
-                } else {
-                    // Si no hay iconos en este bloque, limpiar ambos con el píxel transparente
-                    imgIcono0.src = pixelTransparente;
-                    imgIcono1.src = pixelTransparente;
-                }
+                });
             }
 
-            // Cambiar de bloque de forma cíclica
             bloqueActual = (bloqueActual + 1) % bloques.length;
         }
 
-        // Ejecutar sistema de inmediato
+        // Ejecución inmediata
         rotarSincronizado(); 
         setInterval(rotarSincronizado, 12000);
     </script>
