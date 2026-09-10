@@ -1,50 +1,176 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8"><title>Overlay L4D - TikTok Studio</title>
+    <meta charset="UTF-8">
+    <title>Overlay L4D - TikTok Studio (4x2 Grid)</title>
     <style>
-        body { margin:0; padding:0; background:transparent; overflow:hidden; width:100vw; height:100vh; display:flex; justify-content:center; align-items:center; font-family:Arial,sans-serif; }
+        /* Reset y optimización de pantalla transparente */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background: transparent; 
+            overflow: hidden; 
+            width: 100vw; 
+            height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            font-family: 'Montserrat', Arial, sans-serif; 
+        }
         
         /* Contenedor principal */
-        #overlay-container { display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box; }
-        
-        /* Contenedor del grupo de bloques */
-        .bloque-grupo { display: none; flex-direction: row; gap: 25px; }
-        .bloque-grupo.activo { display: flex; }
-
-        /* Estructura fija de la tarjeta */
-        .card { 
-            background:rgba(10,12,16,0.85); border-radius:12px; width:210px; height:340px; position:relative; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; box-sizing:border-box; 
+        #overlay-container { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            width: 100%; 
+            height: 100%; 
+            box-sizing: border-box; 
+            padding: 30px;
         }
-        .img-box { width:100%; height:100%; position:absolute; border-radius:10px; overflow:hidden; z-index:1; }
-        .img-box img { width:100%; height:100%; object-fit:cover; filter:brightness(0.75) contrast(1.1); }
-        .esq-izq { position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; overflow:visible; pointer-events:none; }
         
-        /* Contenedor de regalos soldados en la esquina */
-        .gift-box { position:absolute; top:-48px; left:-30px; display:flex; gap:6px; align-items:center; z-index:20; overflow:visible; }
-        .tiktok-gift { position:relative; width:56px; height:56px; display:flex; justify-content:center; align-items:center; }
-        .gift-img { width:56px; height:56px; object-fit:contain; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); }
-        .tap-tap-texto { position:absolute; top:36px!important; left:0; right:0; text-align:center; font-family:'Arial Black',Impact,sans-serif; font-size:11px; font-weight:900; color:#fff300; text-shadow:2px 2px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,0 0 10px #fff300; white-space:nowrap; z-index:35; letter-spacing:-0.3px; }
+        /* Estructura fija: 4 columnas hacia la derecha y 2 filas hacia abajo */
+        .bloque-grupo { 
+            display: none; 
+            grid-template-columns: repeat(4, 1fr); /* 4 Columnas estrictas */
+            grid-template-rows: repeat(2, 1fr);    /* 2 Filas estrictas */
+            gap: 45px 25px; /* Espacio vertical amplio para los regalos y horizontal entre tarjetas */
+            animation: fadeIn 0.4s ease-in-out;
+        }
+        .bloque-grupo.activo { 
+            display: grid; 
+        }
 
-        @media (max-width:768px) or (orientation:portrait) {
-            #overlay-container { padding:60px 10px; }
-            .bloque-grupo { flex-direction:column; gap:55px; }
-            .card { width:140px; height:185px; }
-            .gift-box { transform:scale(0.75); transform-origin:top left; }
+        /* Estructura de las tarjetas */
+        .card { 
+            background: rgba(10, 12, 16, 0.85); 
+            border-radius: 12px; 
+            width: 160px; 
+            height: 240px; 
+            position: relative; 
+            overflow: visible; 
+            display: flex; 
+            flex-direction: column; 
+            border: 2px solid #ffffff; 
+            box-sizing: border-box; 
+            transition: all 0.3s ease;
+        }
+        
+        /* Renderizado de los GIFs */
+        .img-box { 
+            width: 100%; 
+            height: 100%; 
+            position: absolute; 
+            border-radius: 10px; 
+            overflow: hidden; 
+            z-index: 1; 
+        }
+        .img-box img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.8) contrast(1.1); 
+        }
+        
+        /* Capa contenedora frontal */
+        .esq-izq { 
+            position: absolute; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            z-index: 10; 
+            overflow: visible; 
+            pointer-events: none; 
+        }
+        
+        /* Contenedor flotante de los Regalos (Ajustado para el nuevo tamaño) */
+        .gift-box { 
+            position: absolute; 
+            top: -34px; 
+            left: -22px; 
+            display: flex; 
+            gap: 4px; 
+            align-items: center; 
+            z-index: 20; 
+            overflow: visible; 
+        }
+        /* REGALOS AGRANDADOS: Subidos de 46px a 58px */
+        .tiktok-gift { 
+            position: relative; 
+            width: 58px; 
+            height: 58px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+        }
+        .gift-img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+            filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); 
+        }
+        
+        /* Texto Tap Tap para Streams */
+        .tap-tap-texto { 
+            position: absolute; 
+            bottom: -6px; 
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center; 
+            font-family: 'Arial Black', Impact, sans-serif; 
+            font-size: 10px; 
+            font-weight: 900; 
+            color: #fff300; 
+            text-shadow: 
+                1.5px 1.5px 0 #000, 
+               -1.5px -1.5px 0 #000, 
+                1.5px -1.5px 0 #000, 
+               -1.5px 1.5px 0 #000, 
+                0 0 6px rgba(255,243,0,0.8); 
+            white-space: nowrap; 
+            z-index: 35; 
+            letter-spacing: -0.3px; 
+        }
+
+        /* Transición suave al cambiar de bloque */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Adaptación exclusiva para lienzos verticales de stream móvil */
+        @media (max-width: 768px) or (orientation: portrait) {
+            #overlay-container { padding: 10px; }
+            .bloque-grupo { 
+                gap: 40px 10px; 
+                transform: scale(0.85); 
+                transform-origin: center;
+            }
+            .card { width: 125px; height: 185px; }
+            /* Se mantiene una proporción grande de los regalos en móvil */
+            .gift-box { transform: scale(0.9); transform-origin: top left; top: -28px; left: -16px; }
         }
     </style>
 </head>
 <body>
+
     <div id="overlay-container"></div>
+
     <script>
         const container = document.getElementById('overlay-container'); 
         let bloqueActual = 0;
 
+        // Colores neón asignados en orden físico (Fila 1: Tarjetas 1 a 4 | Fila 2: Tarjetas 5 a 8)
         const estilosFijos = [
-            {c:'#ca1aff', s:'rgba(202,26,255,0.7)'}, // Tarjeta 1 (Izquierda)
-            {c:'#ff0050', s:'rgba(255,0,80,0.7)'},  // Tarjeta 2
-            {c:'#00e5ff', s:'rgba(0,229,255,0.7)'},  // Tarjeta 3
-            {c:'#ff00aa', s:'rgba(255,0,170,0.7)'}  // Tarjeta 4 (Derecha)
+            {c:'#ca1aff', s:'rgba(202,26,255,0.7)'}, // Fila 1 - Col 1
+            {c:'#ff0050', s:'rgba(255,0,80,0.7)'},  // Fila 1 - Col 2
+            {c:'#00e5ff', s:'rgba(0,229,255,0.7)'},  // Fila 1 - Col 3
+            {c:'#ff00aa', s:'rgba(255,0,170,0.7)'}, // Fila 1 - Col 4
+            {c:'#00ff66', s:'rgba(0,255,102,0.7)'}, // Fila 2 - Col 1
+            {c:'#ffaa00', s:'rgba(255,170,0,0.7)'}, // Fila 2 - Col 2
+            {c:'#9900ff', s:'rgba(153,0,255,0.7)'}, // Fila 2 - Col 3
+            {c:'#ffea00', s:'rgba(255,234,0,0.7)'}  // Fila 2 - Col 4
         ];
 
         const REGALOS_TIKTOK = {
@@ -65,78 +191,69 @@
             "OSITO": { imagen: "regalos/osito.webp" }
         };
 
-        // Estructura de bloques fija: cada infectado y sus regalos están unidos de raíz
+        // Bloques de 8 tarjetas cada uno distribuidas de izquierda a derecha (4 arriba, 4 abajo)
         const bloques = [
             [
                 { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"] },
                 { g: "2.gif", gifts: ["ROSA_1M"] },   
                 { g: "3.gif", gifts: ["ROSA_BLANCA_METAL"] }, 
-                { g: "4.gif", gifts: ["TIKTOK_3D"] }
-            ],
-            [
+                { g: "4.gif", gifts: ["TIKTOK_3D"] },
                 { g: "5.gif", gifts: ["GG_3D"] }, 
                 { g: "6.gif", gifts: ["COREANO"] }, 
                 { g: "7.gif", gifts: ["ROSE_30M"] }, 
-                { g: "8.gif", gifts: ["ROSQUILLA"] } 
+                { g: "8.gif", gifts: ["ROSQUILLA"] }
             ],
             [
                 { g: "9.gif", gifts: ["GAFAS"] },    
                 { g: "10.gif", gifts: ["CONFETTI"] }, 
                 { g: "11.gif", gifts: ["HELADO"] },   
-                { g: "12.gif", gifts: ["PERFUME"] }   
-            ],
-            [
+                { g: "12.gif", gifts: ["PERFUME"] },
                 { g: "13.gif", gifts: ["GORRA"] }, 
                 { g: "14.gif", gifts: ["OSITO"] }, 
                 { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"] },       
-                { g: "2.gif", gifts: ["ROSA_1M"] }               
+                { g: "2.gif", gifts: ["ROSA_1M"] } 
             ]
         ];
 
-        // 1. Pre-construcción total de la interfaz (Crea contenedores soldados por bloque)
+        // 1. Construcción dinámica en la cuadrícula 4x2
         bloques.forEach((grupo, bloqueIndex) => {
             const grupoDiv = document.createElement('div');
             grupoDiv.id = `bloque-grupo-${bloqueIndex}`;
             grupoDiv.className = 'bloque-grupo';
 
-            for (let i = 0; i < 4; i++) {
-                const tarjetaDatos = grupo[i];
+            grupo.forEach((tarjetaDatos, i) => {
                 const card = document.createElement('div');
                 card.className = 'card';
                 
-                // Color de borde asignado permanentemente por posición física
+                // Mapear color fijo de la posición del neón
                 let estilo = estilosFijos[i];
                 card.style.borderColor = estilo.c; 
-                card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
+                card.style.boxShadow = `0 0 14px ${estilo.s}, inset 0 0 8px ${estilo.s}`;
 
-                // Construcción estática de las alertas de regalo correspondientes
                 let regalosHtml = "";
                 tarjetaDatos.gifts.forEach(key => {
                     if (REGALOS_TIKTOK[key]) {
                         let textoHtml = REGALOS_TIKTOK[key].conTexto ? `<div class="tap-tap-texto">TAP TAP</div>` : '';
-                        regalosHtml += `<div class="tiktok-gift">${textoHtml}<img class="gift-img" src="${REGALOS_TIKTOK[key].imagen}"></div>`;
+                        regalosHtml += `<div class="tiktok-gift">${textoHtml}<img class="gift-img" src="${REGALOS_TIKTOK[key].imagen}" alt="${key}"></div>`;
                     }
                 });
 
-                // Inyección del código HTML completo garantizando que el GIF y el regalo compartan el mismo contenedor madre
                 card.innerHTML = `
-                    <div class="img-box"><img src="${tarjetaDatos.g}"></div>
+                    <div class="img-box"><img src="${tarjetaDatos.g}" alt="Infectado L4D"></div>
                     <div class="esq-izq">
                         <div class="gift-box">${regalosHtml}</div>
                     </div>
                 `;
                 grupoDiv.appendChild(card);
-            }
+            });
             container.appendChild(grupoDiv);
         });
 
-        // 2. Rotación simultánea instantánea (0 milisegundos de retraso)
+        // 2. Control de rotación cíclica
         function rotarSincronizado() {
-            // Oculta el bloque completo anterior
             const todosLosGrupos = document.querySelectorAll('.bloque-grupo');
             todosLosGrupos.forEach(g => g.classList.remove('activo'));
 
-            // Muestra el nuevo bloque de golpe (tarjetas y regalos aparecen amarrados al mismo tiempo)
             const grupoActivo = document.getElementById(`bloque-grupo-${bloqueActual}`);
             if (grupoActivo) {
                 grupoActivo.classList.add('activo');
@@ -145,7 +262,7 @@
             bloqueActual = (bloqueActual + 1) % bloques.length;
         }
 
-        // Inicialización del script
+        // Inicializar bucle
         rotarSincronizado(); 
         setInterval(rotarSincronizado, 12000);
     </script>
