@@ -4,8 +4,15 @@
     <meta charset="UTF-8"><title>Overlay L4D - TikTok Studio</title>
     <style>
         body { margin:0; padding:0; background:transparent; overflow:hidden; width:100vw; height:100vh; display:flex; justify-content:center; align-items:center; font-family:Arial,sans-serif; }
+        
+        /* Contenedor principal */
         #overlay-container { display:flex; flex-direction:row; justify-content:center; align-items:center; gap:25px; padding:25px; max-width:100%; max-height:100%; box-sizing:border-box; }
         
+        /* Contenedor del grupo de bloques */
+        .bloque-grupo { display: none; flex-direction: row; gap: 25px; }
+        .bloque-grupo.activo { display: flex; }
+
+        /* Estructura fija de la tarjeta */
         .card { 
             background:rgba(10,12,16,0.85); border-radius:12px; width:210px; height:340px; position:relative; overflow:visible; display:flex; flex-direction:column; border:2px solid #ffffff; box-sizing:border-box; 
         }
@@ -13,17 +20,15 @@
         .img-box img { width:100%; height:100%; object-fit:cover; filter:brightness(0.75) contrast(1.1); }
         .esq-izq { position:absolute; top:0; left:0; width:100%; height:100%; z-index:10; overflow:visible; pointer-events:none; }
         
-        /* Contenedor unificado de regalos e iconos en la esquina */
+        /* Contenedor de regalos soldados en la esquina */
         .gift-box { position:absolute; top:-48px; left:-30px; display:flex; gap:6px; align-items:center; z-index:20; overflow:visible; }
         .tiktok-gift { position:relative; width:56px; height:56px; display:flex; justify-content:center; align-items:center; }
         .gift-img { width:56px; height:56px; object-fit:contain; filter:drop-shadow(2px 4px 6px rgba(0,0,0,0.6)); }
         .tap-tap-texto { position:absolute; top:36px!important; left:0; right:0; text-align:center; font-family:'Arial Black',Impact,sans-serif; font-size:11px; font-weight:900; color:#fff300; text-shadow:2px 2px 0 #000,-2px -2px 0 #000,2px -2px 0 #000,-2px 2px 0 #000,0 0 10px #fff300; white-space:nowrap; z-index:35; letter-spacing:-0.3px; }
-        
-        /* Estilo de escala especial para el primer regalo si lo requieres */
-        .icon-especial-0 { width:72px; height:72px; }
 
         @media (max-width:768px) or (orientation:portrait) {
-            #overlay-container { flex-direction:column; gap:55px; padding:60px 10px; }
+            #overlay-container { padding:60px 10px; }
+            .bloque-grupo { flex-direction:column; gap:55px; }
             .card { width:140px; height:185px; }
             .gift-box { transform:scale(0.75); transform-origin:top left; }
         }
@@ -36,13 +41,12 @@
         let bloqueActual = 0;
 
         const estilosFijos = [
-            {c:'#ca1aff', s:'rgba(202,26,255,0.7)'}, // Tarjeta 1
+            {c:'#ca1aff', s:'rgba(202,26,255,0.7)'}, // Tarjeta 1 (Izquierda)
             {c:'#ff0050', s:'rgba(255,0,80,0.7)'},  // Tarjeta 2
             {c:'#00e5ff', s:'rgba(0,229,255,0.7)'},  // Tarjeta 3
-            {c:'#ff00aa', s:'rgba(255,0,170,0.7)'}  // Tarjeta 4
+            {c:'#ff00aa', s:'rgba(255,0,170,0.7)'}  // Tarjeta 4 (Derecha)
         ];
 
-        // Registro centralizado de imágenes y configuraciones de regalos
         const REGALOS_TIKTOK = {
             "SEGUIR": { imagen: "regalos/seguir.webp" },
             "CORAZON_AZUL": { imagen: "regalos/azul.webp", conTexto: true }, 
@@ -61,7 +65,7 @@
             "OSITO": { imagen: "regalos/osito.webp" }
         };
 
-        // Bloques unificados: Cada tarjeta contiene su GIF de infectado y su lista de regalos fija
+        // Estructura de bloques fija: cada infectado y sus regalos están unidos de raíz
         const bloques = [
             [
                 { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"] },
@@ -89,65 +93,59 @@
             ]
         ];
 
-        const pixelTransparente = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7";
-
-        // 1. Inyectar las 4 estructuras físicas permanentes de las tarjetas
-        for (let i = 0; i < 4; i++) {
-            const card = document.createElement('div');
-            card.id = `card-${i}`;
-            card.className = 'card';
-            
-            let estilo = estilosFijos[i];
-            card.style.borderColor = estilo.c; 
-            card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
-
-            card.innerHTML = `
-                <div class="img-box"><img id="gif-fondo-${i}" src="${pixelTransparente}"></div>
-                <div class="esq-izq">
-                    <div class="gift-box" id="gifts-container-${i}"></div>
-                </div>
-            `;
-            container.appendChild(card);
-        }
-
-        // 2. Rotación sincronizada a través de contenedores unificados
-        function rotarSincronizado() {
-            const grupoContenedor = bloques[bloqueActual];
+        // 1. Pre-construcción total de la interfaz (Crea contenedores soldados por bloque)
+        bloques.forEach((grupo, bloqueIndex) => {
+            const grupoDiv = document.createElement('div');
+            grupoDiv.id = `bloque-grupo-${bloqueIndex}`;
+            grupoDiv.className = 'bloque-grupo';
 
             for (let i = 0; i < 4; i++) {
-                const tarjetaDatos = grupoContenedor[i];
+                const tarjetaDatos = grupo[i];
+                const card = document.createElement('div');
+                card.className = 'card';
                 
-                // Actualizar el GIF del infectado de fondo
-                const imgFondo = document.getElementById(`gif-fondo-${i}`);
-                if (imgFondo.src !== tarjetaDatos.g) {
-                    imgFondo.src = tarjetaDatos.g;
-                }
+                // Color de borde asignado permanentemente por posición física
+                let estilo = estilosFijos[i];
+                card.style.borderColor = estilo.c; 
+                card.style.boxShadow = `0 0 18px ${estilo.s}, inset 0 0 10px ${estilo.s}`;
 
-                // Limpiar y actualizar los regalos de forma sincronizada
-                const contenedorRegalos = document.getElementById(`gifts-container-${i}`);
-                contenedorRegalos.innerHTML = ''; 
-
-                tarjetaDatos.gifts.forEach((key, index) => {
+                // Construcción estática de las alertas de regalo correspondientes
+                let regalosHtml = "";
+                tarjetaDatos.gifts.forEach(key => {
                     if (REGALOS_TIKTOK[key]) {
-                        const el = document.createElement('div');
-                        el.className = 'tiktok-gift';
-                        
-                        // Añadir texto "TAP TAP" solo si el regalo lo requiere
                         let textoHtml = REGALOS_TIKTOK[key].conTexto ? `<div class="tap-tap-texto">TAP TAP</div>` : '';
-                        
-                        // Truco visual por si quieres agrandar el primer icono del bloque 1
-                        let claseImg = (i === 0 && bloqueActual === 0 && index === 0) ? 'gift-img icon-especial-0' : 'gift-img';
-                        
-                        el.innerHTML = `${textoHtml}<img class="${claseImg}" src="${REGALOS_TIKTOK[key].imagen}">`;
-                        contenedorRegalos.appendChild(el);
+                        regalosHtml += `<div class="tiktok-gift">${textoHtml}<img class="gift-img" src="${REGALOS_TIKTOK[key].imagen}"></div>`;
                     }
                 });
+
+                // Inyección del código HTML completo garantizando que el GIF y el regalo compartan el mismo contenedor madre
+                card.innerHTML = `
+                    <div class="img-box"><img src="${tarjetaDatos.g}"></div>
+                    <div class="esq-izq">
+                        <div class="gift-box">${regalosHtml}</div>
+                    </div>
+                `;
+                grupoDiv.appendChild(card);
+            }
+            container.appendChild(grupoDiv);
+        });
+
+        // 2. Rotación simultánea instantánea (0 milisegundos de retraso)
+        function rotarSincronizado() {
+            // Oculta el bloque completo anterior
+            const todosLosGrupos = document.querySelectorAll('.bloque-grupo');
+            todosLosGrupos.forEach(g => g.classList.remove('activo'));
+
+            // Muestra el nuevo bloque de golpe (tarjetas y regalos aparecen amarrados al mismo tiempo)
+            const grupoActivo = document.getElementById(`bloque-grupo-${bloqueActual}`);
+            if (grupoActivo) {
+                grupoActivo.classList.add('activo');
             }
 
             bloqueActual = (bloqueActual + 1) % bloques.length;
         }
 
-        // Ejecución inmediata
+        // Inicialización del script
         rotarSincronizado(); 
         setInterval(rotarSincronizado, 12000);
     </script>
