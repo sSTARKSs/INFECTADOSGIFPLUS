@@ -20,7 +20,7 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .bloque-grupo.activo { display: grid; }
 
 /* Espacio vertical para dar aire a los textos flotantes superiores */
-.bloque-grupo > div { transform: translateY(20px); }
+.bloque-grupo > div { transform: translateY(25px); }
 
 /* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE (TODAS INCLUIDAS) */
 .card { 
@@ -37,8 +37,8 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
 
-/* REGALOS COMUNES BAJADOS: En la esquina superior izquierda interna (Debajo del texto flotante) */
-.gift-box-baja { position: absolute; top: 15px; left: 15px; display: flex !important; align-items: center; z-index: 30 !important; }
+/* REGALOS COMUNES REUBICADOS: Más a la izquierda y un poquito más arriba, debajo de los textos */
+.gift-box-baja { position: absolute; top: 10px; left: 8px; display: flex !important; align-items: center; z-index: 30 !important; }
 .tiktok-gift { position: relative; width: 44px; height: 44px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)) !important; }
 
@@ -49,12 +49,12 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .bg-silueta-seguir-torre { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 0px 0px #000) drop-shadow(-2px 0px 0px #000) drop-shadow(0px 2px 0px #000) drop-shadow(0px -2px 0px #000) drop-shadow(3px 3px 1px #000) drop-shadow(-3px -3px 1px #000) !important; }
 .tap-tap-texto { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 9px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000,-1.5px -1.5px 0 #000,1.5px -1.5px 0 #000,-1.5px 1.5px 0 #000,0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
 
-/* LETRAS CON ANIMACIÓN RGB SINCRONIZADA */
-.nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -34px; font-size: 17px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.2px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
-.texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 11px; top: -28px; }
-.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 10px; top: -38px; }
+/* TEXTOS FLOTANTES CON TAMAÑO AGRANDADO COMPROBADO Y ANIMACIÓN RGB */
+.nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -36px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
+.texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 14px; top: -30px; }
+.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 4px; font-size: 13px; top: -38px; }
 .col-item { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
-.col-item span:first-child { font-size: 13px; }
+.col-item span:first-child { font-size: 16px; }
 
 /* ANIMACIONES RGB EN BORDES Y LETRAS */
 @keyframes bordeRgbCambiante { 
@@ -96,10 +96,15 @@ const bloques = [
     ]
 ];
 
+/* CORRECCIÓN EXHAUSTIVA: Se eliminaron los duplicados innecesarios en el renderizado de textos */
 function genTxt(t) {
     if (!t.txt || t.txt.length === 0) return '';
-    if (t.tipo === "2l") return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt}</span><span>${t.txt}</span></div>`;
-    if (t.tipo === "m") return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c}</span><span>${c}</span></div>`).join('')}</div>`;
+    if (t.tipo === "2l") {
+        return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt[0]}</span><span>${t.txt[1]}</span></div>`;
+    }
+    if (t.tipo === "m") {
+        return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c[0]}</span><span>${c[1]}</span></div>`).join('')}</div>`;
+    }
     return `<div class="nombre-flotante">${t.txt}</div>`;
 }
 
