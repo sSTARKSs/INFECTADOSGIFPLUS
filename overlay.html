@@ -21,12 +21,14 @@
         .tiktok-gift { position: relative; width: 58px; height: 58px; display: flex; justify-content: center; align-items: center; }
         .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); }
         .tap-tap-texto { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', sans-serif; font-size: 10px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000; white-space: nowrap; z-index: 35; }
-        .gift-box.doble-columna { display: flex !important; flex-direction: column !important; gap: 2px !important; top: -65px !important; left: -22px !important; align-items: center !important; }
+        
+        /* Modificado: gap en 0 para pegar los regalos y top modificado para bajar de posición */
+        .gift-box.doble-columna { display: flex !important; flex-direction: column !important; gap: 0px !important; top: -56px !important; left: -22px !important; align-items: center !important; }
         .gift-box.doble-columna .tiktok-gift { display: flex !important; position: relative !important; width: 42px !important; height: 42px !important; transform: none !important; }
         .gift-box.doble-columna .tap-tap-texto { bottom: -4px !important; font-size: 8px !important; }
         
-        /* Estilo exclusivo: Fondo negro interno recortado para la imagen de seguir */
-        .bg-negro-seguir { background: #000 !important; border-radius: 50% !important; padding: 2px !important; box-sizing: border-box !important; }
+        /* Modificado: Añadido contorno/borde negro sólido que rodea el contorno circular del icono de seguir */
+        .bg-negro-seguir { background: #000 !important; border: 4px solid #000 !important; border-radius: 50% !important; box-sizing: border-box !important; }
         
         .nombre-flotante { position: absolute; font-family: 'Arial Black', sans-serif; font-weight: 900; -webkit-text-stroke: 0.8px #fff; text-shadow: 2px 2px 2px #000, -1.5px -1.5px 2px #000; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -28px; font-size: 18px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 4px; width: 100%; }
         .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 12px; top: -26px; }
@@ -45,13 +47,13 @@
         const REG = { SEGUIR: "seguir.webp", CORAZON_AZUL: "azul.webp", ROSA_1M: "rosa.webp", ROSA_BLANCA_METAL: "blanca.webp", TIKTOK_3D: "tiktok.webp", GG_3D: "gg.webp", COREANO: "coreano.webp", ROSE_30M: "rose.webp", ROSQUILLA: "rosquilla.webp", GAFAS: "gafas.webp", CONFETTI: "confetti.webp", HELADO: "helado.webp", PERFUME: "perfume.webp", GORRA: "gorra.webp", OSITO: "osito.webp" };
         const bloques = [
             [{id:1,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:["10 WITCH"]},{id:2,g:"2.gif",gifts:["ROSA_1M"],txt:["1 TANK"]},{id:3,g:"3.gif",gifts:["ROSA_BLANCA_METAL"],txt:["BAILECITO DE","10 SEGUNDOS"],tipo:"2l"},{id:4,g:"4.gif",gifts:["TIKTOK_3D"],txt:["5 WITCH"]},{id:5,g:"5.gif",gifts:["GG_3D"],txt:["10 CHARGER"]},{id:6,g:"6.gif",gifts:["COREANO"],txt:["10 TANK"]},{id:7,g:"7.gif",gifts:["ROSE_30M"],txt:[["20","HUNTER"],["20","WITCH"]],tipo:"m"},{id:8,g:"8.gif",gifts:["ROSQUILLA"],txt:[["20","HUNTER"],["20","SMOKER"]],tipo:"m"}],
-            [{id:9,g:"9.gif",gifts:["GAFAS"],txt:[["5","SMOKER"],["5","HUNTER"],["10", "WITCH"]],tipo:"m"},{id:10,g:"10.gif",gifts:["CONFETTI"],txt:[["10","SMOKER"],["10","SPITTER"],["10","CHARGER"]],tipo:"m"},{id:11,g:"11.gif",gifts:["HELADO"],txt:[["5","SPITTER"],["5","JOCKEYS"]],tipo:"m"},{id:12,g:"12.gif",gifts:["PERFUME"],txt:[["5","BOOMER"],["5","SPITTER"]],tipo:"m"},{id:13,g:"13.gif",gifts:["GORRA"],txt:[["10","SMOKER"],["10","TANK"]],tipo:"m"},{id:14,g:"14.gif",gifts:["OSITO"],txt:["40 TANK"]},{id:15,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:["10 WITCH"]},{id:16,g:"2.gif",gifts:["ROSA_1M"],txt:["1 TANK"]}]
+            [{id:9,g:"9.gif",gifts:["GAFAS"],txt:[["5","SMOKER"],["5","HUNTER"],["10","WITCH"]],tipo:"m"},{id:10,g:"10.gif",gifts:["CONFETTI"],txt:[["10","SMOKER"],["10","SPITTER"],["10","CHARGER"]],tipo:"m"},{id:11,g:"11.gif",gifts:["HELADO"],txt:[["5","SPITTER"],["5","JOCKEYS"]],tipo:"m"},{id:12,g:"12.gif",gifts:["PERFUME"],txt:[["5","BOOMER"],["5","SPITTER"]],tipo:"m"},{id:13,g:"13.gif",gifts:["GORRA"],txt:[["10","SMOKER"],["10","TANK"]],tipo:"m"},{id:14,g:"14.gif",gifts:["OSITO"],txt:["40 TANK"]},{id:15,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:["10 WITCH"]},{id:16,g:"2.gif",gifts:["ROSA_1M"],txt:["1 TANK"]}]
         ];
         function genTxt(t){
             if(!t.txt)return ''; var clE=(t.id===9||t.id===10)?' pos-alta':''; var estE=(t.id===8)?' style="margin-left:20px !important;"':'';
-            if(t.tipo==="2l")return '<div class="nombre-flotante texto-dos-lineas'+clE+'"><span>'+t.txt[0]+'</span><span>'+t.txt[1]+'</span></div>';
-            if(t.tipo==="m")return '<div class="nombre-flotante multi-col'+clE+'"'+estE+'>'+t.txt.map(c=>'<div class="col-item"><span>'+c[0]+'</span><span>'+c[1]+'</span></div>').join('')+'</div>';
-            return '<div class="nombre-flotante'+clE+'">'+t.txt[0]+'</div>';
+            if(t.tipo==="2l")return '<div class="nombre-flotante texto-dos-lineas'+clE+'"><span>'+t.txt+'</span><span>'+t.txt+'</span></div>';
+            if(t.tipo==="m")return '<div class="nombre-flotante multi-col'+clE+'"'+estE+'>'+t.txt.map(c=>'<div class="col-item"><span>'+c+'</span><span>'+c+'</span></div>').join('')+'</div>';
+            return '<div class="nombre-flotante'+clE+'">'+t.txt+'</div>';
         }
         container.innerHTML = bloques.map(grupo => `
             <div class="bloque-grupo">${grupo.map((t,i)=>{ const tA=t.gifts.includes("CORAZON_AZUL")&&t.gifts.includes("SEGUIR"); return `
