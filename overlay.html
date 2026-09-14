@@ -10,10 +10,10 @@
         .bloque-grupo.activo { display: grid; }
         .bloque-grupo > div:nth-child(-n+4) { transform: translateY(35px); }
         
-        /* Ajustes de posición vertical para que no toquen los regalos */
-        .bloque-grupo > div:nth-child(n+5) .nombre-flotante { top: -30px !important; }
-        .bloque-grupo > div:nth-child(n+5) .texto-dos-lineas { top: -34px !important; }
-        .bloque-grupo > div:nth-child(n+5) .multi-col { top: -36px !important; }
+        /* Ajustes de posición vertical fina */
+        .bloque-grupo > div:nth-child(n+5) .nombre-flotante { top: -24px !important; }
+        .bloque-grupo > div:nth-child(n+5) .texto-dos-lineas { top: -28px !important; }
+        .bloque-grupo > div:nth-child(n+5) .multi-col { top: -30px !important; }
         
         .card { background: rgba(10, 12, 16, 0.85); border-radius: 12px; width: 190px; height: 240px; position: relative; border: 2px solid var(--c); box-shadow: 0 0 14px var(--s), inset 0 0 8px var(--s); box-sizing: border-box; }
         .img-box, .esq-izq { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -25,14 +25,14 @@
         .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); }
         .tap-tap-texto { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
         
-        /* Tipografías estilizadas: más compactas pero con borde ultra grueso para legibilidad */
-        .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; -webkit-text-stroke: 1.5px #000; text-shadow: 2px 2px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 0 4px rgba(0,0,0,0.8); white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -34px; font-size: 24px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; }
-        .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 15px; top: -34px; }
+        /* Fuentes estilizadas más pequeñas, equilibradas y con borde sutil */
+        .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; -webkit-text-stroke: 0.8px #000; text-shadow: 1.5px 1.5px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -28px; font-size: 18px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 4px; width: 100%; text-align: center; }
+        .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 12px; top: -26px; }
         
-        /* Tarjetas con varios infectados juntos (multi-col) ajustadas más pequeñas y gruesas */
-        .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 12px; top: -40px; padding: 0 8px; box-sizing: border-box; }
+        /* Fuentes de tarjetas compuestas (múltiples infectados) reducidas al mínimo estético */
+        .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 10px; top: -32px; padding: 0 6px; box-sizing: border-box; }
         .col-item { display: flex; flex-direction: column; align-items: center; line-height: 1.05; }
-        .col-item span:first-child { font-size: 16px; }
+        .col-item span:first-child { font-size: 13px; }
         
         @keyframes rgbCambiante { 0%, 100% { color: #ff0050; } 33% { color: #00e5ff; } 66% { color: #00ff66; } }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.98); } to { opacity: 1; transform: scale(1); } }
