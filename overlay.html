@@ -16,14 +16,19 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box { border-radius: 10px; overflow: hidden; z-index: 1; }
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
-.gift-box-baja { position: absolute; top: 26px; left: -22px; display: flex !important; align-items: center; z-index: 20; }
+
+/* REGALOS COMUNES MÁS ARRIBA (De 26px a -4px) */
+.gift-box-baja { position: absolute; top: -4px; left: -22px; display: flex !important; align-items: center; z-index: 20; }
 .tiktok-gift { position: relative; width: 58px; height: 58px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); }
-.gift-box-torre { position: absolute; top: -46px; left: -22px; display: flex !important; flex-direction: column !important; align-items: center !important; z-index: 20; width: 58px; }
+
+/* TORRE ESPECIAL (TARJETAS 1 Y 15) INTACTAS EN SU POSICIÓN ORIGINAL */
+.gift-box-torre { position: absolute; top: -46px; left: -22px; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 0px !important; z-index: 20; width: 58px; }
 .item-seguir { width: 58px; height: 50px; display: flex !important; justify-content: center; align-items: center; margin-bottom: -15px !important; position: relative; z-index: 22; }
 .item-azul { width: 58px; height: 58px; display: flex !important; justify-content: center; align-items: center; position: relative; z-index: 21; }
 .bg-silueta-seguir-torre { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 0px 0px #000) drop-shadow(-2px 0px 0px #000) drop-shadow(0px 2px 0px #000) drop-shadow(0px -2px 0px #000) drop-shadow(3px 3px 1px #000) drop-shadow(-3px -3px 1px #000) !important; }
 .tap-tap-texto { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000,-1.5px -1.5px 0 #000,1.5px -1.5px 0 #000,-1.5px 1.5px 0 #000,0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
+
 .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 20px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
 .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 13px; top: -32px; }
 .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 11px; top: -43px; }
@@ -65,12 +70,15 @@ const bloques = [
         { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
     ]
 ];
+
+/* CORRECCIÓN DE MAPEO INTERNO PARA TEXTOS SIMPLES, DOBLES Y MÚLTIPLES */
 function genTxt(t) {
     if (!t.txt || t.txt.length === 0) return '';
     if (t.tipo === "2l") return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt[0]}</span><span>${t.txt[1]}</span></div>`;
     if (t.tipo === "m") return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c[0]}</span><span>${c[1]}</span></div>`).join('')}</div>`;
     return `<div class="nombre-flotante">${t.txt[0]}</div>`;
 }
+
 container.innerHTML = bloques.map(grupo => `
     <div class="bloque-grupo">
         ${grupo.map((t, i) => {
