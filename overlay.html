@@ -2,31 +2,27 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Overlay L4D Vertical Rotativo RGB - TikTok Studio</title>
+<title>Overlay L4D 4x2 Horizontal - TikTok Studio</title>
 <style>
-/* CONFIGURACIÓN CONTENEDOR VERTICAL TIKTOK (9:16) */
+/* CONFIGURACIÓN DE PANTALLA COMPLETA */
 body { margin: 0; background: transparent; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
-#overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 10px; }
+#overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* SOLUCIÓN AL FLUJO: Fuerza el renderizado estricto de izquierda a derecha por filas (Horizontal) */
+/* CUADRÍCULA IDÉNTICA A LA FOTO: 4 columnas a lo ancho x 2 filas hacia abajo */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(2, 165px); 
-    grid-template-rows: repeat(4, 210px); 
-    grid-auto-flow: row dense !important; /* Dirección horizontal obligatoria */
-    gap: 55px 15px; 
+    grid-template-columns: repeat(4, 165px); 
+    grid-template-rows: repeat(2, 210px); 
+    grid-auto-flow: row !important; /* Fuerza el orden estricto de izquierda a derecha */
+    gap: 65px 15px; 
     animation: fadeIn 0.4s ease-in-out; 
-    width: 100%; 
-    max-width: 420px; 
-    justify-content: center;
-    align-content: center;
 }
 .bloque-grupo.activo { display: grid; }
 
-/* Espacio de aire inicial para las tarjetas */
+/* Empuje vertical para dar aire a los textos flotantes superiores */
 .bloque-grupo > div { transform: translateY(20px); }
 
-/* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE EMITIENDO LUZ */
+/* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE (TODAS INCLUIDAS) */
 .card { 
     background: rgba(10, 12, 16, 0.9); 
     border-radius: 12px; 
@@ -41,12 +37,12 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
 
-/* Regalos comunes en la esquina superior izquierda interna de la tarjeta, debajo de las letras */
+/* REGALOS COMUNES CORREGIDOS: Bajados a la esquina superior izquierda de la imagen (Debajo del texto flotante) */
 .gift-box-baja { position: absolute; top: 15px; left: 15px; display: flex !important; align-items: center; z-index: 30 !important; }
 .tiktok-gift { position: relative; width: 44px; height: 44px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)) !important; }
 
-/* TORRE ESPECIAL TOTALMENTE INTACTA Y SIN CAMBIOS (TARJETAS 1 Y 15) */
+/* TORRE ESPECIAL MANTENIENDO SU ESTRUCTURA ORIGINAL SIN CAMBIOS (TARJETAS 1 Y 15) */
 .gift-box-torre { position: absolute; top: -46px; left: -15px; display: flex !important; flex-direction: column !important; align-items: center !important; gap: 0px !important; z-index: 20; width: 52px; }
 .item-seguir { width: 52px; height: 45px; display: flex !important; justify-content: center; align-items: center; margin-bottom: -12px !important; position: relative; z-index: 22; }
 .item-azul { width: 52px; height: 52px; display: flex !important; justify-content: center; align-items: center; position: relative; z-index: 21; }
@@ -60,7 +56,7 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .col-item { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
 .col-item span:first-child { font-size: 13px; }
 
-/* ANIMACIONES RGB INTEGRADAS */
+/* ANIMACIONES RGB TOTALES */
 @keyframes bordeRgbCambiante { 
     0%, 100% { border: 2px solid #ff0050; box-shadow: 0 0 12px rgba(255,0,80,0.6), inset 0 0 6px rgba(255,0,80,0.4); } 
     33% { border: 2px solid #00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.6), inset 0 0 6px rgba(0,229,255,0.4); } 
