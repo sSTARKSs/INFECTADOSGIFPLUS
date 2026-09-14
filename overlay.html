@@ -17,22 +17,19 @@
         .img-box { border-radius: 10px; overflow: hidden; z-index: 1; }
         .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
         .esq-izq { z-index: 10; pointer-events: none; }
-        
-        /* Caja de regalos base */
         .gift-box { position: absolute; top: -34px; left: -22px; display: flex; gap: 4px; align-items: center; z-index: 20; }
         .tiktok-gift { position: relative; width: 58px; height: 58px; display: flex; justify-content: center; align-items: center; }
         .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); }
         .tap-tap-texto { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', sans-serif; font-size: 10px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000; white-space: nowrap; z-index: 35; }
         
-        /* --- CORRECCIÓN INTEGRAL: COLUMNA VERTICAL PERFECTA SIN DEFORMAR IMÁGENES --- */
-        .gift-box.doble-columna { display: flex !important; flex-direction: column !important; gap: 0px !important; top: -62px !important; left: -22px !important; align-items: center !important; }
+        /* Modificado: Reducido top a -32px y añadido un margen negativo para encimarla ligeramente */
+        .gift-box.doble-columna { display: flex !important; flex-direction: column !important; gap: 0px !important; top: -32px !important; left: -22px !important; align-items: center !important; }
         .gift-box.doble-columna .tiktok-gift { width: 54px !important; height: 54px !important; display: flex !important; position: relative !important; transform: none !important; justify-content: center !important; align-items: center !important; }
+        .gift-box.doble-columna .tiktok-gift:first-child { margin-bottom: -15px !important; z-index: 26 !important; } /* Fuerza a seguir.webp a bajar y montarse un poco sobre el corazón */
         .gift-box.doble-columna .gift-img { width: 100% !important; height: 100% !important; object-fit: contain !important; }
         .gift-box.doble-columna .tap-tap-texto { bottom: -2px !important; font-size: 9px !important; }
         
-        /* Borde calcado sobre la silueta del icono verde de seguir */
         .bg-negro-seguir { filter: drop-shadow(2px 0px 0px #000) drop-shadow(-2px 0px 0px #000) drop-shadow(0px 2px 0px #000) drop-shadow(0px -2px 0px #000) drop-shadow(1px 1px 2px #000) !important; background: transparent !important; border: none !important; }
-        
         .nombre-flotante { position: absolute; font-family: 'Arial Black', sans-serif; font-weight: 900; -webkit-text-stroke: 0.8px #fff; text-shadow: 2px 2px 2px #000, -1.5px -1.5px 2px #000; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -28px; font-size: 18px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 4px; width: 100%; }
         .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 12px; top: -26px; }
         .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 10px; top: -32px; padding: 0 6px; box-sizing: border-box; }
@@ -57,17 +54,17 @@
             var clE = (t.id === 9 || t.id === 10) ? ' pos-alta' : ''; 
             var estE = (t.id === 8) ? ' style="margin-left:20px !important;"' : '';
             if (t.tipo === "2l") {
-                var l1 = t.txt[0]; var l2 = t.txt[1];
+                var l1 = t.txt; var l2 = t.txt;
                 return '<div class="nombre-flotante texto-dos-lineas' + clE + '"><span>' + l1 + '</span><span>' + l2 + '</span></div>';
             }
             if (t.tipo === "m") {
                 var columnas = t.txt.map(function(c) {
-                    var cant = c[0]; var inf = c[1];
+                    var cant = c; var inf = c;
                     return '<div class="col-item"><span>' + cant + '</span><span>' + inf + '</span></div>';
                 }).join('');
                 return '<div class="nombre-flotante multi-col' + clE + '"' + estE + '>' + columnas + '</div>';
             }
-            var tNormal = t.txt[0];
+            var tNormal = t.txt;
             return '<div class="nombre-flotante' + clE + '">' + tNormal + '</div>';
         }
         container.innerHTML = bloques.map(grupo => `
