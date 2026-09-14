@@ -8,13 +8,13 @@
 body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA CORREGIDA: Tarjetas más grandes y gap vertical bajado a 62px */
+/* CUADRÍCULA COMPACTA DE CORRECCIÓN */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(4, 230px); /* Tarjetas más anchas */
-    grid-template-rows: repeat(2, 290px);    /* Tarjetas más largas/altas */
+    grid-template-columns: repeat(4, 230px); 
+    grid-template-rows: repeat(2, 290px);    
     grid-auto-flow: row !important; 
-    gap: 62px 25px; /* Bajadas un milímetro de 66px a 62px */
+    gap: 62px 25px; 
     width: 1050px;
     justify-content: center;
     align-content: center;
@@ -24,12 +24,12 @@ body { margin: 0; background: transparent; overflow: hidden; width: 1920px; heig
 /* Posicionamiento fijo de la hilera de tarjetas */
 .bloque-grupo > div { transform: translateY(15px); }
 
-/* TARJETAS AMPLIADAS CON BORDE Y SOMBRA RGB CAMBIANTE */
+/* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE */
 .card { 
     background: rgba(10, 12, 16, 0.9); 
     border-radius: 12px; 
-    width: 230px;  /* Ancho ampliado */
-    height: 290px; /* Alto ampliado */
+    width: 230px;  
+    height: 290px; 
     position: relative; 
     box-sizing: border-box; 
     animation: bordeRgbCambiante 4s linear infinite; 
@@ -51,11 +51,21 @@ body { margin: 0; background: transparent; overflow: hidden; width: 1920px; heig
 .bg-silueta-seguir-torre { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 0px 0px #000) drop-shadow(-2px 0px 0px #000) drop-shadow(0px 2px 0px #000) drop-shadow(0px -2px 0px #000) drop-shadow(3px 3px 1px #000) drop-shadow(-3px -3px 1px #000) !important; }
 .tap-tap-texto { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 9px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000,-1.5px -1.5px 0 #000,1.5px -1.5px 0 #000,-1.5px 1.5px 0 #000,0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
 
-/* TEXTOS FLOTANTES GRANDES FIJADOS CORRECTAMENTE SIN DUPLICARSE */
+/* TEXTOS FLOTANTES CON ANIMACIÓN RGB */
 .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
 .texto-dos-lineas { font-size: 14px; top: -34px; line-height: 1.1; }
-.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 12px; font-size: 15px; top: -38px; }
-.col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; }
+
+/* SOLUCIÓN TARJETAS MÚLTIPLES 9 Y 10: Compactación limpia y balanceada de fuentes para 3 elementos */
+.multi-col { 
+    display: flex; 
+    flex-direction: row; 
+    justify-content: space-around; 
+    width: 100%; 
+    gap: 4px; 
+    font-size: 13px; /* Reducido ligeramente para dar holgura y legibilidad */
+    top: -38px; 
+}
+.col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; white-space: nowrap; }
 
 /* ANIMACIONES RGB CONTINUAS SINCRO */
 @keyframes bordeRgbCambiante { 
