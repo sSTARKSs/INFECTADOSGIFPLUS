@@ -21,7 +21,7 @@
         .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); }
         .tap-tap-texto { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
         
-        /* DISEÑO DE TEXTOS RGB GRUESOS CORREGIDOS: Trazo perfecto y unificado sin bordes blancos */
+        /* TEXTOS RGB ULTRA GRUESOS PERFECTAMENTE SINCRONIZADOS SIN CONTORNOS BLANCOS */
         .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 20px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
         .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 13px; top: -32px; }
         .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 11px; top: -43px; }
@@ -45,7 +45,7 @@
         
         const bloques = [
             [
-                { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] },   
+                { g: "1.gif", gifts: ["SEGUIR", "CORAZON_AZUL"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] },   
                 { g: "3.gif", gifts: ["ROSA_BLANCA_METAL"], txt: ["BAILECITO DE", "10 SEGUNDOS"], tipo: "2l" }, { g: "4.gif", gifts: ["TIKTOK_3D"], txt: ["5 WITCH"] },
                 { g: "5.gif", gifts: ["GG_3D"], txt: ["10 CHARGER"] }, { g: "6.gif", gifts: ["COREANO"], txt: ["10 TANK"] }, 
                 { g: "7.gif", gifts: ["ROSE_30M"], txt: [["20", "HUNTER"], ["20", "WITCH"]], tipo: "m" }, { g: "8.gif", gifts: ["ROSQUILLA"], txt: [["20", "HUNTER"], ["20", "SMOKER"]], tipo: "m" }
@@ -56,13 +56,13 @@
                 { g: "11.gif", gifts: ["HELADO"], txt: [["5", "SPITTER"], ["5", "JOCKEYS"]], tipo: "m" },   
                 { g: "12.gif", gifts: ["PERFUME"], txt: [["5", "BOOMER"], ["5", "SPITTER"]], tipo: "m" },
                 { g: "13.gif", gifts: ["GORRA"], txt: [["10", "SMOKER"], ["10", "TANK"]], tipo: "m" }, 
-                { g: "14.gif", gifts: ["OSITO"], txt: ["40 TANK"] }, { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
+                { g: "14.gif", gifts: ["OSITO"], txt: ["40 TANK"] }, { g: "1.gif", gifts: ["SEGUIR", "CORAZON_AZUL"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
             ]
         ];
 
-        // RENDERIZADOR OPTIMIZADO: Procesa de forma independiente strings simples, pares o listas de columnas
+        // CORRECCIÓN ABSOLUTA: Desestructura usando índices nativos para evitar comas de arrays directos en HTML
         function genTxt(t) {
-            if (!t.txt) return '';
+            if (!t.txt || t.txt.length === 0) return '';
             if (t.tipo === "2l") {
                 return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt[0]}</span><span>${t.txt[1]}</span></div>`;
             }
