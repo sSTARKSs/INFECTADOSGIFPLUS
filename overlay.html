@@ -8,20 +8,22 @@
 body { margin: 0; background: transparent; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 10px; }
 
-/* CUADRÍCULA VERTICAL: 2 columnas x 4 filas (8 tarjetas visibles a la vez) */
+/* SOLUCIÓN AL FLUJO: Fuerza el renderizado estricto de izquierda a derecha por filas (Horizontal) */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(2, 1fr); 
-    grid-template-rows: repeat(4, 1fr); 
+    grid-template-columns: repeat(2, 165px); 
+    grid-template-rows: repeat(4, 210px); 
+    grid-auto-flow: row dense !important; /* Dirección horizontal obligatoria */
     gap: 55px 15px; 
     animation: fadeIn 0.4s ease-in-out; 
     width: 100%; 
     max-width: 420px; 
-    justify-items: center; 
+    justify-content: center;
+    align-content: center;
 }
 .bloque-grupo.activo { display: grid; }
 
-/* Espacio vertical inicial para las tarjetas */
+/* Espacio de aire inicial para las tarjetas */
 .bloque-grupo > div { transform: translateY(20px); }
 
 /* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE EMITIENDO LUZ */
@@ -39,7 +41,7 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
 
-/* SOLUCIÓN AL PROBLEMA DE LOS REGALOS: Bajados a la esquina superior izquierda interna de la tarjeta */
+/* Regalos comunes en la esquina superior izquierda interna de la tarjeta, debajo de las letras */
 .gift-box-baja { position: absolute; top: 15px; left: 15px; display: flex !important; align-items: center; z-index: 30 !important; }
 .tiktok-gift { position: relative; width: 44px; height: 44px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)) !important; }
