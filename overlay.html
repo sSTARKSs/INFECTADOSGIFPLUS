@@ -40,8 +40,8 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
 
-/* CORRECCIÓN EXHAUSTIVA: Regalos más a la izquierda y elevados por fuera, justo debajo del texto flotante */
-.gift-box-baja { position: absolute; top: -12px; left: -15px; display: flex !important; align-items: center; z-index: 30 !important; }
+/* AJUSTE MILIMÉTRICO EXTRA: Regalos más a la izquierda (-20px) y más altos (-15px) para salir de la tarjeta */
+.gift-box-baja { position: absolute; top: -15px; left: -20px; display: flex !important; align-items: center; z-index: 30 !important; }
 .tiktok-gift { position: relative; width: 44px; height: 44px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)) !important; }
 
