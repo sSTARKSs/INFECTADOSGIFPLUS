@@ -55,17 +55,18 @@ body { margin: 0; background: transparent; overflow: hidden; width: 1920px; heig
 .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
 .texto-dos-lineas { font-size: 14px; top: -34px; line-height: 1.1; }
 
-/* SOLUCIÓN TARJETAS MÚLTIPLES 9 Y 10: Compactación limpia y balanceada de fuentes para 3 elementos */
-.multi-col { 
-    display: flex; 
-    flex-direction: row; 
-    justify-content: space-around; 
-    width: 100%; 
-    gap: 4px; 
-    font-size: 13px; /* Reducido ligeramente para dar holgura y legibilidad */
-    top: -38px; 
+/* CONFIGURACIÓN DE COLUMNAS GENERALES */
+.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 12px; font-size: 15px; top: -38px; }
+.col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; }
+
+/* FORMATO VERTICAL APILADO EXCLUSIVO PARA TARJETAS 9 Y 10 */
+.texto-tres-lineas { 
+    display: flex !important; 
+    flex-direction: column !important; 
+    line-height: 0.95 !important; 
+    font-size: 13px !important; 
+    top: -46px !important; 
 }
-.col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; white-space: nowrap; }
 
 /* ANIMACIONES RGB CONTINUAS SINCRO */
 @keyframes bordeRgbCambiante { 
@@ -96,8 +97,9 @@ const bloques = [
         { g: "8.gif", gifts: ["ROSQUILLA"], txt: ["20 HUNTER", "20 SMOKER"], tipo: "m" }
     ],
     [
-        { g: "9.gif", gifts: ["GAFAS"], txt: ["5 SMOKER", "5 HUNTER", "10 WITCH"], tipo: "m" },    
-        { g: "10.gif", gifts: ["CONFETTI"], txt: ["10 SMOKER", "10 SPITTER", "10 CHARGER"], tipo: "m" }, 
+        /* CORRECCIÓN TARJETAS 9 Y 10: Se estructuraron con saltos de línea de arriba hacia abajo */
+        { g: "9.gif", gifts: ["GAFAS"], txt: "5 SMOKER<br>5 HUNTER<br>10 WITCH", tipo: "3l" },    
+        { g: "10.gif", gifts: ["CONFETTI"], txt: "10 SMOKER<br>10 SPITTER<br>10 CHARGER", tipo: "3l" }, 
         { g: "11.gif", gifts: ["HELADO"], txt: ["5 SPITTER", "5 JOCKEYS"], tipo: "m" },   
         { g: "12.gif", gifts: ["PERFUME"], txt: ["5 BOOMER", "5 SPITTER"], tipo: "m" },
         { g: "13.gif", gifts: ["GORRA"], txt: ["10 SMOKER", "10 TANK"], tipo: "m" }, 
@@ -109,6 +111,9 @@ const bloques = [
 
 function genTxt(t) {
     if (!t.txt) return '';
+    if (t.tipo === "3l") {
+        return `<div class="nombre-flotante texto-tres-lineas"><span>${t.txt}</span></div>`;
+    }
     if (t.tipo === "2l") {
         return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt}</span></div>`;
     }
