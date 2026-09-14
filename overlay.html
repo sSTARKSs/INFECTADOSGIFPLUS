@@ -66,30 +66,27 @@
             ]
         ];
 
-        // FUNCIÓN CORREGIDA DESDE LA RAÍZ: Extrae cada elemento usando sus índices exactos
+        // Se reestructuró para leer las posiciones de los arreglos explícitamente sin fallos
         function genTxt(t) {
             if (!t.txt) return '';
             
-            // Caso para tarjetas de 2 líneas (ej: Bailecito)
             if (t.tipo === "2l") {
-                const linea1 = t.txt[0];
-                const linea2 = t.txt[1];
-                return `<div class="nombre-flotante texto-dos-lineas"><span>${linea1}</span><span>${linea2}</span></div>`;
+                var l1 = t.txt[0];
+                var l2 = t.txt[1];
+                return '<div class="nombre-flotante texto-dos-lineas"><span>' + l1 + '</span><span>' + l2 + '</span></div>';
             }
             
-            // Caso para tarjetas de múltiples columnas juntas
             if (t.tipo === "m") {
-                const columnasHtml = t.txt.map(columna => {
-                    const cantidad = columna[0];
-                    const nombreInfectado = columna[1];
-                    return `<div class="col-item"><span>${cantidad}</span><span>${nombreInfectado}</span></div>`;
+                var columnas = t.txt.map(function(c) {
+                    var cant = c[0];
+                    var inf = c[1];
+                    return '<div class="col-item"><span>' + cant + '</span><span>' + inf + '</span></div>';
                 }).join('');
-                return `<div class="nombre-flotante multi-col">${columnasHtml}</div>`;
+                return '<div class="nombre-flotante multi-col">' + columnas + '</div>';
             }
             
-            // Caso para tarjetas normales de una sola línea
-            const textoUnico = t.txt[0];
-            return `<div class="nombre-flotante">${textoUnico}</div>`;
+            var tNormal = t.txt[0];
+            return '<div class="nombre-flotante">' + tNormal + '</div>';
         }
 
         container.innerHTML = bloques.map(grupo => `
