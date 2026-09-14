@@ -61,9 +61,9 @@
         // Función constructora de textos compactada
         function genTxt(t) {
             if (!t.txt) return '';
-            if (t.tipo === "2l") return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt[0]}</span><span>${t.txt[1]}</span></div>`;
-            if (t.tipo === "m") return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c[0]}</span><span>${c[1]}</span></div>`).join('')}</div>`;
-            return `<div class="nombre-flotante">${t.txt[0]}</div>`;
+            if (t.tipo === "2l") return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt}</span><span>${t.txt}</span></div>`;
+            if (t.tipo === "m") return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c}</span><span>${c}</span></div>`).join('')}</div>`;
+            return `<div class="nombre-flotante">${t.txt}</div>`;
         }
 
         container.innerHTML = bloques.map(grupo => `
