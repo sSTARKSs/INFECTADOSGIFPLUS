@@ -8,7 +8,7 @@
 body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA COMPACTA DE CORRECCIÓN */
+/* CUADRÍCULA COMPACTA DE LAS TARJETAS (4x2) */
 .bloque-grupo { 
     display: none; 
     grid-template-columns: repeat(4, 230px); 
@@ -55,17 +55,17 @@ body { margin: 0; background: transparent; overflow: hidden; width: 1920px; heig
 .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
 .texto-dos-lineas { font-size: 14px; top: -34px; line-height: 1.1; }
 
-/* CONFIGURACIÓN DE COLUMNAS GENERALES */
+/* CONFIGURACIÓN DE COLUMNAS GENERALES (TARJETAS 7, 8, 11, 12, 13) */
 .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 12px; font-size: 15px; top: -38px; }
 .col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; }
 
-/* FORMATO VERTICAL APILADO EXCLUSIVO PARA TARJETAS 9 Y 10 */
+/* ESTILO EXCLUSIVO PILA VERTICAL PARA LAS TARJETAS 9 Y 10 */
 .texto-tres-lineas { 
     display: flex !important; 
     flex-direction: column !important; 
     line-height: 0.95 !important; 
-    font-size: 13px !important; 
-    top: -46px !important; 
+    font-size: 15px !important; /* Ajustado para que las 3 líneas se lean perfectas */
+    top: -55px !important; /* Centrado vertical correcto para que no tape el regalo */
 }
 
 /* ANIMACIONES RGB CONTINUAS SINCRO */
@@ -97,7 +97,7 @@ const bloques = [
         { g: "8.gif", gifts: ["ROSQUILLA"], txt: ["20 HUNTER", "20 SMOKER"], tipo: "m" }
     ],
     [
-        /* CORRECCIÓN TARJETAS 9 Y 10: Se estructuraron con saltos de línea de arriba hacia abajo */
+        /* TARJETAS 9 Y 10 CONFIGURADAS EXACTAMENTE UNO ENCIIMA DE OTRO */
         { g: "9.gif", gifts: ["GAFAS"], txt: "5 SMOKER<br>5 HUNTER<br>10 WITCH", tipo: "3l" },    
         { g: "10.gif", gifts: ["CONFETTI"], txt: "10 SMOKER<br>10 SPITTER<br>10 CHARGER", tipo: "3l" }, 
         { g: "11.gif", gifts: ["HELADO"], txt: ["5 SPITTER", "5 JOCKEYS"], tipo: "m" },   
