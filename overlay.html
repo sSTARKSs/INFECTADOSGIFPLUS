@@ -59,13 +59,13 @@ body { margin: 0; background: transparent; overflow: hidden; width: 1920px; heig
 .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 12px; font-size: 15px; top: -38px; }
 .col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; }
 
-/* CORRECCIÓN: Separación hacia abajo aumentada y recolocación vertical */
+/* CORRECCIÓN FINAL: Interlineado estirado a 1.4 y subido a -85px para evitar colisiones */
 .texto-tres-lineas { 
     display: flex !important; 
     flex-direction: column !important; 
-    line-height: 1.25 !important; /* Más separado hacia abajo */
+    line-height: 1.4 !important; /* Separación vertical máxima */
     font-size: 15px !important; 
-    top: -75px !important; /* Subido un poco más para que la tercera línea no pise la tarjeta */
+    top: -85px !important; /* Recolocación exacta hacia arriba para soportar el espacio */
 }
 
 /* ANIMACIONES RGB CONTINUAS SINCRO */
