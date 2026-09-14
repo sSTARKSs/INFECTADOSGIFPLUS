@@ -2,35 +2,36 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Overlay L4D 4x2 Horizontal Rotativo - TikTok Studio</title>
 <style>
-/* CONFIGURACIÓN DE PANTALLA COMPLETA */
+/* CONFIGURACIÓN DE PANTALLA RESPONSIVE COMPLETA */
 body { margin: 0; background: transparent; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
-#overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
+#overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 2vh; }
 
-/* CUADRÍCULA FIJA: 4 columnas x 2 filas (Dos hileras de 4) */
+/* CUADRÍCULA FIJA RESPONSIVE: 4 columnas x 2 filas (Dos hileras de 4) */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(4, 165px); 
-    grid-template-rows: repeat(2, 210px); 
+    grid-template-columns: repeat(4, minmax(130px, 165px)); 
+    grid-template-rows: repeat(2, minmax(170px, 210px)); 
     grid-auto-flow: row !important; 
-    gap: 65px 15px; 
+    gap: 7vh 1.5vw; 
     animation: fadeIn 0.4s ease-in-out; 
     width: 100%;
-    max-width: 720px; 
+    max-width: 740px; 
     justify-content: center;
 }
 .bloque-grupo.activo { display: grid; }
 
 /* Espacio de aire para dar soporte a los elementos flotantes superiores */
-.bloque-grupo > div { transform: translateY(25px); }
+.bloque-grupo > div { transform: translateY(3vh); }
 
 /* TARJETAS VERTICALES CON EFECTO RGB CAMBIANTE EN TODO EL BORDE */
 .card { 
     background: rgba(10, 12, 16, 0.9); 
     border-radius: 12px; 
-    width: 165px; 
-    height: 210px; 
+    width: 100%; 
+    height: 100%; 
     position: relative; 
     box-sizing: border-box; 
     animation: bordeRgbCambiante 4s linear infinite; 
@@ -40,9 +41,9 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
 
-/* AJUSTE MILIMÉTRICO EXTRA: Regalos más a la izquierda (-20px) y más altos (-15px) para salir de la tarjeta */
-.gift-box-baja { position: absolute; top: -15px; left: -20px; display: flex !important; align-items: center; z-index: 30 !important; }
-.tiktok-gift { position: relative; width: 44px; height: 44px; display: flex !important; justify-content: center; align-items: center; }
+/* REGALOS UN POCO MÁS GRANDES (De 44px a 52px) Y EN POSICIÓN SIN TAPAR */
+.gift-box-baja { position: absolute; top: -18px; left: -22px; display: flex !important; align-items: center; z-index: 30 !important; }
+.tiktok-gift { position: relative; width: 52px; height: 52px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)) !important; }
 
 /* TORRE ESPECIAL TOTALMENTE PROTEGIDA SIN CAMBIOS (TARJETAS 1 Y 15) */
@@ -52,11 +53,12 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .bg-silueta-seguir-torre { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 0px 0px #000) drop-shadow(-2px 0px 0px #000) drop-shadow(0px 2px 0px #000) drop-shadow(0px -2px 0px #000) drop-shadow(3px 3px 1px #000) drop-shadow(-3px -3px 1px #000) !important; }
 .tap-tap-texto { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 9px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000,-1.5px -1.5px 0 #000,1.5px -1.5px 0 #000,-1.5px 1.5px 0 #000,0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
 
-/* TEXTOS FLOTANTES CON TAMAÑO MÁXIMO AGRANDADO Y CAMBIO RGB */
-.nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -36px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
-.texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 14px; top: -30px; }
-.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 4px; font-size: 13px; top: -38px; }
+/* TEXTOS FLOTANTES AGRANDADOS Y CON ANIMACIÓN RGB */
+.nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
+.texto-dos-lineas { display: flex; flex-direction: column; line-height: 1.0; font-size: 14px; top: -34px; }
+.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 4px; font-size: 13px; top: -40px; }
 .col-item { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
+.col-item span { font-size: 13px; }
 .col-item span:first-child { font-size: 16px; }
 
 /* ANIMACIONES RGB SINCRONIZADAS */
@@ -99,15 +101,16 @@ const bloques = [
     ]
 ];
 
+/* SOLUCIÓN DE RAÍZ: Limpieza absoluta del renderizado HTML para evitar duplicados */
 function genTxt(t) {
     if (!t.txt || t.txt.length === 0) return '';
     if (t.tipo === "2l") {
-        return `<div class="nombre-flotante texto-dos-lineas">${t.txt}</div>`;
+        return `<div class="nombre-flotante texto-dos-lineas"><span>${t.txt}</span></div>`;
     }
     if (t.tipo === "m") {
-        return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c}</span><span>${c}</span></div>`).join('')}</div>`;
+        return `<div class="nombre-flotante multi-col">${t.txt.map(c => `<div class="col-item"><span>${c[0]}</span><span>${c[1]}</span></div>`).join('')}</div>`;
     }
-    return `<div class="nombre-flotante">${t.txt}</div>`;
+    return `<div class="nombre-flotante"><span>${t.txt}</span></div>`;
 }
 
 container.innerHTML = bloques.map(grupo => `
