@@ -4,32 +4,32 @@
 <meta charset="UTF-8">
 <title>Overlay L4D 4x2 Horizontal Rotativo Fijo - TikTok Studio</title>
 <style>
-/* CONFIGURACIÓN ABSOLUTA CON PIXELES FIJOS (SIN RESPONSIVE) */
+/* CONFIGURACIÓN ABSOLUTA CON PIXELES FIJOS */
 body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA FIJA REFORZADA: 4 columnas x 2 filas con píxeles absolutos */
+/* CUADRÍCULA CORREGIDA: Se aumenta el gap vertical a 60px para separar las filas y subir las tarjetas de arriba */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(4, 200px); /* Más anchas para evitar choques */
-    grid-template-rows: repeat(2, 260px);    /* Más altas para mejor impacto */
+    grid-template-columns: repeat(4, 200px); 
+    grid-template-rows: repeat(2, 260px);    
     grid-auto-flow: row !important; 
-    gap: 30px 25px; /* Espaciado fijo controlado */
+    gap: 60px 25px; /* 60px de separación vertical para dar espacio a los textos de abajo */
     width: 900px;
     justify-content: center;
     align-content: center;
 }
 .bloque-grupo.activo { display: grid; }
 
-/* Posicionamiento y bajada fija de la hilera de tarjetas */
+/* Posicionamiento fijo de la hilera de tarjetas */
 .bloque-grupo > div { transform: translateY(15px); }
 
-/* TARJETAS AMPLIADAS CON BORDE Y SOMBRA RGB CAMBIANTE */
+/* TARJETAS CON BORDE Y SOMBRA RGB CAMBIANTE */
 .card { 
     background: rgba(10, 12, 16, 0.9); 
     border-radius: 12px; 
-    width: 200px;  /* Ancho absoluto */
-    height: 260px; /* Alto absoluto */
+    width: 200px;  
+    height: 260px; 
     position: relative; 
     box-sizing: border-box; 
     animation: bordeRgbCambiante 4s linear infinite; 
@@ -146,4 +146,3 @@ rotar(); setInterval(rotar, 12000);
 </script>
 </body>
 </html>
-Usa el código con precaución.
