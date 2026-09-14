@@ -2,24 +2,24 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Overlay L4D Horizontal Continuo 8x1 - TikTok Studio</title>
+<title>Overlay L4D 4x2 Horizontal Rotativo - TikTok Studio</title>
 <style>
-/* CONFIGURACIÓN DE PANTALLA COMPLETA PANORÁMICA */
+/* CONFIGURACIÓN DE PANTALLA COMPLETA */
 body { margin: 0; background: transparent; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA HORIZONTAL CONTINUA: 8 columnas de izquierda a derecha x 1 sola fila */
+/* DOS HILERAS DE 4: 4 columnas a lo ancho x 2 filas hacia abajo */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(8, 165px); 
-    grid-template-rows: 210px; 
-    grid-auto-flow: column !important; /* Fuerza el flujo puramente horizontal */
-    gap: 15px; 
+    grid-template-columns: repeat(4, 165px); 
+    grid-template-rows: repeat(2, 210px); 
+    grid-auto-flow: row !important; /* Fuerza la organización de izquierda a derecha por filas */
+    gap: 65px 15px; 
     animation: fadeIn 0.4s ease-in-out; 
 }
 .bloque-grupo.activo { display: grid; }
 
-/* Espacio vertical para dar aire a los textos flotantes superiores */
+/* Empuje vertical para dar aire a los textos flotantes superiores */
 .bloque-grupo > div { transform: translateY(25px); }
 
 /* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE (TODAS INCLUIDAS) */
@@ -96,7 +96,7 @@ const bloques = [
     ]
 ];
 
-/* CORRECCIÓN EXHAUSTIVA: Se eliminaron los duplicados innecesarios en el renderizado de textos */
+/* CORRECCIÓN INTERNA DE TEXTOS SIMPLES, DOBLES Y MÚLTIPLES PARA EVITAR DUPLICADOS */
 function genTxt(t) {
     if (!t.txt || t.txt.length === 0) return '';
     if (t.tipo === "2l") {
