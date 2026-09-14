@@ -8,20 +8,20 @@
 body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA COMPACTA DE LAS TARJETAS (4x2) */
+/* CUADRÍCULA AJUSTADA: 52px vertical para evitar choques y 6px horizontal para pegarlas a los lados */
 .bloque-grupo { 
     display: none; 
     grid-template-columns: repeat(4, 230px); 
     grid-template-rows: repeat(2, 290px);    
     grid-auto-flow: row !important; 
-    gap: 62px 25px; 
-    width: 1050px;
+    gap: 52px 6px; /* 52px vertical (aire para los textos) y 6px horizontal (bien juntas a los lados) */
+    width: 960px;
     justify-content: center;
     align-content: center;
 }
 .bloque-grupo.activo { display: grid; }
 
-/* Posicionamiento fijo de la hilera de tarjetas */
+/* Posicionamiento de aire fijo de la hilera de tarjetas */
 .bloque-grupo > div { transform: translateY(15px); }
 
 /* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE */
@@ -59,13 +59,13 @@ body { margin: 0; background: transparent; overflow: hidden; width: 1920px; heig
 .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 12px; font-size: 15px; top: -38px; }
 .col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; }
 
-/* CORRECCIÓN FINAL: Interlineado estirado a 1.4 y subido a -85px para evitar colisiones */
+/* INTERLINEADO SEPARADO VERTICALMENTE PARA LAS TARJETAS 9 Y 10 */
 .texto-tres-lineas { 
     display: flex !important; 
     flex-direction: column !important; 
-    line-height: 1.4 !important; /* Separación vertical máxima */
+    line-height: 1.4 !important; 
     font-size: 15px !important; 
-    top: -85px !important; /* Recolocación exacta hacia arriba para soportar el espacio */
+    top: -85px !important; 
 }
 
 /* ANIMACIONES RGB CONTINUAS SINCRO */
