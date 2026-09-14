@@ -2,37 +2,34 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Overlay L4D 4x2 Horizontal Rotativo - TikTok Studio</title>
+<title>Overlay L4D 4x2 Horizontal Rotativo Fijo - TikTok Studio</title>
 <style>
-/* CONFIGURACIÓN DE PANTALLA COMPLETA RESPONSIVE */
-body { margin: 0; background: transparent; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
-#overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 2vh; }
+/* CONFIGURACIÓN ABSOLUTA CON PIXELES FIJOS (SIN RESPONSIVE) */
+body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
+#overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA COMPACTA: Gap reducido a 12px vertical y 10px horizontal para juntar las tarjetas */
+/* CUADRÍCULA FIJA REFORZADA: 4 columnas x 2 filas con píxeles absolutos */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(4, 172px); 
-    grid-template-rows: repeat(2, 230px);    
+    grid-template-columns: repeat(4, 200px); /* Más anchas para evitar choques */
+    grid-template-rows: repeat(2, 260px);    /* Más altas para mejor impacto */
     grid-auto-flow: row !important; 
-    gap: 12px 10px; /* Tarjetas mucho más juntas en ambas direcciones */
-    animation: fadeIn 0.4s ease-in-out; 
-    width: 100%;
-    max-width: 760px; 
+    gap: 30px 25px; /* Espaciado fijo controlado */
+    width: 900px;
     justify-content: center;
     align-content: center;
 }
 .bloque-grupo.activo { display: grid; }
 
-/* CORRECCIÓN: Se reduce el empuje vertical de 3vh a 15px para bajar las tarjetas superiores */
+/* Posicionamiento y bajada fija de la hilera de tarjetas */
 .bloque-grupo > div { transform: translateY(15px); }
 
-/* TARJETAS VERTICALES CON EFECTO RGB CAMBIANTE EN TODO EL BORDE */
+/* TARJETAS AMPLIADAS CON BORDE Y SOMBRA RGB CAMBIANTE */
 .card { 
     background: rgba(10, 12, 16, 0.9); 
     border-radius: 12px; 
-    width: 172px; 
-    height: 230px; 
+    width: 200px;  /* Ancho absoluto */
+    height: 260px; /* Alto absoluto */
     position: relative; 
     box-sizing: border-box; 
     animation: bordeRgbCambiante 4s linear infinite; 
@@ -54,13 +51,13 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .bg-silueta-seguir-torre { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 0px 0px #000) drop-shadow(-2px 0px 0px #000) drop-shadow(0px 2px 0px #000) drop-shadow(0px -2px 0px #000) drop-shadow(3px 3px 1px #000) drop-shadow(-3px -3px 1px #000) !important; }
 .tap-tap-texto { position: absolute; bottom: -4px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 9px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000,-1.5px -1.5px 0 #000,1.5px -1.5px 0 #000,-1.5px 1.5px 0 #000,0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
 
-/* TEXTOS FLOTANTES CON TAMAÑO IDEAL Y SIN DUPLICADOS */
+/* TEXTOS FLOTANTES GRANDES FIJADOS CORRECTAMENTE SIN DUPLICARSE */
 .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 22px; animation: rgbTextoCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 6px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
 .texto-dos-lineas { font-size: 14px; top: -34px; line-height: 1.1; }
-.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 4px; font-size: 13px; top: -38px; }
+.multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 8px; font-size: 14px; top: -38px; }
 .col-item { display: flex; flex-direction: row; align-items: center; gap: 3px; }
 
-/* ANIMACIONES RGB SINCRONIZADAS */
+/* ANIMACIONES RGB CONTINUAS SINCRO */
 @keyframes bordeRgbCambiante { 
     0%, 100% { border: 2px solid #ff0050; box-shadow: 0 0 12px rgba(255,0,80,0.6), inset 0 0 6px rgba(255,0,80,0.4); } 
     33% { border: 2px solid #00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.6), inset 0 0 6px rgba(0,229,255,0.4); } 
@@ -149,3 +146,4 @@ rotar(); setInterval(rotar, 12000);
 </script>
 </body>
 </html>
+Usa el código con precaución.
