@@ -44,42 +44,32 @@
         const container = document.getElementById('overlay-container'); let bAct = 0;
         const est = [{c:'#ca1aff',s:'rgba(202,26,255,0.7)'},{c:'#ff0050',s:'rgba(255,0,80,0.7)'},{c:'#00e5ff',s:'rgba(0,229,255,0.7)'},{c:'#ff00aa',s:'rgba(255,0,170,0.7)'},{c:'#00ff66',s:'rgba(0,255,102,0.7)'},{c:'#ffaa00',s:'rgba(255,170,0,0.7)'},{c:'#9900ff',s:'rgba(153,0,255,0.7)'},{c:'#ffea00',s:'rgba(255,234,0,0.7)'}];
         const REG = { SEGUIR: "seguir.webp", CORAZON_AZUL: "azul.webp", ROSA_1M: "rosa.webp", ROSA_BLANCA_METAL: "blanca.webp", TIKTOK_3D: "tiktok.webp", GG_3D: "gg.webp", COREANO: "coreano.webp", ROSE_30M: "rose.webp", ROSQUILLA: "rosquilla.webp", GAFAS: "gafas.webp", CONFETTI: "confetti.webp", HELADO: "helado.webp", PERFUME: "perfume.webp", GORRA: "gorra.webp", OSITO: "osito.webp" };
+        
         const bloques = [
-            [{id:1,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:["10 WITCH"]},{id:2,g:"2.gif",gifts:["ROSA_1M"],txt:["1 TANK"]},{id:3,g:"3.gif",gifts:["BAILECITO DE","10 SEGUNDOS"],tipo:"2l"},{id:4,g:"4.gif",gifts:["TIKTOK_3D"],txt:["5 WITCH"]},{id:5,g:"5.gif",gifts:["GG_3D"],txt:["10 CHARGER"]},{id:6,g:"6.gif",gifts:["COREANO"],txt:["10 TANK"]},{id:7,g:"7.gif",gifts:[["20","HUNTER"],["20","WITCH"]],tipo:"m"},{id:8,g:"8.gif",gifts:["ROSQUILLA"],txt:[["20","HUNTER"],["20","SMOKER"]],tipo:"m"}],
-            [{id:9,g:"9.gif",gifts:["GAFAS"],txt:[["5","SMOKER"],["5","HUNTER"],["10","WITCH"]],tipo:"m"},{id:10,g:"10.gif",gifts:["CONFETTI"],txt:[["10","SMOKER"],["10","SPITTER"],["10","CHARGER"]],tipo:"m"},{id:11,g:"11.gif",gifts:["HELADO"],txt:[["5","SPITTER"],["5","JOCKEYS"]],tipo:"m"},{id:12,g:"12.gif",gifts:["PERFUME"],txt:[["5","BOOMER"],["5","SPITTER"]],tipo:"m"},{id:13,g:"13.gif",gifts:["GORRA"],txt:[["10","SMOKER"],["10","TANK"]],tipo:"m"},{id:14,g:"14.gif",gifts:["OSITO"],txt:["40 TANK"]},{id:15,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:["10 WITCH"]},{id:16,g:"2.gif",gifts:["ROSA_1M"],txt:["1 TANK"]}]
+            [{id:1,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:"10 WITCH"},{id:2,g:"2.gif",gifts:["ROSA_1M"],txt:"1 TANK"},{id:3,g:"3.gif",txtL1:"BAILECITO DE",txtL2:"10 SEGUNDOS",tipo:"2l"},{id:4,g:"4.gif",gifts:["TIKTOK_3D"],txt:"5 WITCH"},{id:5,g:"5.gif",gifts:["ROSA_1M"],txt:"1 TANK"},{id:6,g:"6.gif",gifts:["COREANO"],txt:"10 TANK"},{id:7,g:"7.gif",gifts:["ROSE_30M"],txtM:[{cant:"20",inf:"HUNTER"},{cant:"20",inf:"WITCH"}],tipo:"m"},{id:8,g:"8.gif",gifts:["ROSQUILLA"],txtM:[{cant:"20",inf:"HUNTER"},{cant:"20",inf:"SMOKER"}],tipo:"m"}],
+            [{id:9,g:"9.gif",gifts:["GAFAS"],txtM:[{cant:"5",inf:"SMOKER"},{cant:"5",inf:"HUNTER"},{cant:"10",inf:"WITCH"}],tipo:"m"},{id:10,g:"10.gif",gifts:["CONFETTI"],txtM:[{cant:"10",inf:"SMOKER"},{cant:"10",inf:"SPITTER"},{cant:"10",inf:"CHARGER"}],tipo:"m"},{id:11,g:"11.gif",gifts:["HELADO"],txtM:[{cant:"5",inf:"SPITTER"},{cant:"5",inf:"JOCKEYS"}],tipo:"m"},{id:12,g:"12.gif",gifts:["PERFUME"],txtM:[{cant:"5",inf:"BOOMER"},{cant:"5",inf:"SPITTER"}],tipo:"m"},{id:13,g:"13.gif",gifts:["GORRA"],txtM:[{cant:"10",inf:"SMOKER"},{cant:"10",inf:"TANK"}],tipo:"m"},{id:14,g:"14.gif",gifts:["OSITO"],txt:"40 TANK"},{id:15,g:"1.gif",gifts:["SEGUIR","CORAZON_AZUL"],txt:"10 WITCH"},{id:16,g:"2.gif",gifts:["ROSA_1M"],txt:"1 TANK"}]
         ];
         
-        // CORRECCIÓN DIRECTA CON ÍNDICES EXPLICITOS DE JAVASCRIPT
         function genTxt(t) {
-            if (!t.txt) return ''; 
             var clE = (t.id === 9 || t.id === 10) ? ' pos-alta' : ''; 
             var estE = (t.id === 8) ? ' style="margin-left:20px !important;"' : '';
             
-            // Tarjetas de dos líneas separadas por índice exacto
             if (t.tipo === "2l") {
-                var l1 = t.txt[0]; 
-                var l2 = t.txt[1];
-                return '<div class="nombre-flotante texto-dos-lineas' + clE + '"><span>' + l1 + '</span><span>' + l2 + '</span></div>';
+                return '<div class="nombre-flotante texto-dos-lineas' + clE + '"><span>' + t.txtL1 + '</span><span>' + t.txtL2 + '</span></div>';
             }
-            
-            // Tarjetas con columnas de infectados juntas procesadas de forma individual
             if (t.tipo === "m") {
-                var columnas = t.txt.map(function(c) {
-                    var cant = c[0]; 
-                    var inf = c[1];
-                    return '<div class="col-item"><span>' + cant + '</span><span>' + inf + '</span></div>';
+                var columnas = t.txtM.map(function(c) {
+                    return '<div class="col-item"><span>' + c.cant + '</span><span>' + c.inf + '</span></div>';
                 }).join('');
                 return '<div class="nombre-flotante multi-col' + clE + '"' + estE + '>' + columnas + '</div>';
             }
-            
-            var tNormal = t.txt[0];
-            return '<div class="nombre-flotante' + clE + '">' + tNormal + '</div>';
+            return '<div class="nombre-flotante' + clE + '">' + t.txt + '</div>';
         }
 
         container.innerHTML = bloques.map(grupo => `
-            <div class="bloque-grupo">${grupo.map((t,i)=>{ const tA=t.gifts.includes("CORAZON_AZUL")&&t.gifts.includes("SEGUIR"); return `
+            <div class="bloque-grupo">${grupo.map((t,i)=>{ const tA=t.gifts&&t.gifts.includes("CORAZON_AZUL")&&t.gifts.includes("SEGUIR"); return `
                 <div class="card" style="--c:${est[i].c}; --s:${est[i].s}">${genTxt(t)}<div class="img-box"><img src="${t.g}"></div><div class="esq-izq">
-                <div class="gift-box ${tA?'doble-columna':''}">${t.gifts.filter(k=>REG[k]).map(k=>`<div class="tiktok-gift"><img class="gift-img ${k==="SEGUIR"?'bg-negro-seguir':''}" src="regalos/${REG[k]}">${k==="CORAZON_AZUL"?'<div class="tap-tap-texto">TAP TAP</div>':''}</div>`).join('')}</div>
+                <div class="gift-box ${tA?'doble-columna':''}">${t.gifts?t.gifts.filter(k=>REG[k]).map(k=>`<div class="tiktok-gift"><img class="gift-img ${k==="SEGUIR"?'bg-negro-seguir':''}" src="regalos/${REG[k]}">${k==="CORAZON_AZUL"?'<div class="tap-tap-texto">TAP TAP</div>':''}</div>`).join(''):''}</div>
                 </div></div>`;}).join('')}</div>`).join('');
         const els = container.getElementsByClassName('bloque-grupo');
         function rotar(){ const act=container.querySelector('.bloque-grupo.activo'); if(act)act.classList.remove('activo'); if(els[bAct])els[bAct].classList.add('activo'); bAct=(bAct+1)%bloques.length; }
