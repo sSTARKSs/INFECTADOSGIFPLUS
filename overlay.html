@@ -10,19 +10,13 @@
         .bloque-grupo.activo { display: grid; }
         .bloque-grupo > div:nth-child(-n+4) { transform: translateY(35px); }
         
-        /* Ajustes de posición vertical fina general para la fila de abajo */
+        /* Ajustes de posición vertical fina estándar */
         .bloque-grupo > div:nth-child(n+5) .nombre-flotante { top: -24px !important; }
         .bloque-grupo > div:nth-child(n+5) .texto-dos-lineas { top: -28px !important; }
         .bloque-grupo > div:nth-child(n+5) .multi-col { top: -30px !important; }
         
-        /* --- AJUSTES EXCLUSIVOS SOLICITADOS --- */
-        /* Tarjeta 8: Desplazar textos a la derecha para no tapar el regalo */
-        .bloque-grupo:nth-child(1) > div:nth-child(8) .multi-col { padding-left: 25px !important; }
-        
-        /* Tarjetas 9 y 10: Subir textos más arriba para liberar espacio de donación */
-        .bloque-grupo:nth-child(2) > div:nth-child(1) .multi-col,
-        .bloque-grupo:nth-child(2) > div:nth-child(2) .multi-col { top: -48px !important; }
-        /* -------------------------------------- */
+        /* Clase especial para forzar que las tarjetas 9 y 10 suban mucho más */
+        .pos-alta { top: -48px !important; }
         
         .card { background: rgba(10, 12, 16, 0.85); border-radius: 12px; width: 190px; height: 240px; position: relative; border: 2px solid var(--c); box-shadow: 0 0 14px var(--s), inset 0 0 8px var(--s); box-sizing: border-box; }
         .img-box, .esq-izq { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
@@ -58,30 +52,37 @@
         ];
         const REGALOS = { SEGUIR: "seguir.webp", CORAZON_AZUL: "azul.webp", ROSA_1M: "rosa.webp", ROSA_BLANCA_METAL: "blanca.webp", TIKTOK_3D: "tiktok.webp", GG_3D: "gg.webp", COREANO: "coreano.webp", ROSE_30M: "rose.webp", ROSQUILLA: "rosquilla.webp", GAFAS: "gafas.webp", CONFETTI: "confetti.webp", HELADO: "helado.webp", PERFUME: "perfume.webp", GORRA: "gorra.webp", OSITO: "osito.webp" };
         
+        // Se añadieron identificadores de tarjeta (id) para aplicar los cambios quirúrgicos desde la raíz
         const bloques = [
             [
-                { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] },   
-                { g: "3.gif", gifts: ["ROSA_BLANCA_METAL"], txt: ["BAILECITO DE", "10 SEGUNDOS"], tipo: "2l" }, { g: "4.gif", gifts: ["TIKTOK_3D"], txt: ["5 WITCH"] },
-                { g: "5.gif", gifts: ["GG_3D"], txt: ["10 CHARGER"] }, { g: "6.gif", gifts: ["COREANO"], txt: ["10 TANK"] }, 
-                { g: "7.gif", gifts: ["ROSE_30M"], txt: [["20", "HUNTER"], ["20", "WITCH"]], tipo: "m" }, { g: "8.gif", gifts: ["ROSQUILLA"], txt: [["20", "HUNTER"], ["20", "SMOKER"]], tipo: "m" }
+                { id: 1, g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { id: 2, g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] },   
+                { id: 3, g: "3.gif", gifts: ["ROSA_BLANCA_METAL"], txt: ["BAILECITO DE", "10 SEGUNDOS"], tipo: "2l" }, { id: 4, g: "4.gif", gifts: ["TIKTOK_3D"], txt: ["5 WITCH"] },
+                { id: 5, g: "5.gif", gifts: ["GG_3D"], txt: ["10 CHARGER"] }, { id: 6, g: "6.gif", gifts: ["COREANO"], txt: ["10 TANK"] }, 
+                { id: 7, g: "7.gif", gifts: ["ROSE_30M"], txt: [["20", "HUNTER"], ["20", "WITCH"]], tipo: "m" }, { id: 8, g: "8.gif", gifts: ["ROSQUILLA"], txt: [["20", "HUNTER"], ["20", "SMOKER"]], tipo: "m" }
             ],
             [
-                { g: "9.gif", gifts: ["GAFAS"], txt: [["5", "SMOKER"], ["5", "HUNTER"], ["10", "WITCH"]], tipo: "m" },    
-                { g: "10.gif", gifts: ["CONFETTI"], txt: [["10", "SMOKER"], ["10", "SPITTER"], ["10", "CHARGER"]], tipo: "m" }, 
-                { g: "11.gif", gifts: ["HELADO"], txt: [["5", "SPITTER"], ["5", "JOCKEYS"]], tipo: "m" },   
-                { g: "12.gif", gifts: ["PERFUME"], txt: [["5", "BOOMER"], ["5", "SPITTER"]], tipo: "m" },
-                { g: "13.gif", gifts: ["GORRA"], txt: [["10", "SMOKER"], ["10", "TANK"]], tipo: "m" }, 
-                { g: "14.gif", gifts: ["OSITO"], txt: ["40 TANK"] }, { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
+                { id: 9, g: "9.gif", gifts: ["GAFAS"], txt: [["5", "SMOKER"], ["5", "HUNTER"], ["10", "WITCH"]], tipo: "m" },    
+                { id: 10, g: "10.gif", gifts: ["CONFETTI"], txt: [["10", "SMOKER"], ["10", "SPITTER"], ["10", "CHARGER"]], tipo: "m" }, 
+                { id: 11, g: "11.gif", gifts: ["HELADO"], txt: [["5", "SPITTER"], ["5", "JOCKEYS"]], tipo: "m" },   
+                { id: 12, g: "12.gif", gifts: ["PERFUME"], txt: [["5", "BOOMER"], ["5", "SPITTER"]], tipo: "m" },
+                { id: 13, g: "13.gif", gifts: ["GORRA"], txt: [["10", "SMOKER"], ["10", "TANK"]], tipo: "m" }, 
+                { id: 14, g: "14.gif", gifts: ["OSITO"], txt: ["40 TANK"] }, { id: 15, g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { id: 16, g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
             ]
         ];
 
         function genTxt(t) {
             if (!t.txt) return '';
             
+            // Forzar subida de posición alta en tarjetas 9 y 10
+            var claseExtra = (t.id === 9 || t.id === 10) ? ' pos-alta' : '';
+            
+            // Forzar margen derecho exclusivo en la tarjeta 8
+            var estiloExtra = (t.id === 8) ? ' style="margin-left: 20px !important;"' : '';
+            
             if (t.tipo === "2l") {
                 var l1 = t.txt[0];
                 var l2 = t.txt[1];
-                return '<div class="nombre-flotante texto-dos-lineas"><span>' + l1 + '</span><span>' + l2 + '</span></div>';
+                return '<div class="nombre-flotante texto-dos-lineas' + claseExtra + '"><span>' + l1 + '</span><span>' + l2 + '</span></div>';
             }
             
             if (t.tipo === "m") {
@@ -90,11 +91,11 @@
                     var inf = c[1];
                     return '<div class="col-item"><span>' + cant + '</span><span>' + inf + '</span></div>';
                 }).join('');
-                return '<div class="nombre-flotante multi-col">' + columnas + '</div>';
+                return '<div class="nombre-flotante multi-col' + claseExtra + '"' + estiloExtra + '>' + columnas + '</div>';
             }
             
             var tNormal = t.txt[0];
-            return '<div class="nombre-flotante">' + tNormal + '</div>';
+            return '<div class="nombre-flotante' + claseExtra + '">' + tNormal + '</div>';
         }
 
         container.innerHTML = bloques.map(grupo => `
