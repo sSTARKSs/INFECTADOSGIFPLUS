@@ -8,13 +8,13 @@
 body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA CORREGIDA: Se aumenta el gap vertical a 60px para separar las filas y subir las tarjetas de arriba */
+/* CUADRÍCULA CORREGIDA: Se aumenta el gap vertical a 66px para subir la hilera de arriba y dar más aire al texto de abajo */
 .bloque-grupo { 
     display: none; 
     grid-template-columns: repeat(4, 200px); 
     grid-template-rows: repeat(2, 260px);    
     grid-auto-flow: row !important; 
-    gap: 60px 25px; /* 60px de separación vertical para dar espacio a los textos de abajo */
+    gap: 66px 25px; /* Aumentado a 66px vertical para un ajuste milimétrico más separado */
     width: 900px;
     justify-content: center;
     align-content: center;
