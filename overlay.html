@@ -2,24 +2,24 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Overlay L4D 4x2 Horizontal - TikTok Studio</title>
+<title>Overlay L4D Horizontal Continuo 8x1 - TikTok Studio</title>
 <style>
-/* CONFIGURACIÓN DE PANTALLA COMPLETA */
+/* CONFIGURACIÓN DE PANTALLA COMPLETA PANORÁMICA */
 body { margin: 0; background: transparent; overflow: hidden; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA IDÉNTICA A LA FOTO: 4 columnas a lo ancho x 2 filas hacia abajo */
+/* CUADRÍCULA HORIZONTAL CONTINUA: 8 columnas de izquierda a derecha x 1 sola fila */
 .bloque-grupo { 
     display: none; 
-    grid-template-columns: repeat(4, 165px); 
-    grid-template-rows: repeat(2, 210px); 
-    grid-auto-flow: row !important; /* Fuerza el orden estricto de izquierda a derecha */
-    gap: 65px 15px; 
+    grid-template-columns: repeat(8, 165px); 
+    grid-template-rows: 210px; 
+    grid-auto-flow: column !important; /* Fuerza el flujo puramente horizontal */
+    gap: 15px; 
     animation: fadeIn 0.4s ease-in-out; 
 }
 .bloque-grupo.activo { display: grid; }
 
-/* Empuje vertical para dar aire a los textos flotantes superiores */
+/* Espacio vertical para dar aire a los textos flotantes superiores */
 .bloque-grupo > div { transform: translateY(20px); }
 
 /* TARJETAS VERTICALES CON BORDE Y SOMBRA RGB CAMBIANTE (TODAS INCLUIDAS) */
@@ -37,7 +37,7 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.7) contrast(1.1); }
 .esq-izq { z-index: 10; pointer-events: none; }
 
-/* REGALOS COMUNES CORREGIDOS: Bajados a la esquina superior izquierda de la imagen (Debajo del texto flotante) */
+/* REGALOS COMUNES BAJADOS: En la esquina superior izquierda interna (Debajo del texto flotante) */
 .gift-box-baja { position: absolute; top: 15px; left: 15px; display: flex !important; align-items: center; z-index: 30 !important; }
 .tiktok-gift { position: relative; width: 44px; height: 44px; display: flex !important; justify-content: center; align-items: center; }
 .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)) !important; }
@@ -56,7 +56,7 @@ body { margin: 0; background: transparent; overflow: hidden; width: 100vw; heigh
 .col-item { display: flex; flex-direction: column; align-items: center; line-height: 1.1; }
 .col-item span:first-child { font-size: 13px; }
 
-/* ANIMACIONES RGB TOTALES */
+/* ANIMACIONES RGB EN BORDES Y LETRAS */
 @keyframes bordeRgbCambiante { 
     0%, 100% { border: 2px solid #ff0050; box-shadow: 0 0 12px rgba(255,0,80,0.6), inset 0 0 6px rgba(255,0,80,0.4); } 
     33% { border: 2px solid #00e5ff; box-shadow: 0 0 12px rgba(0,229,255,0.6), inset 0 0 6px rgba(0,229,255,0.4); } 
