@@ -17,13 +17,24 @@
         .img-box img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) contrast(1.1); }
         .esq-izq { z-index: 10; pointer-events: none; }
         
-        /* CORRECCIÓN DE REGALOS: Alineados horizontalmente, bien pegados y en el orden correcto */
-        .gift-box { position: absolute; top: -34px; left: -12px; display: flex; flex-direction: row-reverse; gap: 0px; align-items: center; z-index: 20; }
-        .tiktok-gift { position: relative; width: 58px; height: 58px; display: flex; justify-content: center; align-items: center; }
+        /* FIX HORIZONTAL: Fuerza un diseño de fila estricto sin saltos de línea ni modo torre */
+        .gift-box { position: absolute; top: -34px; left: -22px; display: flex !important; flex-direction: row !important; gap: 0px !important; align-items: center; z-index: 20; }
+        .tiktok-gift { position: relative; width: 58px; height: 58px; display: flex !important; justify-content: center; align-items: center; }
         .gift-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(2px 4px 5px rgba(0,0,0,0.8)); }
+        
+        /* Recorte de silueta negro para aislar el muñeco de seguir sobre los gifs */
+        .bg-silueta-seguir {
+            filter: drop-shadow(2px 0px 0px #000) 
+                    drop-shadow(-2px 0px 0px #000) 
+                    drop-shadow(0px 2px 0px #000) 
+                    drop-shadow(0px -2px 0px #000)
+                    drop-shadow(2px 2px 1px #000)
+                    drop-shadow(-2px -2px 1px #000) !important;
+        }
+        
         .tap-tap-texto { position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); font-family: 'Arial Black', Impact, sans-serif; font-size: 10px; font-weight: 900; color: #fff300; text-shadow: 1.5px 1.5px 0 #000, -1.5px -1.5px 0 #000, 1.5px -1.5px 0 #000, -1.5px 1.5px 0 #000, 0 0 6px rgba(255,243,0,0.8); white-space: nowrap; z-index: 35; letter-spacing: -0.3px; }
         
-        /* TEXTOS RGB ULTRA GRUESOS PERFECTAMENTE SINCRONIZADOS SIN CONTORNOS BLANCOS */
+        /* TEXTO INTERNO ULTRA GRUESO CON CONTORNO RGB FLUIDO SIN BORDES BLANCOS Viejos */
         .nombre-flotante { position: absolute; font-family: 'Arial Black', Impact, sans-serif; font-weight: 900; white-space: nowrap; z-index: 40; left: 50%; transform: translateX(-50%); top: -38px; font-size: 20px; animation: rgbCambiante 4s linear infinite; display: flex; justify-content: center; align-items: center; gap: 8px; width: 100%; text-align: center; -webkit-text-stroke: 1.5px currentColor; paint-order: stroke fill; text-shadow: 3px 3px 0px #000, -2px -2px 0px #000, 2px -2px 0px #000, -2px 2px 0px #000; }
         .texto-dos-lineas { display: flex; flex-direction: column; line-height: 0.95; font-size: 13px; top: -32px; }
         .multi-col { display: flex; flex-direction: row; justify-content: space-around; width: 100%; gap: 2px; font-size: 11px; top: -43px; }
@@ -47,7 +58,7 @@
         
         const bloques = [
             [
-                { g: "1.gif", gifts: ["SEGUIR", "CORAZON_AZUL"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] },   
+                { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] },   
                 { g: "3.gif", gifts: ["ROSA_BLANCA_METAL"], txt: ["BAILECITO DE", "10 SEGUNDOS"], tipo: "2l" }, { g: "4.gif", gifts: ["TIKTOK_3D"], txt: ["5 WITCH"] },
                 { g: "5.gif", gifts: ["GG_3D"], txt: ["10 CHARGER"] }, { g: "6.gif", gifts: ["COREANO"], txt: ["10 TANK"] }, 
                 { g: "7.gif", gifts: ["ROSE_30M"], txt: [["20", "HUNTER"], ["20", "WITCH"]], tipo: "m" }, { g: "8.gif", gifts: ["ROSQUILLA"], txt: [["20", "HUNTER"], ["20", "SMOKER"]], tipo: "m" }
@@ -58,10 +69,11 @@
                 { g: "11.gif", gifts: ["HELADO"], txt: [["5", "SPITTER"], ["5", "JOCKEYS"]], tipo: "m" },   
                 { g: "12.gif", gifts: ["PERFUME"], txt: [["5", "BOOMER"], ["5", "SPITTER"]], tipo: "m" },
                 { g: "13.gif", gifts: ["GORRA"], txt: [["10", "SMOKER"], ["10", "TANK"]], tipo: "m" }, 
-                { g: "14.gif", gifts: ["OSITO"], txt: ["40 TANK"] }, { g: "1.gif", gifts: ["SEGUIR", "CORAZON_AZUL"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
+                { g: "14.gif", gifts: ["OSITO"], txt: ["40 TANK"] }, { g: "1.gif", gifts: ["CORAZON_AZUL", "SEGUIR"], txt: ["10 WITCH"] }, { g: "2.gif", gifts: ["ROSA_1M"], txt: ["1 TANK"] } 
             ]
         ];
 
+        // CORRECCIÓN INTERNA RESUELTA: Accede estrictamente a los índices de los sub-arrays para evitar la inyección automática de comas en HTML
         function genTxt(t) {
             if (!t.txt || t.txt.length === 0) return '';
             if (t.tipo === "2l") {
@@ -84,7 +96,7 @@
                                 ${t.gifts.filter(k => REGALOS[k]).map(k => `
                                     <div class="tiktok-gift">
                                         ${k === "CORAZON_AZUL" ? '<div class="tap-tap-texto">TAP TAP</div>' : ''}
-                                        <img class="gift-img" src="regalos/${REGALOS[k]}" alt="${k}" loading="lazy">
+                                        <img class="gift-img ${k === 'SEGUIR' ? 'bg-silueta-seguir' : ''}" src="regalos/${REGALOS[k]}" alt="${k}" loading="lazy">
                                     </div>
                                 `).join('')}
                             </div>
