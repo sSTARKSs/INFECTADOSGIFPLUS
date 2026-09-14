@@ -8,13 +8,13 @@
 body { margin: 0; background: transparent; overflow: hidden; width: 1920px; height: 1080px; display: flex; justify-content: center; align-items: center; font-family: 'Montserrat', sans-serif; }
 #overlay-container { display: flex; justify-content: center; align-items: center; width: 100%; height: 100%; box-sizing: border-box; padding: 20px; }
 
-/* CUADRÍCULA AJUSTADA: 52px vertical para evitar choques y 6px horizontal para pegarlas a los lados */
+/* CUADRÍCULA CORREGIDA MILIMÉTRICAMENTE: Gap vertical bajado de 52px a 49px para acercar la hilera de arriba */
 .bloque-grupo { 
     display: none; 
     grid-template-columns: repeat(4, 230px); 
     grid-template-rows: repeat(2, 290px);    
     grid-auto-flow: row !important; 
-    gap: 52px 6px; /* 52px vertical (aire para los textos) y 6px horizontal (bien juntas a los lados) */
+    gap: 49px 6px; /* Ajuste preciso: 49px vertical y 6px horizontal */
     width: 960px;
     justify-content: center;
     align-content: center;
