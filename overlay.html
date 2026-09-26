@@ -78,17 +78,21 @@ html, body {
 .svg-wrapper-top { position: absolute !important; top: -15px !important; left: -15px !important; width: 545px !important; height: 160px !important; z-index: 45 !important; pointer-events: none !important; }
 .svg-wrapper-bottom { position: absolute !important; bottom: -15px !important; left: -15px !important; width: 545px !important; height: 320px !important; z-index: 45 !important; pointer-events: none !important; }
 
+
+
+
+
 /* TEXTO DE LA WITCH EN LA ESQUINA SUPERIOR DERECHA ABSOLUTA */
 .texto-witch-premium {
     position: absolute !important;
     top: 30px !important;
     right: 35px !important;
     font-family: 'Bebas Neue', sans-serif !important;
-    font-size: 75px !important;
+    font-size: 85px !important;
     font-style: italic !important;
     font-weight: 700 !important;
     color: #ffffff !important;
-    text-shadow: 3px 3px 0px #040508, -3px -3px 0px #040508, 3px -3px 0px #040508, -3px 3px 0px #040508 !important;
+    text-shadow: 4px 4px 0px #040508, -4px -4px 0px #040508, 4px -4px 0px #040508, -4px 4px 0px #040508 !important;
     z-index: 50 !important;
     pointer-events: none !important;
 }
@@ -205,13 +209,14 @@ html, body {
 .sub-box-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 
 /* TEXTOS INTERNOS */
-.texto-seguir-interno { position: absolute !important; top: 6px !important; left: 50% !important; transform: translateX(-50%) !important; font-family: 'Bebas Neue', sans-serif; font-size: 20px; font-weight: 700; color: #ffffff; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000 !important; white-space: nowrap; z-index: 25; text-align: center; }
-.texto-taptap-interno { position: absolute !important; top: 6px !important; left: 50% !important; transform: translateX(-50%) !important; font-family: 'Bebas Neue', sans-serif; font-size: 20px; font-weight: 700; color: #ffffff; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000 !important; white-space: nowrap; z-index: 25; text-align: center; }
+.texto-seguir-interno { position: absolute !important; top: 6px !important; left: 50% !important; transform: translateX(-50%) !important; font-family: 'Bebas Neue', sans-serif; font-size: 22px; font-weight: 700; color: #ffffff; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000 !important; white-space: nowrap; z-index: 25; text-align: center; }
+.texto-taptap-interno { position: absolute !important; top: 6px !important; left: 50% !important; transform: translateX(-50%) !important; font-family: 'Bebas Neue', sans-serif; font-size: 22px; font-weight: 700; color: #ffffff; text-shadow: 2px 2px 0 #000, -2px -2px 0 #000 !important; white-space: nowrap; z-index: 25; text-align: center; }
 </style>
 </head>
 <body>
 
 <div id="overlay-container"></div>
+
 
 
 <script>
@@ -224,23 +229,22 @@ const REGALOS = {
     TIKTOK_3D: "tiktok.webp", GG_3D: "gg.webp", ROSE_30M: "rose.webp", ROSQUILLA: "rosquilla.webp", 
     GAFAS: "gafas.webp", CONFETTI: "confetti.webp", GORRA: "gorra.webp", OSITO: "osito.webp",
     ADORO: "adoro.webp", ALAS: "alas.webp", APLAUSO: "aplauso.webp", CONO: "cono.webp",
-    PERFUME: "perfume.webp",
-    GALAXIA: "galaxia.webp" /* Añadido el regalo de la Galaxia */
+    PERFUME: "perfume.webp", GALAXIA: "galaxia.webp"
 };
 
 const tarjetasHeroes = [
-    { g: "5.webp", c: "c-h1", id: "dar_vida", gift: "ADORO", esHeroe: true }, 
-    { g: "6.webp", c: "c-h2", id: "vida_todos", gift: "ALAS", esHeroe: true },
-    { g: "7.webp", c: "c-h3", id: "arma_random", gift: "APLAUSO", esHeroe: true },
-    { g: "8.webp", c: "c-h4", id: "matar_enemigos", gift: "CONO", esHeroe: true },
-    { g: "22.webp", c: "c-h5", id: "curar_compa", gift: "PERFUME", esHeroe: true }, 
-    { g: "23.webp", c: "c-h6", id: "apagar_live", gift: "GALAXIA", esHeroe: true } /* Actualizado a apagar_live con GALAXIA */
+    { g: "5.webp", c: "c-h1", id: "DAR VIDA", gift: "ADORO", esHeroe: true }, 
+    { g: "6.webp", c: "c-h2", id: "VIDA\nTODOS", gift: "ALAS", esHeroe: true }, // Dos líneas
+    { g: "7.webp", c: "c-h3", id: "ARMA\nRANDOM", gift: "APLAUSO", esHeroe: true }, // Dos líneas
+    { g: "8.webp", c: "c-h4", id: "MATAR\nENEMIGOS", gift: "CONO", esHeroe: true }, // Dos líneas
+    { g: "22.webp", c: "c-h5", id: "BAILE DE\n10 SEGUNDOS", gift: "PERFUME", esHeroe: true }, // Reemplazado y en dos líneas
+    { g: "23.webp", c: "c-h6", id: "APAGAR\nLIVE", gift: "GALAXIA", esHeroe: true } // Dos líneas
 ];
 
 const tarjetasVillanos = [
     { g: "1.webp", c: "c-1", mult: "X5", dobleGift: true, esWitch: true }, 
     { g: "2.webp", c: "c-2", infNombre: "TANK", mult: "X1", gift: "ROSA_1M" }, 
-    { g: "3.webp", c: "c-3", infNombre: "JOCKEY", gift: "ROSA_BLANCA_METAL" }, 
+    { g: "3.webp", c: "c-3", infNombre: "JOCKEY", mult: "X1", gift: "ROSA_BLANCA_METAL" }, 
     { g: "4.webp", c: "c-4", infNombre: "CHARGER", mult: "X1", gift: "TIKTOK_3D" }, 
     { g: "9.webp", c: "c-5", infNombre: "HUNTER", mult: "X1", gift: "GG_3D" },
     { g: "10.webp", c: "c-6", infNombre: "SMOKER", mult: "X1", gift: "INCREIBLE" },
@@ -256,81 +260,64 @@ const tarjetasVillanos = [
     { g: "20.webp", c: "c-16", infNombre: "HUNTER WITCH", mult: "X40", gift: "CONFETTI" }, 
     { g: "21.webp", c: "c-17", infNombre: "CAOS TOTAL", mult: "X50", gift: "OSITO" }
 ];
-</script>
 
 
 
-<script>
+
+/* FUNCIONES DE RENDERIZADO VECTORIAL ASISTIDO PARA MÁXIMA CALIDAD */
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
-             <text x="540" y="125" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="120px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">HEROES</text>
-           </svg>`;
+        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">BENEFICIOS HÉROES</text>
+    </svg>`;
 }
 
 function drawSvgTitleVillanos() {
     return `<svg class="svg-wrapper-title-villanos" viewBox="0 0 3780 160">
-             <text x="1890" y="125" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="120px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">VILLANOS</text>
-           </svg>`;
+        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">INOCULACIONES INFECTADOS</text>
+    </svg>`;
 }
 
-function drawSvgTop(texto) {
-    let html = `<svg class="svg-wrapper-top" viewBox="0 0 540 140">`;
-    html += `<text x="45" y="115" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="120px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${texto}</text>`;
-    return html + `</svg>`;
+function drawSvgTop(multiplicador) {
+    return `<svg class="svg-wrapper-top" viewBox="0 0 545 160">
+        <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="85px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${multiplicador}</text>
+    </svg>`;
 }
 
-function drawSvgBottomHeroeManual(idTarjeta) {
+function drawSvgBottomHeroeManual(textoId) {
+    let lineas = String(textoId).split('\n');
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
     
-    if (idTarjeta === "dar_vida") {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">VIDA</text>`;
-        htmlSvg += `<text x="25" y="185" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">DAR</text>`;
-    } 
-    else if (idTarjeta === "vida_todos") {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="46px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">A TODOS</text>`;
-        htmlSvg += `<text x="25" y="190" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="46px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">DAR VIDA</text>`;
-    } 
-    else if (idTarjeta === "arma_random") {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">RANDOM</text>`;
-        htmlSvg += `<text x="25" y="185" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">ARMA</text>`;
-    } 
-    else if (idTarjeta === "matar_enemigos") {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="42px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">ENEMIGOS</text>`;
-        htmlSvg += `<text x="25" y="195" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="42px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
+    if (lineas.length > 1) {
+        // Renderizado inverso de abajo hacia arriba para un ajuste perfecto de caja
+        let lineasInvertidas = lineas.slice().reverse();
+        for (let i = 0; i < lineasInvertidas.length; i++) {
+            let posY = 235 - (i * 56);
+            htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="56px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="11" stroke-linejoin="round" paint-order="stroke fill">${lineasInvertidas[i]}</text>`;
+        }
+    } else {
+        htmlSvg += `<text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoId}</text>`;
     }
-    else if (idTarjeta === "curar_compa") {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="42px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">10 SEGUNDOS</text>`;
-        htmlSvg += `<text x="25" y="195" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="42px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">BAILE DE</text>`;
-    }
-    /* Tarjeta 23 de los Héroes configurada exactamente con APAGAR LIVE */
-    else if (idTarjeta === "apagar_live") {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">LIVE</text>`;
-        htmlSvg += `<text x="25" y="185" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">APAGAR</text>`;
-    }
-    
     return htmlSvg + `</svg>`;
 }
-</script>
 
-
-
-<script>
 function drawSvgBottomVillano(texto) {
     let textoLimpio = String(texto).trim();
     let palabras = textoLimpio.split(/\s+/);
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
     
     if (palabras.length > 1) {
-        let palabrasInvertivas = palabras.slice().reverse();
-        for (let i = 0; i < palabrasInvertivas.length; i++) {
-            let posY = 240 - (i * 48);
-            htmlSvg += `<text x="25" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="42px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="9" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertivas[i]}</text>`;
+        let palabrasInvertidas = palabras.slice().reverse();
+        for (let i = 0; i < palabrasInvertidas.length; i++) {
+            let posY = 235 - (i * 54);
+            htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertidas[i]}</text>`;
         }
     } else {
-        htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="58px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="11" stroke-linejoin="round" paint-order="stroke fill">${textoLimpio}</text>`;
+        htmlSvg += `<text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="68px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoLimpio}</text>`;
     }
     return htmlSvg + `</svg>`;
 }
+
+
 
 function generarTarjetaHTML(t) {
     let esTarjetaAncha = (t.c === "c-11" || t.c === "c-14" || t.c === "c-16" || t.c === "c-17");
@@ -342,7 +329,13 @@ function generarTarjetaHTML(t) {
     }
     
     if (t.mult) {
-        html += drawSvgTop(t.mult);
+        if (esTarjetaAncha) {
+            html += `<svg class="svg-wrapper-top" viewBox="0 0 1096 160">
+                <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="85px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${t.mult}</text>
+            </svg>`;
+        } else {
+            html += drawSvgTop(t.mult);
+        }
     }
     html += `<div class="img-box"><img src="${t.g}" alt="Icono"></div>`;
     
@@ -352,18 +345,18 @@ function generarTarjetaHTML(t) {
         if (esTarjetaAncha) {
             let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 1080 280">`;
             if (t.infNombre === "INCAPACITAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="35" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
-                htmlSvg += `<text x="35" y="190" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">INCAPACITAR</text>`;
+                htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
+                htmlSvg += `<text x="35" y="180" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">INCAPACITAR</text>`;
             } else if (t.infNombre === "ELIMINAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="35" y="240" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
-                htmlSvg += `<text x="35" y="190" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
+                htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
+                htmlSvg += `<text x="35" y="180" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
             } else {
                 let textoLimpio = String(t.infNombre).trim();
                 let palabras = textoLimpio.split(/\s+/);
                 let palabrasInvertivas = palabras.slice().reverse();
                 for (let i = 0; i < palabrasInvertivas.length; i++) {
-                    let posY = 240 - (i * 48);
-                    htmlSvg += `<text x="35" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="50px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertivas[i]}</text>`;
+                    let posY = 235 - (i * 54);
+                    htmlSvg += `<text x="35" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="58px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="11" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertivas[i]}</text>`;
                 }
             }
             html += htmlSvg + `</svg>`;
@@ -399,3 +392,7 @@ if (container) {
 </script>
 </body>
 </html>
+
+
+
+
