@@ -19,16 +19,16 @@ html, body {
     font-family: 'Bebas Neue', sans-serif !important; 
 }
 
-/* CONTENEDOR MAESTRO HORIZONTAL ADAPTADO CON TRADUCCIÓN NATIVA DE GPU */
+/* CONTENEDOR MAESTRO ESCALADO PARA GRAN TAMAÑO (DE SCALE 0.15 A 0.45) */
 #overlay-container { 
     display: flex !important; 
-    gap: 0.6cm !important; 
+    gap: 1.2cm !important; 
     justify-content: center !important; 
     align-items: flex-start !important; 
     box-sizing: border-box !important; 
-    width: 6400px !important; 
-    height: 2400px !important;
-    transform: scale(0.15) translate3d(0,0,0) !important; 
+    width: 100% !important; 
+    height: auto !important;
+    transform: scale(0.45) translate3d(0,0,0) !important; 
     transform-origin: center center !important;
     margin: 0 auto !important;
 }
@@ -43,18 +43,18 @@ html, body {
     padding: 0 !important;
 }
 
-/* CUADRÍCULAS CON ESPACIADO FLUIDO PARA OBS / TIKTOK STUDIO */
+/* CUADRÍCULAS GRANDES CON ESPACIADO INTEGRAL PROXIMAL */
 .cuadrilla-heroes { 
     display: grid !important; 
     grid-template-columns: repeat(2, 540px) !important; 
     grid-template-rows: repeat(3, 680px) !important; 
-    gap: 16px 16px !important; 
+    gap: 20px 20px !important; 
 }
 .cuadrilla-villanos { 
     display: grid !important; 
     grid-template-columns: repeat(7, 540px) !important; 
     grid-template-rows: repeat(3, 680px) !important; 
-    gap: 16px 16px !important; 
+    gap: 20px 20px !important; 
 }
 
 /* CONFIGURACIÓN ANCHA EXCLUSIVA PARA LAS TARJETAS MÚLTIPLES MARCADAS */
@@ -63,12 +63,12 @@ html, body {
 .cuadrilla-villanos .c-16,
 .cuadrilla-villanos .c-17 {
     grid-column: span 2 !important; 
-    width: 1096px !important; 
+    width: 1100px !important; 
 }
 
 /* REAJUSTE DE CONTENEDORES INTERNOS EN TARJETAS EXTENDIDAS */
-.c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1085px !important; }
-.c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1085px !important; }
+.c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1090px !important; }
+.c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1090px !important; }
 
 /* CABECERAS VECTORIALES */
 .svg-wrapper-title-heroes { width: 1080px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 0 -10px 0 !important; }
@@ -234,11 +234,11 @@ const REGALOS = {
 
 const tarjetasHeroes = [
     { g: "5.webp", c: "c-h1", id: "DAR VIDA", gift: "ADORO", esHeroe: true }, 
-    { g: "6.webp", c: "c-h2", id: "VIDA\nTODOS", gift: "ALAS", esHeroe: true }, // Dos líneas
-    { g: "7.webp", c: "c-h3", id: "ARMA\nRANDOM", gift: "APLAUSO", esHeroe: true }, // Dos líneas
-    { g: "8.webp", c: "c-h4", id: "MATAR\nENEMIGOS", gift: "CONO", esHeroe: true }, // Dos líneas
-    { g: "22.webp", c: "c-h5", id: "BAILE DE\n10 SEGUNDOS", gift: "PERFUME", esHeroe: true }, // Reemplazado y en dos líneas
-    { g: "23.webp", c: "c-h6", id: "APAGAR\nLIVE", gift: "GALAXIA", esHeroe: true } // Dos líneas
+    { g: "6.webp", c: "c-h2", id: "VIDA\nTODOS", gift: "ALAS", esHeroe: true }, 
+    { g: "7.webp", c: "c-h3", id: "ARMA\nRANDOM", gift: "APLAUSO", esHeroe: true }, 
+    { g: "8.webp", c: "c-h4", id: "MATAR\nENEMIGOS", gift: "CONO", esHeroe: true }, 
+    { g: "22.webp", c: "c-h5", id: "BAILE DE\n10 SEGUNDOS", gift: "PERFUME", esHeroe: true }, 
+    { g: "23.webp", c: "c-h6", id: "APAGAR\nLIVE", gift: "GALAXIA", esHeroe: true }
 ];
 
 const tarjetasVillanos = [
@@ -267,13 +267,13 @@ const tarjetasVillanos = [
 /* FUNCIONES DE RENDERIZADO VECTORIAL ASISTIDO PARA MÁXIMA CALIDAD */
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
-        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">BENEFICIOS HÉROES</text>
+        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">HEROES</text>
     </svg>`;
 }
 
 function drawSvgTitleVillanos() {
     return `<svg class="svg-wrapper-title-villanos" viewBox="0 0 3780 160">
-        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">INOCULACIONES INFECTADOS</text>
+        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">VILLANOS</text>
     </svg>`;
 }
 
@@ -288,7 +288,6 @@ function drawSvgBottomHeroeManual(textoId) {
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
     
     if (lineas.length > 1) {
-        // Renderizado inverso de abajo hacia arriba para un ajuste perfecto de caja
         let lineasInvertidas = lineas.slice().reverse();
         for (let i = 0; i < lineasInvertidas.length; i++) {
             let posY = 235 - (i * 56);
@@ -321,7 +320,7 @@ function drawSvgBottomVillano(texto) {
 
 function generarTarjetaHTML(t) {
     let esTarjetaAncha = (t.c === "c-11" || t.c === "c-14" || t.c === "c-16" || t.c === "c-17");
-    let anchoEstilo = esTarjetaAncha ? 'width: 1096px !important;' : 'width: 540px !important;';
+    let anchoEstilo = esTarjetaAncha ? 'width: 1100px !important;' : 'width: 540px !important;';
     let html = `<div class="card ${t.c}" style="${anchoEstilo} height: 680px !important;">`; 
     
     if (t.esWitch) {
@@ -330,7 +329,7 @@ function generarTarjetaHTML(t) {
     
     if (t.mult) {
         if (esTarjetaAncha) {
-            html += `<svg class="svg-wrapper-top" viewBox="0 0 1096 160">
+            html += `<svg class="svg-wrapper-top" viewBox="0 0 1100 160">
                 <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="85px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${t.mult}</text>
             </svg>`;
         } else {
@@ -392,7 +391,5 @@ if (container) {
 </script>
 </body>
 </html>
-
-
 
 
