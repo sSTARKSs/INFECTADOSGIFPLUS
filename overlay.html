@@ -17,7 +17,7 @@ html, body {
     justify-content: center !important; 
     align-items: center !important; 
     font-family: 'Bebas Neue', sans-serif !important; 
-    /* MEJORAS DE NITIDEZ Y ANTI-PARPADEO CRÍTICAS */
+/* MEJORAS DE NITIDEZ Y ANTI-PARPADEO CRÍTICAS */
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
     image-rendering: -webkit-optimize-contrast !important;
@@ -27,14 +27,17 @@ html, body {
 /* CONTENEDOR MAESTRO HORIZONTAL ADAPTADO CON RENDERING SEGURO */
 #overlay-container { 
     display: flex !important; 
-    gap: 0.6cm !important; 
+    gap: 1.2cm !important; 
     justify-content: center !important; 
     align-items: flex-start !important; 
     box-sizing: border-box !important; 
-    width: 6400px !important; 
-    height: 2400px !important;
+    width: 100% !important; 
+    height: auto !important;
     /* FIX DE PARPADEO: Combinación precisa de escalado de hardware + perspectiva */
-    transform: scale(0.15) translate3d(0,0,0) !important; 
+    transform: scale(0.45) translate3d(0,0,0) !important; 
+    transform-origin: center center !important;
+    margin: 0 auto !important;
+    backface-visibility: hidden !important;
     transform-origin: center center !important;
     margin: 0 auto !important;
     backface-visibility: hidden !important;
@@ -53,18 +56,18 @@ html, body {
     padding: 0 !important;
 }
 
-/* CUADRÍCULAS CON ESPACIADO FLUIDO PARA OBS / TIKTOK STUDIO */
+/* CUADRÍCULAS GRANDES CON ESPACIADO INTEGRAL PROXIMAL */
 .cuadrilla-heroes { 
     display: grid !important; 
     grid-template-columns: repeat(2, 540px) !important; 
     grid-template-rows: repeat(3, 680px) !important; 
-    gap: 16px 16px !important; 
+    gap: 20px 20px !important; 
 }
 .cuadrilla-villanos { 
     display: grid !important; 
     grid-template-columns: repeat(7, 540px) !important; 
     grid-template-rows: repeat(3, 680px) !important; 
-    gap: 16px 16px !important; 
+    gap: 20px 20px !important; 
 }
 
 /* CONFIGURACIÓN ANCHA EXCLUSIVA PARA LAS TARJETAS MÚLTIPLES MARCADAS */
@@ -73,12 +76,12 @@ html, body {
 .cuadrilla-villanos .c-16,
 .cuadrilla-villanos .c-17 {
     grid-column: span 2 !important; 
-    width: 1096px !important; 
+    width: 1100px !important; 
 }
 
 /* REAJUSTE DE CONTENEDORES INTERNOS EN TARJETAS EXTENDIDAS */
-.c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1085px !important; }
-.c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1085px !important; }
+.c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1090px !important; }
+.c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1090px !important; }
 
 /* CABECERAS VECTORIALES */
 .svg-wrapper-title-heroes { width: 1080px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 0 -10px 0 !important; }
@@ -104,23 +107,23 @@ html, body {
     pointer-events: none !important;
 }
 
-/* ANIMACIÓN OPTIMIZADA BAJO CONSUMO DE GPU (Evita recalcular posiciones de píxeles) */
+/* ANIMACIÓN LINEAL DE PULSO MAESTRO QUANTUM (BAJO CONSUMO GPU) */
 @keyframes pulso-quantum {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* BASE DE LA TARJETA CON CAPA DE AISLAMIENTO ACELERADA */
+/* BASE DE LA TARJETA CON MARCO DE FIBRA ÓPTICA ANIMADA */
 .card { 
     position: relative !important; 
     box-sizing: border-box !important; 
     overflow: visible !important;
-    background: #040508 !important;
-    /* FIX DE NITIDEZ EN ESCALA INDIVIDUAL */
-    transform: translate3d(0, 0, 0) !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
+    transform: translate3d(0, 0, 0) !important;
+    will-change: transform !important;
+    background: #040508 !important;
 }
 
 /* SUBPANEL DE ENERGÍA FLUIDA SUTIL SIN SATURACIÓN */
@@ -133,7 +136,7 @@ html, body {
     bottom: -4px !important;
     z-index: -1 !important;
     background-size: 200% 200% !important; 
-    animation: pulso-quantum 4s linear infinite !important; 
+    animation: pulso-quantum 4s ease infinite !important; 
     transform: translate3d(0, 0, 0) !important;
     will-change: background-position !important; 
 }
@@ -177,7 +180,7 @@ html, body {
     right: 25px !important; 
     width: 220px !important; 
     height: 190px !important; 
-    background: rgba(4, 5, 8, 0.6) !important; 
+    background: rgba(200, 205, 215, 0.25) !important; 
     backdrop-filter: blur(15px) !important; 
     -webkit-backdrop-filter: blur(15px) !important;
     border: 2px solid rgba(255, 255, 255, 0.4) !important; 
@@ -207,7 +210,7 @@ html, body {
 .sub-box-regalo { 
     width: 220px !important; 
     height: 190px !important; 
-    background: rgba(4, 5, 8, 0.6) !important; 
+    background: rgba(200, 205, 215, 0.25) !important; 
     backdrop-filter: blur(15px) !important; 
     -webkit-backdrop-filter: blur(15px) !important;
     border: 2px solid rgba(255, 255, 255, 0.4) !important; 
@@ -257,11 +260,11 @@ const REGALOS = {
 
 const tarjetasHeroes = [
     { g: "5.webp", c: "c-h1", id: "DAR VIDA", gift: "ADORO", esHeroe: true }, 
-    { g: "6.webp", c: "c-h2", id: "VIDA TODOS", gift: "ALAS", esHeroe: true },
-    { g: "7.webp", c: "c-h3", id: "ARMA RANDOM", gift: "APLAUSO", esHeroe: true },
-    { g: "8.webp", c: "c-h4", id: "MATAR ENEMIGOS", gift: "CONO", esHeroe: true },
-    { g: "22.webp", c: "c-h5", id: "CURAR COMPA", gift: "PERFUME", esHeroe: true }, 
-    { g: "23.webp", c: "c-h6", id: "APAGAR LIVE", gift: "GALAXIA", esHeroe: true }
+    { g: "6.webp", c: "c-h2", id: "VIDA\nTODOS", gift: "ALAS", esHeroe: true }, 
+    { g: "7.webp", c: "c-h3", id: "ARMA\nRANDOM", gift: "APLAUSO", esHeroe: true }, 
+    { g: "8.webp", c: "c-h4", id: "MATAR\nENEMIGOS", gift: "CONO", esHeroe: true }, 
+    { g: "22.webp", c: "c-h5", id: "BAILE DE\n10 SEGUNDOS", gift: "PERFUME", esHeroe: true }, 
+    { g: "23.webp", c: "c-h6", id: "APAGAR\nLIVE", gift: "GALAXIA", esHeroe: true }
 ];
 
 const tarjetasVillanos = [
@@ -284,6 +287,7 @@ const tarjetasVillanos = [
     { g: "21.webp", c: "c-17", infNombre: "CAOS TOTAL", mult: "X50", gift: "OSITO" }
 ];
 
+/* FUNCIONES DE RENDERIZADO VECTORIAL ASISTIDO PARA MÁXIMA CALIDAD */
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
         <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">BENEFICIOS HÉROES</text>
@@ -303,9 +307,19 @@ function drawSvgTop(multiplicador) {
 }
 
 function drawSvgBottomHeroeManual(textoId) {
-    return `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">
-        <text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoId}</text>
-    </svg>`;
+    let lineas = String(textoId).split('\n');
+    let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
+    
+    if (lineas.length > 1) {
+        let lineasInvertidas = lineas.slice().reverse();
+        for (let i = 0; i < lineasInvertidas.length; i++) {
+            let posY = 235 - (i * 56);
+            htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="56px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="11" stroke-linejoin="round" paint-order="stroke fill">${lineasInvertidas[i]}</text>`;
+        }
+    } else {
+        htmlSvg += `<text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoId}</text>`;
+    }
+    return htmlSvg + `</svg>`;
 }
 
 function drawSvgBottomVillano(texto) {
@@ -316,7 +330,7 @@ function drawSvgBottomVillano(texto) {
     if (palabras.length > 1) {
         let palabrasInvertidas = palabras.slice().reverse();
         for (let i = 0; i < palabrasInvertidas.length; i++) {
-            let posY = 235 - (i * 54); 
+            let posY = 235 - (i * 54);
             htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertidas[i]}</text>`;
         }
     } else {
@@ -327,10 +341,9 @@ function drawSvgBottomVillano(texto) {
 
 
 
-
 function generarTarjetaHTML(t) {
     let esTarjetaAncha = (t.c === "c-11" || t.c === "c-14" || t.c === "c-16" || t.c === "c-17");
-    let anchoEstilo = esTarjetaAncha ? 'width: 1096px !important;' : 'width: 540px !important;';
+    let anchoEstilo = esTarjetaAncha ? 'width: 1100px !important;' : 'width: 540px !important;'
     let html = `<div class="card ${t.c}" style="${anchoEstilo} height: 680px !important;">`; 
     
     if (t.esWitch) {
@@ -339,7 +352,7 @@ function generarTarjetaHTML(t) {
     
     if (t.mult) {
         if (esTarjetaAncha) {
-            html += `<svg class="svg-wrapper-top" viewBox="0 0 1096 160">
+            html += `<svg class="svg-wrapper-top" viewBox="0 0 1100 160">
                 <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="85px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${t.mult}</text>
             </svg>`;
         } else {
