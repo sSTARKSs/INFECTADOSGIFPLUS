@@ -5,55 +5,73 @@
 <title>Overlay L4D Horizontal - TikTok Studio Edition Premium</title>
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
-/* CENTRADO MAESTRO ABSOLUTE EN PANTALLA COMPLETA VERTICAL (TIKTOK STUDIO) */
+/* CENTRADO INTEGRAL DE PANTALLA COMPLETA */
 html, body { 
     margin: 0 !important; 
     padding: 0 !important;
     background: transparent !important; 
     overflow: hidden !important; 
-    width: 100vw !important; 
-    height: 100vh !important; 
+    width: 2500px !important; 
+    height: 1920px !important; 
     display: flex !important; 
     justify-content: center !important; 
     align-items: center !important; 
     font-family: 'Bebas Neue', sans-serif !important; 
-    /* MEJORAS DE NITIDEZ Y ANTI-PARPADEO CRÍTICAS */
     -webkit-font-smoothing: antialiased !important;
     -moz-osx-font-smoothing: grayscale !important;
     image-rendering: -webkit-optimize-contrast !important;
     image-rendering: crisp-edges !important;
+    position: relative !important;
 }
 
-/* CONTENEDOR MAESTRO HORIZONTAL ADAPTADO CON RENDERING SEGURO */
+/* CONTENEDOR MAESTRO: CENTRADO ABSOLUTO EN LA MITAD EXACTA DEL NAVEGADOR */
 #overlay-container { 
     display: flex !important; 
-    gap: 0.6cm !important; 
+    gap: 0.4cm !important; 
     justify-content: center !important; 
     align-items: flex-start !important; 
     box-sizing: border-box !important; 
-    width: 6400px !important; 
+    width: 6400px !important; /* Retorno a base ancha interna para contener la rejilla limpia */
     height: 2400px !important;
-    /* MEJORA: Escala aumentada de 0.15 a 0.32 para que se vea el doble de grande y nítido de forma nativa */
-    transform: scale(0.32) translate3d(0,0,0) !important; 
+    /* FIX DEFINITIVO: Anclaje al centro del lienzo + Escalado unificado */
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.36) translate3d(0,0,0) !important; 
     transform-origin: center center !important;
-    margin: 0 auto !important;
     backface-visibility: hidden !important;
     -webkit-backface-visibility: hidden !important;
     perspective: 1000px !important;
-    -webkit-perspective: 1000px !important;
 }
 
-/* BLOQUES AL BORDE HORIZONTAL */
-.bloque-heroes, .bloque-villanos { 
+/* RECUADROS CON FONDO SÓLIDO EQUILIBRADO (NO OSCUROS) */
+.bloque-heroes { 
     display: flex !important; 
     flex-direction: column !important; 
     align-items: center !important; 
     gap: 0px !important; 
     margin: 0 !important;
-    padding: 0 !important;
+    padding: 20px !important;
+    border-radius: 24px !important;
+    background: #062617 !important; /* Fondo sólido Cyber Jade */
+    border: 6px solid #00ff88 !important; 
+    box-shadow: 0 0 50px rgba(0, 255, 136, 0.3) !important;
 }
 
-/* CUADRÍCULAS CON ESPACIADO FLUIDO PARA OBS / TIKTOK STUDIO */
+.bloque-villanos { 
+    display: flex !important; 
+    flex-direction: column !important; 
+    align-items: center !important; 
+    gap: 0px !important; 
+    margin: 0 !important;
+    padding: 20px !important;
+    border-radius: 24px !important;
+    background: #2b030c !important; /* Fondo sólido Láser Rubí */
+    border: 6px solid #ff003c !important; 
+    box-shadow: 0 0 50px rgba(255, 0, 60, 0.3) !important;
+}
+
+/* CUADRÍCULAS CON ESPACIADO FLUIDO ORIGINAL DE TU PLANTILLA */
 .cuadrilla-heroes { 
     display: grid !important; 
     grid-template-columns: repeat(2, 540px) !important; 
@@ -76,7 +94,6 @@ html, body {
     width: 1096px !important; 
 }
 
-
 /* REAJUSTE DE CONTENEDORES INTERNOS EN TARJETAS EXTENDIDAS */
 .c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1085px !important; }
 .c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1085px !important; }
@@ -89,6 +106,8 @@ html, body {
 .svg-wrapper-top { position: absolute !important; top: -15px !important; left: -15px !important; width: 545px !important; height: 160px !important; z-index: 45 !important; pointer-events: none !important; }
 .svg-wrapper-bottom { position: absolute !important; bottom: -15px !important; left: -15px !important; width: 545px !important; height: 320px !important; z-index: 45 !important; pointer-events: none !important; }
 
+
+
 /* TEXTO DE LA WITCH EN LA ESQUINA SUPERIOR DERECHA ABSOLUTA */
 .texto-witch-premium {
     position: absolute !important;
@@ -97,33 +116,29 @@ html, body {
     font-family: 'Bebas Neue', sans-serif !important;
     font-size: 85px !important;
     font-style: italic !important;
-    font-weight: 700 !important;
+    font-weight: 900 !important;
     color: #ffffff !important;
-    text-shadow: 4px 4px 0px #040508, -4px -4px 0px #040508, 4px -4px 0px #040508, -4px 4px 0px #040508 !important;
+    text-shadow: 5px 5px 0px #040508, -5px -5px 0px #040508, 5px -5px 0px #040508, -5px 5px 0px #040508 !important;
     z-index: 50 !important;
-    pointer-events: none !important;
 }
 
-/* ANIMACIÓN OPTIMIZADA BAJO CONSUMO DE GPU (Evita recalcular posiciones de píxeles) */
+/* ANIMACIÓN LINEAL DE PULSO MAESTRO QUANTUM */
 @keyframes pulso-quantum {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-/* BASE DE LA TARJETA CON CAPA DE AISLAMIENTO ACELERADA */
+/* BASE DE LA TARJETA ACELERADA POR HARDWARE */
 .card { 
     position: relative !important; 
     box-sizing: border-box !important; 
     overflow: visible !important;
     background: #040508 !important;
-    /* FIX DE NITIDEZ EN ESCALA INDIVIDUAL */
     transform: translate3d(0, 0, 0) !important;
     backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
 }
 
-/* SUBPANEL DE ENERGÍA FLUIDA SUTIL SIN SATURACIÓN */
 .card::before {
     content: '' !important;
     position: absolute !important;
@@ -134,14 +149,10 @@ html, body {
     z-index: -1 !important;
     background-size: 200% 200% !important; 
     animation: pulso-quantum 4s linear infinite !important; 
-    transform: translate3d(0, 0, 0) !important;
-    will-change: background-position !important; 
 }
 
-/* PULSO CYBER JADE EN HÉROES */
+/* PULSOS DE COLOR */
 .cuadrilla-heroes .card::before { background-image: linear-gradient(270deg, #00ff88, #014d25, #00ff88) !important; }
-
-/* PULSO LÁSER RUBÍ EN VILLANOS */
 .cuadrilla-villanos .card::before { background-image: linear-gradient(270deg, #ff003c, #4d0012, #ff003c) !important; }
 
 /* CORTES DE MONTAJE DEL BISEL */
@@ -161,17 +172,13 @@ html, body {
     overflow: hidden !important; 
     z-index: 1 !important;
     background: #040508 !important;
-    transform: translate3d(0, 0, 0) !important;
 }
 .cuadrilla-heroes .img-box { clip-path: polygon(12% 0%, 100% 0%, 100% 88%, 88% 100%, 0% 100%, 0% 12%) !important; }
 .cuadrilla-villanos .img-box { clip-path: polygon(0% 0%, 88% 0%, 100% 12%, 100% 100%, 12% 100%, 0% 88%) !important; }
 .cuadrilla-villanos .c-11 .img-box, .cuadrilla-villanos .c-14 .img-box, .cuadrilla-villanos .c-16 .img-box, .cuadrilla-villanos .c-17 .img-box {
     clip-path: polygon(0% 0%, 94% 0%, 100% 12%, 100% 100%, 6% 100%, 0% 88%) !important;
 }
-
-
-/* MEJORA NITIDEZ: Forzar suavizado completo de la imagen al escalar en navegadores OBS de streaming */
-.img-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; opacity: 1.0 !important; image-rendering: auto !important; }
+.img-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
 /* CONTENEDOR DE REGALOS COMPACTO DE ALTA VISIBILIDAD (220x190px) */
 .esq-der-regalo { 
@@ -180,17 +187,13 @@ html, body {
     right: 25px !important; 
     width: 220px !important; 
     height: 190px !important; 
-    background: rgba(4, 5, 8, 0.6) !important; 
-    backdrop-filter: blur(15px) !important; 
-    -webkit-backdrop-filter: blur(15px) !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important; 
+    background: rgba(4, 5, 8, 0.8) !important; 
+    border: 3px solid rgba(255, 255, 255, 0.5) !important; 
     border-radius: 18px !important; 
     display: flex !important; 
     justify-content: center !important; 
     align-items: center !important; 
     z-index: 20 !important; 
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
-    transform: translate3d(0, 0, 0) !important;
 }
 .esq-der-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 
@@ -204,45 +207,40 @@ html, body {
     align-items: center !important; 
     gap: 16px !important; 
     z-index: 20 !important; 
-    transform: translate3d(0, 0, 0) !important;
 }
 
 .sub-box-regalo { 
     width: 220px !important; 
     height: 190px !important; 
-    background: rgba(4, 5, 8, 0.6) !important; 
-    backdrop-filter: blur(15px) !important; 
-    -webkit-backdrop-filter: blur(15px) !important;
-    border: 2px solid rgba(255, 255, 255, 0.4) !important; 
+    background: rgba(4, 5, 8, 0.8) !important; 
+    border: 3px solid rgba(255, 255, 255, 0.5) !important; 
     border-radius: 18px !important; 
     display: flex !important; 
     justify-content: center !important; 
     align-items: center !important; 
-    position: relative; 
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
 }
 .sub-box-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 
-/* TEXTOS INTERNOS CRISP CON CORRECCIÓN DE PARPADEO */
+/* TEXTOS INTERNOS CRISP */
 .texto-seguir-interno, .texto-taptap-interno { 
     position: absolute !important; 
     top: 6px !important; 
     left: 50% !important; 
-    transform: translateX(-50%) translate3d(0,0,0) !important; 
+    transform: translateX(-50%) !important; 
     font-family: 'Bebas Neue', sans-serif; 
-    font-size: 22px; 
-    font-weight: 700; 
+    font-size: 24px; 
+    font-weight: 900; 
     color: #ffffff; 
     text-shadow: 2px 2px 0 #000, -2px -2px 0 #000 !important; 
     white-space: nowrap; 
     z-index: 25; 
-    text-align: center;
 }
 </style>
 </head>
 <body>
 
 <div id="overlay-container"></div>
+
 
 
 <script>
@@ -287,52 +285,51 @@ const tarjetasVillanos = [
     { g: "21.webp", c: "c-17", infNombre: "CAOS TOTAL", mult: "X50", gift: "OSITO" }
 ];
 
-/* ENCABEZADOS VECTORIALES COMPACTOS EXCLUSIVOS */
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
-        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">HEROES</text>
+        <text x="50%" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="105px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="16" stroke-linejoin="round" paint-order="stroke fill">HEROES</text>
     </svg>`;
 }
 
 function drawSvgTitleVillanos() {
     return `<svg class="svg-wrapper-title-villanos" viewBox="0 0 3780 160">
-        <text x="50%" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">VILLANOS</text>
+        <text x="50%" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="105px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="16" stroke-linejoin="round" paint-order="stroke fill">VILLANOS</text>
     </svg>`;
 }
 
 function drawSvgTop(multiplicador) {
     return `<svg class="svg-wrapper-top" viewBox="0 0 545 160">
-        <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="85px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${multiplicador}</text>
+        <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="16" stroke-linejoin="round" paint-order="stroke fill">${multiplicador}</text>
     </svg>`;
 }
+
 
 function drawSvgBottomHeroeManual(textoId) {
     let palabras = String(textoId).trim().split(/\s+/);
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
     
-    let inicioY = palabras.length > 1 ? 180 : 235;
-    for (let i = 0; i < palabras.length; i++) {
-        let posY = inicioY + (i * 54);
-        htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${palabras[i]}</text>`;
+    if (palabras.length === 2) {
+        htmlSvg += `<text x="30" y="170" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras}</text>`;
+        htmlSvg += `<text x="30" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras}</text>`;
+    } else {
+        htmlSvg += `<text x="30" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="75px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${textoId}</text>`;
     }
     return htmlSvg + `</svg>`;
 }
 
 function drawSvgBottomVillano(texto) {
-    let textoLimpio = String(texto).trim();
-    let palabras = textoLimpio.split(/\s+/);
+    let palabras = String(texto).trim().split(/\s+/);
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
     
-    if (palabras.length > 1) {
-        // MEJORA: Letra más grande (64px) y más gruesa (stroke 12) para textos como SMOKER TANK o ATAQUE AEREO
-        let inicioY = palabras.length === 2 ? 175 : 120;
-        let espacioLinea = palabras.length === 2 ? 60 : 54;
-        for (let i = 0; i < palabras.length; i++) {
-            let posY = inicioY + (i * espacioLinea); 
-            htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="64px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${palabras[i]}</text>`;
-        }
+    if (palabras.length === 3) {
+        htmlSvg += `<text x="30" y="110" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="62px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
+        htmlSvg += `<text x="30" y="175" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="62px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
+        htmlSvg += `<text x="30" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="62px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${palabras[2]}</text>`;
+    } else if (palabras.length === 2) {
+        htmlSvg += `<text x="30" y="170" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="68px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
+        htmlSvg += `<text x="30" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="68px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
     } else {
-        htmlSvg += `<text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="68px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoLimpio}</text>`;
+        htmlSvg += `<text x="30" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="75px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${texto}</text>`;
     }
     return htmlSvg + `</svg>`;
 }
@@ -349,7 +346,7 @@ function generarTarjetaHTML(t) {
     if (t.mult) {
         if (esTarjetaAncha) {
             html += `<svg class="svg-wrapper-top" viewBox="0 0 1096 160">
-                <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="85px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="14" stroke-linejoin="round" paint-order="stroke fill">${t.mult}</text>
+                <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="16" stroke-linejoin="round" paint-order="stroke fill">${t.mult}</text>
             </svg>`;
         } else {
             html += drawSvgTop(t.mult);
@@ -363,20 +360,18 @@ function generarTarjetaHTML(t) {
         if (esTarjetaAncha) {
             let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 1080 280">`;
             if (t.infNombre === "INCAPACITAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="35" y="180" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">INCAPACITAR</text>`;
-                htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
+                htmlSvg += `<text x="35" y="170" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">INCAPACITAR</text>`;
+                htmlSvg += `<text x="35" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
             } else if (t.infNombre === "ELIMINAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="35" y="180" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
-                htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
+                htmlSvg += `<text x="35" y="170" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
+                htmlSvg += `<text x="35" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
             } else {
-                let textoLimpio = String(t.infNombre).trim();
-                let palabras = textoLimpio.split(/\s+/);
-                // MEJORA: Letra masiva (68px) y gruesa (stroke 13) para los nombres triples de las tarjetas anchas (SMOKER HUNTER WITCH, etc.)
-                let inicioY = palabras.length === 2 ? 180 : (palabras.length === 3 ? 115 : 90);
-                let espacioLinea = palabras.length === 3 ? 60 : 54;
-                for (let i = 0; i < palabras.length; i++) {
-                    let posY = inicioY + (i * espacioLinea);
-                    htmlSvg += `<text x="35" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="68px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[i]}</text>`;
+                let palabras = String(t.infNombre).trim().split(/\s+/);
+                if(palabras.length === 2) {
+                    htmlSvg += `<text x="35" y="170" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
+                    htmlSvg += `<text x="35" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="72px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
+                } else {
+                    htmlSvg += `<text x="35" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="75px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${t.infNombre}</text>`;
                 }
             }
             html += htmlSvg + `</svg>`;
@@ -412,4 +407,3 @@ if (container) {
 </script>
 </body>
 </html>
-
