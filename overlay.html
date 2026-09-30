@@ -1,7 +1,3 @@
-
-
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,8 +33,8 @@ html, body {
     box-sizing: border-box !important; 
     width: 6400px !important; 
     height: 2400px !important;
-    /* FIX DE PARPADEO: Combinación precisa de escalado de hardware + perspectiva */
-    transform: scale(0.15) translate3d(0,0,0) !important; 
+    /* MEJORA: Escala aumentada de 0.15 a 0.32 para que se vea el doble de grande y nítido de forma nativa */
+    transform: scale(0.32) translate3d(0,0,0) !important; 
     transform-origin: center center !important;
     margin: 0 auto !important;
     backface-visibility: hidden !important;
@@ -91,12 +87,6 @@ html, body {
 /* MARCADORES INTERNOS */
 .svg-wrapper-top { position: absolute !important; top: -15px !important; left: -15px !important; width: 545px !important; height: 160px !important; z-index: 45 !important; pointer-events: none !important; }
 .svg-wrapper-bottom { position: absolute !important; bottom: -15px !important; left: -15px !important; width: 545px !important; height: 320px !important; z-index: 45 !important; pointer-events: none !important; }
-
-
-
-
-
-
 
 /* TEXTO DE LA WITCH EN LA ESQUINA SUPERIOR DERECHA ABSOLUTA */
 .texto-witch-premium {
@@ -177,7 +167,10 @@ html, body {
 .cuadrilla-villanos .c-11 .img-box, .cuadrilla-villanos .c-14 .img-box, .cuadrilla-villanos .c-16 .img-box, .cuadrilla-villanos .c-17 .img-box {
     clip-path: polygon(0% 0%, 94% 0%, 100% 12%, 100% 100%, 6% 100%, 0% 88%) !important;
 }
-.img-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; opacity: 1.0 !important; }
+
+
+/* MEJORA NITIDEZ: Forzar suavizado completo de la imagen al escalar en navegadores OBS de streaming */
+.img-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; opacity: 1.0 !important; image-rendering: auto !important; }
 
 /* CONTENEDOR DE REGALOS COMPACTO DE ALTA VISIBILIDAD (220x190px) */
 .esq-der-regalo { 
@@ -293,6 +286,8 @@ const tarjetasVillanos = [
     { g: "21.webp", c: "c-17", infNombre: "CAOS TOTAL", mult: "X50", gift: "OSITO" }
 ];
 
+
+
 /* ENCABEZADOS VECTORIALES COMPACTOS EXCLUSIVOS */
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
@@ -334,8 +329,6 @@ function drawSvgBottomVillano(texto) {
     }
     return htmlSvg + `</svg>`;
 }
-
-
 
 function generarTarjetaHTML(t) {
     let esTarjetaAncha = (t.c === "c-11" || t.c === "c-14" || t.c === "c-16" || t.c === "c-17");
@@ -410,5 +403,3 @@ if (container) {
 </script>
 </body>
 </html>
-
-
