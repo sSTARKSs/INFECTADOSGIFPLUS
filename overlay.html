@@ -76,6 +76,7 @@ html, body {
     width: 1096px !important; 
 }
 
+
 /* REAJUSTE DE CONTENEDORES INTERNOS EN TARJETAS EXTENDIDAS */
 .c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1085px !important; }
 .c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1085px !important; }
@@ -286,8 +287,6 @@ const tarjetasVillanos = [
     { g: "21.webp", c: "c-17", infNombre: "CAOS TOTAL", mult: "X50", gift: "OSITO" }
 ];
 
-
-
 /* ENCABEZADOS VECTORIALES COMPACTOS EXCLUSIVOS */
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
@@ -308,9 +307,15 @@ function drawSvgTop(multiplicador) {
 }
 
 function drawSvgBottomHeroeManual(textoId) {
-    return `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">
-        <text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoId}</text>
-    </svg>`;
+    let palabras = String(textoId).trim().split(/\s+/);
+    let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
+    
+    let inicioY = palabras.length > 1 ? 180 : 235;
+    for (let i = 0; i < palabras.length; i++) {
+        let posY = inicioY + (i * 54);
+        htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${palabras[i]}</text>`;
+    }
+    return htmlSvg + `</svg>`;
 }
 
 function drawSvgBottomVillano(texto) {
@@ -319,10 +324,12 @@ function drawSvgBottomVillano(texto) {
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
     
     if (palabras.length > 1) {
-        let palabrasInvertidas = palabras.slice().reverse();
-        for (let i = 0; i < palabrasInvertidas.length; i++) {
-            let posY = 235 - (i * 54); 
-            htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="52px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="10" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertidas[i]}</text>`;
+        // MEJORA: Letra más grande (64px) y más gruesa (stroke 12) para textos como SMOKER TANK o ATAQUE AEREO
+        let inicioY = palabras.length === 2 ? 175 : 120;
+        let espacioLinea = palabras.length === 2 ? 60 : 54;
+        for (let i = 0; i < palabras.length; i++) {
+            let posY = inicioY + (i * espacioLinea); 
+            htmlSvg += `<text x="30" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="64px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${palabras[i]}</text>`;
         }
     } else {
         htmlSvg += `<text x="30" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="68px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">${textoLimpio}</text>`;
@@ -356,18 +363,20 @@ function generarTarjetaHTML(t) {
         if (esTarjetaAncha) {
             let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 1080 280">`;
             if (t.infNombre === "INCAPACITAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
                 htmlSvg += `<text x="35" y="180" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">INCAPACITAR</text>`;
-            } else if (t.infNombre === "ELIMINAR SUPERVIVIENTES") {
                 htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
+            } else if (t.infNombre === "ELIMINAR SUPERVIVIENTES") {
                 htmlSvg += `<text x="35" y="180" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
+                htmlSvg += `<text x="35" y="235" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="62px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="12" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
             } else {
                 let textoLimpio = String(t.infNombre).trim();
                 let palabras = textoLimpio.split(/\s+/);
-                let palabrasInvertivas = palabras.slice().reverse();
-                for (let i = 0; i < palabrasInvertivas.length; i++) {
-                    let posY = 235 - (i * 54);
-                    htmlSvg += `<text x="35" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="58px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="11" stroke-linejoin="round" paint-order="stroke fill">${palabrasInvertivas[i]}</text>`;
+                // MEJORA: Letra masiva (68px) y gruesa (stroke 13) para los nombres triples de las tarjetas anchas (SMOKER HUNTER WITCH, etc.)
+                let inicioY = palabras.length === 2 ? 180 : (palabras.length === 3 ? 115 : 90);
+                let espacioLinea = palabras.length === 3 ? 60 : 54;
+                for (let i = 0; i < palabras.length; i++) {
+                    let posY = inicioY + (i * espacioLinea);
+                    htmlSvg += `<text x="35" y="${posY}" font-family="'Bebas Neue', sans-serif" font-weight="700" font-size="68px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[i]}</text>`;
                 }
             }
             html += htmlSvg + `</svg>`;
@@ -403,3 +412,4 @@ if (container) {
 </script>
 </body>
 </html>
+
