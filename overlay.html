@@ -27,7 +27,7 @@ html, body {
 /* CONTENEDOR MAESTRO EN MATRIZ FLUIDA DE HARDWARE */
 #overlay-container { 
     display: flex !important; 
-    gap: 0.3cm !important; 
+    gap: 12px !important; 
     justify-content: center !important; 
     align-items: flex-start !important; 
     box-sizing: border-box !important; 
@@ -36,14 +36,11 @@ html, body {
     position: absolute !important;
     top: 50% !important;
     left: 50% !important;
-    transform: translate(-50%, -50%) scale(0.27) translate3d(0,0,0) !important; 
+    transform: translate(-50%, -50%) scale(0.27) !important; 
     transform-origin: center center !important;
-    backface-visibility: hidden !important;
-    -webkit-backface-visibility: hidden !important;
-    perspective: 1000px !important;
 }
 
-/* RECUADROS CON FONDO SÓLIDO EQUILIBRADO */
+/* RECUADROS CON FONDO SÓLIDO EQUILIBRADO Y BAJO CONSUMO */
 .bloque-heroes { 
     display: flex !important; 
     flex-direction: column !important; 
@@ -54,7 +51,7 @@ html, body {
     border-radius: 24px !important;
     background: #062617 !important; 
     border: 6px solid #00ff88 !important; 
-    box-shadow: 0 0 50px rgba(0, 255, 136, 0.3) !important;
+    content-visibility: auto !important; 
 }
 
 .bloque-villanos { 
@@ -67,45 +64,33 @@ html, body {
     border-radius: 24px !important;
     background: #2b030c !important; 
     border: 6px solid #ff003c !important; 
-    box-shadow: 0 0 50px rgba(255, 0, 60, 0.3) !important;
+    content-visibility: auto !important;
 }
 
-/* CUADRÍCULAS CON ESPACIADO FLUIDO */
+/* CUADRÍCULAS CON ESPACIADO FLUIDO SIMÉTRICO */
 .cuadrilla-heroes { 
     display: grid !important; 
     grid-template-columns: repeat(2, 540px) !important; 
-    grid-template-rows: repeat(3, 680px) !important; 
+    grid-template-rows: repeat(2, 680px) !important; 
     gap: 16px 16px !important; 
 }
 .cuadrilla-villanos { 
     display: grid !important; 
     grid-template-columns: repeat(7, 540px) !important; 
-    grid-template-rows: repeat(3, 680px) !important; 
+    grid-template-rows: repeat(2, 680px) !important; 
     gap: 16px 16px !important; 
 }
 
-/* CONFIGURACIÓN ANCHA EXCLUSIVA */
-.cuadrilla-villanos .c-11,
-.cuadrilla-villanos .c-14,
-.cuadrilla-villanos .c-16,
-.cuadrilla-villanos .c-17 {
-    grid-column: span 2 !important; 
-    width: 1096px !important; 
-}
-
-.c-11 .svg-wrapper-top, .c-14 .svg-wrapper-top, .c-16 .svg-wrapper-top, .c-17 .svg-wrapper-top { width: 1085px !important; }
-.c-11 .svg-wrapper-bottom, .c-14 .svg-wrapper-bottom, .c-16 .svg-wrapper-bottom, .c-17 .svg-wrapper-bottom { width: 1085px !important; }
-
 /* CABECERAS VECTORIALES */
 .svg-wrapper-title-heroes { width: 1080px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 0 -10px 0 !important; }
-.svg-wrapper-title-villanos { width: 3780px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 0 -10px 0 !important; }
+.svg-wrapper-title-villanos { width: 3780px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 0 -10px 0 0 !important; }
 
 /* MARCADORES INTERNOS */
 .svg-wrapper-top { position: absolute !important; top: -15px !important; left: -15px !important; width: 545px !important; height: 160px !important; z-index: 45 !important; pointer-events: none !important; }
 .svg-wrapper-bottom { position: absolute !important; bottom: -15px !important; left: -15px !important; width: 545px !important; height: 320px !important; z-index: 45 !important; pointer-events: none !important; }
 
 
-/* TEXTO DE LA WITCH EN LA ESQUINA SUPERIOR DERECHA ABSOLUTA */
+/* TEXTO DE LA WITCH */
 .texto-witch-premium {
     position: absolute !important;
     top: 30px !important;
@@ -120,86 +105,72 @@ html, body {
 }
 
 @keyframes pulso-quantum {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 
 /* BASE DE LA TARJETA ACELERADA */
 .card { 
     position: relative !important; 
     box-sizing: border-box !important; 
-    overflow: visible !important;
+    overflow: hidden !important;
     background: #040508 !important;
-    transform: translate3d(0, 0, 0) !important;
-    backface-visibility: hidden !important;
 }
 
 .card::before {
     content: '' !important;
     position: absolute !important;
-    top: -4px !important;
-    left: -4px !important;
-    right: -4px !important;
-    bottom: -4px !important;
+    top: -50% !important;
+    left: -50% !important;
+    width: 200% !important;
+    height: 200% !important;
     z-index: -1 !important;
-    background-size: 200% 200% !important; 
-    animation: pulso-quantum 4s linear infinite !important; 
+    animation: pulso-quantum 6s linear infinite !important; 
 }
 
-.cuadrilla-heroes .card::before { background-image: linear-gradient(270deg, #00ff88, #014d25, #00ff88) !important; }
-.cuadrilla-villanos .card::before { background-image: linear-gradient(270deg, #ff003c, #4d0012, #ff003c) !important; }
+.cuadrilla-heroes .card::before { background: conic-gradient(#00ff88, #014d25, #00ff88) !important; }
+.cuadrilla-villanos .card::before { background: conic-gradient(#ff003c, #4d0012, #ff003c) !important; }
 
 .cuadrilla-heroes .card { clip-path: polygon(12% 0%, 100% 0%, 100% 88%, 88% 100%, 0% 100%, 0% 12%) !important; }
 .cuadrilla-villanos .card { clip-path: polygon(0% 0%, 88% 0%, 100% 12%, 100% 100%, 12% 100%, 0% 88%) !important; }
-.cuadrilla-villanos .c-11, .cuadrilla-villanos .c-14, .cuadrilla-villanos .c-16, .cuadrilla-villanos .c-17 {
-    clip-path: polygon(0% 0%, 94% 0%, 100% 12%, 100% 100%, 6% 100%, 0% 88%) !important;
-}
 
-/* CONTENEDOR DE IMÁGENES ANTI-LAG */
+/* CONTENEDOR DE IMÁGENES ALTA VELOCIDAD */
 .img-box { 
     position: absolute !important; 
-    top: 3px !important; 
-    left: 3px !important; 
-    width: calc(100% - 6px) !important; 
-    height: calc(100% - 6px) !important; 
+    top: 4px !important; 
+    left: 4px !important; 
+    width: calc(100% - 8px) !important; 
+    height: calc(100% - 8px) !important; 
     overflow: hidden !important; 
     z-index: 1 !important;
     background: #040508 !important;
 }
 .cuadrilla-heroes .img-box { clip-path: polygon(12% 0%, 100% 0%, 100% 88%, 88% 100%, 0% 100%, 0% 12%) !important; }
 .cuadrilla-villanos .img-box { clip-path: polygon(0% 0%, 88% 0%, 100% 12%, 100% 100%, 12% 100%, 0% 88%) !important; }
-.cuadrilla-villanos .c-11 .img-box, .cuadrilla-villanos .c-14 .img-box, .cuadrilla-villanos .c-16 .img-box, .cuadrilla-villanos .c-17 .img-box {
-    clip-path: polygon(0% 0%, 94% 0%, 100% 12%, 100% 100%, 6% 100%, 0% 88%) !important;
-}
+
 .img-box img { 
     width: 100% !important; 
     height: 100% !important; 
     object-fit: cover !important; 
-    transform: translateZ(0) !important;
-    will-change: transform !important;
     image-rendering: -webkit-optimize-contrast !important;
 }
 
-/* CAJAS CON EFECTO DIAMANTE CRISTALINO RESALTADO */
+/* CAJAS DE REGALOS DE ALTO RENDIMIENTO */
 .esq-der-regalo { 
     position: absolute !important; 
     bottom: 25px !important; 
     right: 25px !important; 
     width: 220px !important; 
     height: 190px !important; 
-    background: linear-gradient(135deg, rgba(240, 248, 255, 0.25), rgba(255, 255, 255, 0.45)) !important; /* Brillo de Diamante */
-    backdrop-filter: blur(15px) !important; 
-    -webkit-backdrop-filter: blur(15px) !important;
-    border: 4px solid rgba(220, 235, 255, 0.8) !important; /* Borde Platino Claro */
+    background: linear-gradient(135deg, #111a2e, #1a2947) !important; 
+    border: 4px solid rgba(220, 235, 255, 0.9) !important; 
     border-radius: 18px !important; 
     display: flex !important; 
     justify-content: center !important; 
     align-items: center !important; 
     z-index: 20 !important; 
-    box-shadow: 0 0 35px rgba(230, 245, 255, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5) !important; /* Resplandor Diamante */
 }
-.esq-der-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)) !important; }
+.esq-der-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 
 .esq-der-doble { 
     position: absolute !important; 
@@ -212,20 +183,18 @@ html, body {
     z-index: 20 !important; 
 }
 
+
 .sub-box-regalo { 
     width: 220px !important; 
     height: 190px !important; 
-    background: linear-gradient(135deg, rgba(240, 248, 255, 0.25), rgba(255, 255, 255, 0.45)) !important; 
-    backdrop-filter: blur(15px) !important;
-    -webkit-backdrop-filter: blur(15px) !important;
-    border: 4px solid rgba(220, 235, 255, 0.8) !important; 
+    background: linear-gradient(135deg, #111a2e, #1a2947) !important; 
+    border: 4px solid rgba(220, 235, 255, 0.9) !important; 
     border-radius: 18px !important; 
     display: flex !important; 
     justify-content: center !important; 
     align-items: center !important; 
-    box-shadow: 0 0 35px rgba(230, 245, 255, 0.6), inset 0 0 15px rgba(255, 255, 255, 0.5) !important;
 }
-.sub-box-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.5)) !important; }
+.sub-box-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 
 /* TEXTOS INTERNOS CRISP */
 .texto-seguir-interno, .texto-taptap-interno { 
@@ -247,8 +216,6 @@ html, body {
 
 <div id="overlay-container"></div>
 
-
-
 <script>
 const container = document.getElementById('overlay-container');
 
@@ -264,32 +231,28 @@ const REGALOS = {
 
 const tarjetasHeroes = [
     { g: "5.webp", c: "c-h1", id: "DAR VIDA", gift: "ADORO", esHeroe: true }, 
-    { g: "6.webp", c: "c-h2", id: "VIDA TODOS", gift: "ALAS", esHeroe: true },
-    { g: "7.webp", c: "c-h3", id: "ARMA RANDOM", gift: "APLAUSO", esHeroe: true },
-    { g: "8.webp", c: "c-h4", id: "MATAR ENEMIGOS", gift: "CONO", esHeroe: true },
-    { g: "22.webp", c: "c-h5", id: "CURAR COMPA", gift: "PERFUME", esHeroe: true }, 
-    { g: "23.webp", c: "c-h6", id: "APAGAR LIVE", gift: "GALAXIA", esHeroe: true }
+    { g: "6.webp", c: "c-h2", id: "ARMA RANDOM", gift: "ALAS", esHeroe: true },
+    { g: "7.webp", c: "c-h3", id: "APAGAR LIVE", gift: "GALAXIA", esHeroe: true },
+    { g: "8.webp", c: "c-h4", id: "BAILE 10 SEGUNDOS", gift: "CONO", esHeroe: true }
 ];
 
 const tarjetasVillanos = [
     { g: "1.webp", c: "c-1", mult: "X5", dobleGift: true, esWitch: true }, 
     { g: "2.webp", c: "c-2", infNombre: "TANK", mult: "X1", gift: "ROSA_1M" }, 
-    { g: "3.webp", c: "c-3", infNombre: "JOCKEY", mult: "X1", gift: "ROSA_BLANCA_METAL" }, 
+    { g: "3.webp", c: "c-3", infNombre: "BOOMER", mult: "X1", gift: "ROSA_BLANCA_METAL" }, 
     { g: "4.webp", c: "c-4", infNombre: "CHARGER", mult: "X1", gift: "TIKTOK_3D" }, 
     { g: "9.webp", c: "c-5", infNombre: "HUNTER", mult: "X1", gift: "GG_3D" },
     { g: "10.webp", c: "c-6", infNombre: "SMOKER", mult: "X1", gift: "INCREIBLE" },
     { g: "11.webp", c: "c-7", infNombre: "TANK", mult: "X10", gift: "CORAZON" },
-    { g: "4.webp", c: "c-8", infNombre: "CHARGER", mult: "X10", gift: "CABEZA" }, 
-    { g: "13.webp", c: "c-9", infNombre: "SMOKER HUNTER WITCH", mult: "X30", gift: "LENTO" }, 
-    { g: "14.webp", c: "c-10", infNombre: "SMOKER SPITTER CHARGER", mult: "X30", gift: "PASE" }, 
-    { g: "15.webp", c: "c-11", infNombre: "INCAPACITAR SUPERVIVIENTES", gift: "ROSE_30M" }, 
+    { g: "12.webp", c: "c-8", infNombre: "CHARGER", mult: "X10", gift: "CABEZA" }, 
+    { g: "13.webp", c: "c-9", infNombre: "JOCKEY", mult: "X10", gift: "LENTO" }, 
+    { g: "14.webp", c: "c-10", infNombre: "SPITTER", mult: "X10", gift: "PASE" }, 
+    { g: "15.webp", c: "c-11", infNombre: "WITCH", mult: "X20", gift: "ROSE_30M" }, 
     { g: "16.webp", c: "c-12", infNombre: "ATAQUE AEREO", gift: "BOSQUE" }, 
-    { g: "17.webp", c: "c-13", infNombre: "REINICIAR MAPA", gift: "CAPIBARA" }, 
-    { g: "18.webp", c: "c-14", infNombre: "ELIMINAR SUPERVIVIENTES", gift: "ROSQUILLA" }, 
-    { g: "19.webp", c: "c-15", infNombre: "SMOKER TANK", mult: "X40", gift: "GORRA" }, 
-    { g: "20.webp", c: "c-16", infNombre: "HUNTER WITCH", mult: "X40", gift: "CONFETTI" }, 
-    { g: "21.webp", c: "c-17", infNombre: "CAOS TOTAL", mult: "X50", gift: "OSITO" }
+    { g: "17.webp", c: "c-13", infNombre: "REINICIAR MAPA", gift: "CAPIBARA" },
+    { g: "18.webp", c: "c-14", infNombre: "BARRILES EXPLOSIVOS", mult: "X30" , gift: "ROSQUILLA" }
 ];
+
 
 function drawSvgTitleHeroes() {
     return `<svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160">
@@ -309,12 +272,15 @@ function drawSvgTop(multiplicador) {
     </svg>`;
 }
 
-
 function drawSvgBottomHeroeManual(textoId) {
+    if (!textoId || String(textoId).trim() === "") return ""; // Si está vacío (como la cuarta), no dibuja nada
     let palabras = String(textoId).trim().split(/\s+/);
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
-    
-    if (palabras.length === 2) {
+    if (palabras.length === 3) {
+        htmlSvg += `<text x="18" y="120" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="46px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
+        htmlSvg += `<text x="18" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="46px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
+        htmlSvg += `<text x="18" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="46px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[2]}</text>`;
+    } else if (palabras.length === 2) {
         htmlSvg += `<text x="18" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
         htmlSvg += `<text x="18" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
     } else {
@@ -326,7 +292,6 @@ function drawSvgBottomHeroeManual(textoId) {
 function drawSvgBottomVillano(texto) {
     let palabras = String(texto).trim().split(/\s+/);
     let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
-    
     if (palabras.length === 3) {
         htmlSvg += `<text x="18" y="120" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="46px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
         htmlSvg += `<text x="18" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="46px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="13" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
@@ -340,47 +305,24 @@ function drawSvgBottomVillano(texto) {
     return htmlSvg + `</svg>`;
 }
 
+
 function generarTarjetaHTML(t) {
-    let esTarjetaAncha = (t.c === "c-11" || t.c === "c-14" || t.c === "c-16" || t.c === "c-17");
-    let anchoEstilo = esTarjetaAncha ? 'width: 1096px !important;' : 'width: 540px !important;';
-    let html = `<div class="card ${t.c}" style="${anchoEstilo} height: 680px !important;">`; 
+    let html = `<div class="card ${t.c}" style="width: 540px !important; height: 680px !important;">`; 
+    if (t.esWitch) { html += `<div class="texto-witch-premium">WITCH</div>`; }
+    if (t.mult) { html += drawSvgTop(t.mult); }
     
-    if (t.esWitch) {
-        html += `<div class="texto-witch-premium">WITCH</div>`;
-    }
-    
-    if (t.mult) {
-        if (esTarjetaAncha) {
-            html += `<svg class="svg-wrapper-top" viewBox="0 0 1096 160">
-                <text x="35" y="115" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="95px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="16" stroke-linejoin="round" paint-order="stroke fill">${t.mult}</text>
-            </svg>`;
-        } else {
-            html += drawSvgTop(t.mult);
-        }
-    }
-    html += `<div class="img-box"><img src="${t.g}" alt="Icono"></div>`;
+    html += `<div class="img-box"><img src="${t.g}" width="540" height="680" alt="Icono"></div>`;
     
     if (t.esHeroe) {
         html += drawSvgBottomHeroeManual(t.id);
     } else if (t.infNombre) {
-        if (esTarjetaAncha) {
-            let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 1080 280">`;
-            if (t.infNombre === "INCAPACITAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="25" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">INCAPACITAR</text>`;
-                htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
-            } else if (t.infNombre === "ELIMINAR SUPERVIVIENTES") {
-                htmlSvg += `<text x="25" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">ELIMINAR</text>`;
-                htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">SUPERVIVIENTES</text>`;
-            } else {
-                let palabras = String(t.infNombre).trim().split(/\s+/);
-                if(palabras.length === 2) {
-                    htmlSvg += `<text x="25" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
-                    htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
-                } else {
-                    htmlSvg += `<text x="25" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="64px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${t.infNombre}</text>`;
-                }
-            }
-            html += htmlSvg + `</svg>`;
+        let palabras = String(t.infNombre).trim().split(/\s+/);
+        if (palabras.length === 2 && t.infNombre.includes("SUPERVIVIENTES")) {
+            let htmlSvg = `<svg class="svg-wrapper-bottom" viewBox="0 0 540 280">`;
+            htmlSvg += `<text x="18" y="180" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[0]}</text>`;
+            htmlSvg += `<text x="18" y="240" font-family="'Bebas Neue', sans-serif" font-weight="900" font-size="58px" font-style="italic" fill="#ffffff" stroke="#040508" stroke-width="15" stroke-linejoin="round" paint-order="stroke fill">${palabras[1]}</text>`;
+            htmlSvg += `</svg>`;
+            html += htmlSvg;
         } else {
             html += drawSvgBottomVillano(t.infNombre);
         }
@@ -390,15 +332,15 @@ function generarTarjetaHTML(t) {
         html += `<div class="esq-der-doble">` +
                     `<div class="sub-box-regalo">` +
                         `<div class="texto-seguir-interno">SEGUIRME</div>` +
-                        `<img src="regalos/${REGALOS.SEGUIR}" alt="Seguir">` +
+                        `<img src="regalos/${REGALOS.SEGUIR}" width="220" height="190">` +
                     `</div>` +
                     `<div class="sub-box-regalo">` +
                         `<div class="texto-taptap-interno">TAP TAP</div>` + 
-                        `<img src="regalos/${REGALOS.CORAZON_AZUL}" alt="Azul">` +
+                        `<img src="regalos/${REGALOS.CORAZON_AZUL}" width="220" height="190">` +
                     `</div>` +
                 `</div>`;
     } else if (t.gift && REGALOS[t.gift]) {
-        html += `<div class="esq-der-regalo"><img src="regalos/${REGALOS[t.gift]}" alt="Regalo"></div>`;
+        html += `<div class="esq-der-regalo"><img src="regalos/${REGALOS[t.gift]}" width="220" height="190"></div>`;
     }
     return html + `</div>`;
 }
@@ -413,5 +355,3 @@ if (container) {
 </script>
 </body>
 </html>
-
-
