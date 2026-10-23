@@ -1,139 +1,156 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Overlay L4D Horizontal - TikTok Studio Edition Premium</title>
-<link href="https://googleapis.com" rel="stylesheet">
-<style>
-/* CONEXIÓN NATIVA AL LIENZO FULL HD SIN LAG */
-html, body { 
-    margin: 0 !important; 
-    padding: 0 !important;
-    background: transparent !important; 
-    overflow: hidden !important; 
-    width: 1920px !important; 
-    height: 1080px !important; 
-    display: flex !important; 
-    justify-content: center !important; 
-    align-items: center !important; 
-    font-family: 'Bebas Neue', sans-serif !important; 
-    -webkit-font-smoothing: antialiased !important;
-    -moz-osx-font-smoothing: grayscale !important;
-    image-rendering: -webkit-optimize-contrast !important;
-    position: relative !important;
-}
+    <meta charset="UTF-8">
+    <title>Overlay L4D Horizontal - TikTok Studio Edition Premium</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        /* ==========================================================================
+           1. CONEXIÓN NATIVA AL LIENZO FULL HD (SIN LAG)
+           ========================================================================= */
+        html, body {
+            margin: 0 !important;
+            padding: 0 !important;
+            background: transparent !important;
+            overflow: hidden !important;
+            width: 1920px !important;
+            height: 1080px !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            font-family: 'Bebas Neue', sans-serif !important;
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            image-rendering: -webkit-optimize-contrast !important;
+            position: relative !important;
+        }
 
-/* ALINEACIÓN HORIZONTAL SIMÉTRICA Y COMPACTA */
-#overlay-container { 
-    display: flex !important; 
-    flex-direction: row !important; 
-    gap: 20px !important; 
-    justify-content: center !important; 
-    align-items: flex-start !important; 
-    box-sizing: border-box !important; 
-    width: 1920px !important; 
-    height: 1080px !important;
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    transform: translate(-50%, -50%) scale(0.31) !important; 
-    transform-origin: center center !important;
-    will-change: transform !important;
-    backface-visibility: hidden !important;
-}
+        /* ==========================================================================
+           2. ALINEACIÓN HORIZONTAL SIMÉTRICA Y COMPACTA
+           ========================================================================= */
+        #overlay-container {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 20px !important;
+            justify-content: center !important;
+            align-items: flex-start !important;
+            box-sizing: border-box !important;
+            width: 1920px !important;
+            height: 1080px !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) scale(0.31) !important;
+            transform-origin: center center !important;
+            will-change: transform !important;
+            backface-visibility: hidden !important;
+        }
 
-/* CAJAS CONTENEDORAS AJUSTADAS Y SIN MÁRGENES AGRESIVOS */
-.bloque-heroes { 
-    display: flex !important; 
-    flex-direction: column !important; 
-    align-items: center !important; 
-    justify-content: flex-start !important;
-    gap: 0px !important; 
-    margin: 0 !important; 
-    padding: 20px !important;
-    border-radius: 24px !important;
-    background: #062617 !important; 
-    border: 6px solid #00ff88 !important; 
-}
+        /* ==========================================================================
+           3. CAJAS CONTENEDORAS PRINCIPALES (HÉROES Y VILLANOS)
+           ========================================================================= */
+        .bloque-heroes {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 0px !important;
+            margin: 0 !important;
+            padding: 20px !important;
+            border-radius: 24px !important;
+            background: #04140d !important;
+            border: 6px solid #00ff8c !important;
+        }
 
-.bloque-villanos { 
-    display: flex !important; 
-    flex-direction: column !important; 
-    align-items: center !important; 
-    justify-content: flex-start !important;
-    gap: 0px !important; 
-    margin: 0 !important; 
-    padding: 20px !important;
-    border-radius: 24px !important;
-    background: #2b030c !important; 
-    border: 6px solid #ff003c !important; 
-}
-</style>
+        .bloque-villanos {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            gap: 0px !important;
+            margin: 0 !important;
+            padding: 20px !important;
+            border-radius: 24px !important;
+            background: #1a0208 !important;
+            border: 6px solid #ff2a6d !important;
+        }
+        /* ==========================================================================
+           4. CUADRÍCULAS CON ESPACIADO FLUIDO SIMÉTRICO FORZADO
+           ========================================================================= */
+        .cuadrilla-heroes {
+            display: grid !important;
+            grid-template-columns: repeat(2, 540px) !important;
+            grid-template-rows: repeat(3, 680px) !important;
+            gap: 16px 16px !important;
+            justify-content: center !important;
+        }
 
+        .cuadrilla-villanos {
+            display: grid !important;
+            grid-template-columns: repeat(5, 540px) !important;
+            grid-template-rows: repeat(3, 680px) !important;
+            gap: 16px 16px !important;
+            justify-content: center !important;
+        }
 
-<style>
-/* CUADRÍCULAS CON ESPACIADO FLUIDO SIMÉTRICO FORZADO AL CENTRO */
-.cuadrilla-heroes { 
-    display: grid !important; 
-    grid-template-columns: repeat(2, 540px) !important; 
-    grid-template-rows: repeat(3, 680px) !important; 
-    gap: 16px 16px !important; 
-    justify-content: center !important;
-}
-.cuadrilla-villanos { 
-    display: grid !important; 
-    grid-template-columns: repeat(5, 540px) !important; 
-    grid-template-rows: repeat(3, 680px) !important;    
-    gap: 16px 16px !important; 
-    justify-content: center !important;
-}
+        /* ==========================================================================
+           5. CABECERAS VECTORIALES CON MARGEN INFERIOR NORMALIZADO
+           ========================================================================= */
+        .svg-wrapper-title-heroes {
+            width: 1080px !important;
+            height: 160px !important;
+            pointer-events: none !important;
+            display: block !important;
+            margin: 0 auto 10px auto !important;
+        }
 
-/* CABECERAS VECTORIALES CON MARGEN INFERIOR NORMALIZADO */
-.svg-wrapper-title-heroes { width: 1080px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 auto 10px auto !important; }
-.svg-wrapper-title-villanos { width: 2700px !important; height: 160px !important; pointer-events: none !important; display: block !important; margin: 0 auto 10px auto !important; }
+        .svg-wrapper-title-villanos {
+            width: 2700px !important;
+            height: 160px !important;
+            pointer-events: none !important;
+            display: block !important;
+            margin: 0 auto 10px auto !important;
+        }
 
-/* MARCADORES INTERNOS */
-.svg-wrapper-top { position: absolute !important; top: -15px !important; left: -15px !important; width: 545px !important; height: 160px !important; z-index: 45 !important; pointer-events: none !important; }
-.svg-wrapper-bottom { position: absolute !important; bottom: -15px !important; left: -15px !important; width: 545px !important; height: 320px !important; z-index: 45 !important; pointer-events: none !important; }
+        /* ==========================================================================
+           6. MARCADORES INTERNOS (SVG FLOATING)
+           ========================================================================= */
+        .svg-wrapper-top {
+            position: absolute !important;
+            top: -15px !important;
+            left: -15px !important;
+            width: 545px !important;
+            height: 160px !important;
+            z-index: 45 !important;
+            pointer-events: none !important;
+        }
 
-/* TEXTO DE LA WITCH PREMIUM */
-.texto-witch-premium {
-    position: absolute !important;
-    top: 30px !important;
-    right: 35px !important;
-    font-family: 'Bebas Neue', sans-serif !important;
-    font-size: 85px !important;
-    font-style: italic !important;
-    font-weight: 900 !important;
-    color: #ffffff !important;
-    text-shadow: 8px 8px 0px #040508, -8px -8px 0px #040508, 8px -8px 0px #040508, -8px 8px 0px #040508 !important;
-    z-index: 50 !important;
-}
+        /* ANIMACIÓN RGB NEÓN FLUIDA INTERACTIVA PARA TODOS LOS TEXTOS */
+        @keyframes rgb-neon-cambiante {
+            0% { fill: #ff0055; filter: drop-shadow(0 0 2px #ff0055); }
+            20% { fill: #00ff8c; filter: drop-shadow(0 0 2px #00ff8c); }
+            40% { fill: #00e5ff; filter: drop-shadow(0 0 2px #00e5ff); }
+            60% { fill: #b900ff; filter: drop-shadow(0 0 2px #b900ff); }
+            80% { fill: #ffea00; filter: drop-shadow(0 0 2px #ffea00); }
+            100% { fill: #ff0055; filter: drop-shadow(0 0 2px #ff0055); }
+        }
 
-/* AJUSTE VECTORIAL INFERIOR IZQUIERDO */
-.text-villano-inf-izq-svg {
-    position: absolute !important;
-    bottom: 0px !important;
-    left: 0px !important;
-    width: 540px !important;
-    height: 680px !important;
-    z-index: 44 !important;
-    pointer-events: none !important;
-}
+        .neon-text-rgb-cambiante { 
+            animation: rgb-neon-cambiante 8s linear infinite !important; 
+        }
 
-@keyframes pulso-quantum {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
+        @keyframes pulso-quantum {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-/* BASE DE LA TARJETA ACELERADA */
-.card { 
-    position: relative !important; 
-    box-sizing: border-box !important; 
-    overflow: hidden !important;
-    background: #040508 !important;
-}
-
+        /* BASE DE LA TARJETA ACELERADA */
+        .card { 
+            position: relative !important; 
+            box-sizing: border-box !important; 
+            overflow: hidden !important;
+            background: #040508 !important;
+        }
 .card::before {
     content: '' !important;
     position: absolute !important;
@@ -145,10 +162,10 @@ html, body {
     animation: pulso-quantum 8s linear infinite !important; 
 }
 
-.bloque-heroes .card::before { background: conic-gradient(#00ff88, #014d25, #00ff88) !important; }
-.bloque-villanos .card::before { background: conic-gradient(#ff003c, #4d0012, #ff003c) !important; }
+.bloque-heroes .card::before { background: conic-gradient(#00ff8c, #00331c, #00ff8c) !important; }
+.bloque-villanos .card::before { background: conic-gradient(#ff2a6d, #3b0012, #ff2a6d) !important; }
 
-/* CONTENEDOR DE IMÁREGENES ALTA VELOCIDAD */
+/* CONTENEDOR DE IMÁGENES ALTA VELOCIDAD */
 .img-box { 
     position: absolute !important; 
     top: 6px !important; 
@@ -160,16 +177,21 @@ html, body {
     background: #040508 !important;
 }
 
-
 .bloque-heroes .img-box { clip-path: polygon(12% 0%, 100% 0%, 100% 88%, 88% 100%, 0% 100%, 0% 12%) !important; }
 .bloque-villanos .img-box { clip-path: polygon(0% 0%, 88% 0%, 100% 12%, 100% 100%, 12% 100%, 0% 88%) !important; }
 .img-box img { width: 100% !important; height: 100% !important; object-fit: cover !important; }
 
+/* REGLA: ENCOGE LA IMAGEN DE HEROES HACIA ADENTRO PARA EVITAR CORTES */
+.card-kill-todos .img-box img { 
+    object-fit: contain !important; 
+    background-color: #040508 !important;
+}
+
 /* CAJAS DE REGALOS CONFIGURADAS EN LA ESQUINA INFERIOR DERECHA */
-.esq-der-regalo { position: absolute !important; bottom: 25px !important; right: 25px !important; width: 220px !important; height: 190px !important; background: linear-gradient(135deg, #111a2e, #1a2947) !important; border: 4px solid rgba(220, 235, 255, 0.9) !important; border-radius: 18px !important; display: flex !important; justify-content: center !important; align-items: center !important; z-index: 15 !important; }
+.esq-der-regalo { position: absolute !important; bottom: 25px !important; right: 25px !important; width: 220px !important; height: 190px !important; background: linear-gradient(135deg, #09101f, #111d33) !important; border: 4px solid rgba(220, 235, 255, 0.8) !important; border-radius: 18px !important; display: flex !important; justify-content: center !important; align-items: center !important; z-index: 15 !important; }
 .esq-der-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 .esq-der-doble { position: absolute !important; bottom: 25px !important; right: 25px !important; display: flex !important; flex-direction: row !important; align-items: center !important; gap: 16px !important; z-index: 15 !important; }
-.sub-box-regalo { width: 220px !important; height: 190px !important; background: linear-gradient(135deg, #111a2e, #1a2947) !important; border: 4px solid rgba(220, 235, 255, 0.9) !important; border-radius: 18px !important; display: flex !important; justify-content: center !important; align-items: center !important; }
+.sub-box-regalo { width: 220px !important; height: 190px !important; background: linear-gradient(135deg, #09101f, #111d33) !important; border: 4px solid rgba(220, 235, 255, 0.8) !important; border-radius: 18px !important; display: flex !important; justify-content: center !important; align-items: center !important; }
 .sub-box-regalo img { width: 88% !important; height: 88% !important; object-fit: contain !important; }
 
 /* AJUSTE VECTORIAL MAESTRO */
@@ -180,56 +202,56 @@ html, body {
 <body>
 <div id="overlay-container">
 
-
-<!-- SECCIÓN HÉROES -->
+    <!-- SECCIÓN HÉROES -->
     <div class="bloque-heroes">
-        <svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160"><text x="50%" y="115" font-family="Bebas Neue" font-weight="900" font-size="105px" font-style="italic" text-anchor="middle" fill="#00ff88" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">HEROES</text></svg>
+        <svg class="svg-wrapper-title-heroes" viewBox="0 0 1080 160"><text x="50%" y="115" font-family="Bebas Neue" font-weight="900" font-size="105px" font-style="italic" text-anchor="middle" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">HEROES</text></svg>
         
         <div class="cuadrilla-heroes">
-            <!-- Heroe 1: DAR VIDA -->
-            <div class="card c-h1" style="width: 540px; height: 680px;">
-                <div class="img-box"><img src="5.jpg"></div>
-                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" fill="#ffffff" stroke="#040508" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="45%">DAR</tspan><tspan x="45%" dy="1.05em">VIDA</tspan></text></svg>
-                <div class="esq-der-regalo"><img src="regalos/adoro.webp"></div>
-            </div>
-            <!-- Heroe 2: ARMA RANDOM -->
-            <div class="card c-h2" style="width: 540px; height: 680px;">
-                <div class="img-box"><img src="6.jpg"></div>
-                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" fill="#ffffff" stroke="#040508" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="45%">ARMA</tspan><tspan x="45%" dy="1.05em">RANDOM</tspan></text></svg>
-                <div class="esq-der-regalo"><img src="regalos/alas.webp"></div>
-            </div>
-            <!-- Heroe 3: APAGAR LIVE -->
-            <div class="card c-h3" style="width: 540px; height: 680px;">
-                <div class="img-box"><img src="7.jpg"></div>
-                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" fill="#ffffff" stroke="#040508" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="45%">APAGAR</tspan><tspan x="45%" dy="1.05em">LIVE</tspan></text></svg>
-                <div class="esq-der-regalo"><img src="regalos/galaxia.webp"></div>
-            </div>
+            
             <!-- Heroe 4: BAILE 10 SEGUNDOS -->
             <div class="card c-h4" style="width: 540px; height: 680px;">
                 <div class="img-box"><img src="8.jpg"></div>
-                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" fill="#ffffff" stroke="#040508" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="50%">BAILECITO</tspan></text></svg>
+                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="50%">BAILECITO</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/bravo.webp"></div>
+            </div>
+
+            <!-- Heroe 2: ARMA RANDOM -->
+            <div class="card c-h2" style="width: 540px; height: 680px;">
+                <div class="img-box"><img src="6.jpg"></div>
+                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="45%">ARMA</tspan><tspan x="45%" dy="1.05em">RANDOM</tspan></text></svg>
+                <div class="esq-der-regalo"><img src="regalos/alas.webp"></div>
+            </div>
+
+            <!-- Heroe 5: MATAR TODOS -->
+            <div class="card c-h5 card-kill-todos" style="width: 1096px; height: 680px; grid-column: span 2 !important;">
+                <div class="img-box"><img src="7.jpg"></div>
+                <svg class="text-villano-svg" viewBox="0 0 1096 680" style="width: 1096px !important;">
+                    <text x="1050" y="380" font-family="Bebas Neue" font-weight="900" font-size="75px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill">
+                        <tspan x="1050">KILL</tspan>
+                        <tspan x="1050" dy="0.95em">A TODOS</tspan>
+                    </text>
+                </svg>
+                <div class="esq-der-regalo" style="right: 46px !important;"><img src="regalos/maracas.webp"></div>
             </div>
             <!-- Heroe 5: REVIVIR A TODOS -->
             <div class="card c-h5" style="width: 1096px; height: 680px; grid-column: span 2 !important;">
                 <div class="img-box"><img src="20.jpg"></div>
-                <svg class="text-heroe-svg" viewBox="0 0 1096 320" style="width: 1096px !important;"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" fill="#ffffff" stroke="#040508" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="50%">REVIVIR</tspan><tspan x="50%" dy="1.05em">A TODOS</tspan></text></svg>
+                <svg class="text-heroe-svg" viewBox="0 0 1096 320" style="width: 1096px !important;"><text x="50%" y="85" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="28" stroke-linejoin="round" paint-order="stroke fill"><tspan x="50%">REVIVIR</tspan><tspan x="50%" dy="1.05em">A TODOS</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/cono.webp"></div>
             </div>
         </div>
     </div>
 
-
-<!-- SECCIÓN VILLANOS -->
+    <!-- SECCIÓN VILLANOS -->
     <div class="bloque-villanos">
-        <svg class="svg-wrapper-title-villanos" viewBox="0 0 2700 160"><text x="50%" y="115" font-family="Bebas Neue" font-weight="900" font-size="105px" font-style="italic" text-anchor="middle" fill="#ff003c" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">VILLANOS</text></svg>
+        <svg class="svg-wrapper-title-villanos" viewBox="0 0 2700 160"><text x="50%" y="115" font-family="Bebas Neue" font-weight="900" font-size="105px" font-style="italic" text-anchor="middle" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">VILLANOS</text></svg>
         
         <div class="cuadrilla-villanos">
-            <!-- Villano 1: WITCH REPARADA -->
+            <!-- Villano 1: WITCH X5-->
             <div class="card c-1" style="width: 540px; height: 680px;">
-                <div class="texto-witch-premium">WITCH</div>
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X5</text></svg>
                 <div class="img-box"><img src="1.jpg"></div>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">WITCH</tspan></text></svg>
                 <div class="esq-der-doble">
                     <div class="sub-box-regalo"><img src="regalos/seguir.webp"></div>
                     <div class="sub-box-regalo"><img src="regalos/azul.webp"></div>
@@ -237,114 +259,124 @@ html, body {
             </div>
             <!-- Villano 2: TANK X1 -->
             <div class="card c-2" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
                 <div class="img-box"><img src="2.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">TANK</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">TANK</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/rosa.webp"></div>
             </div>
             <!-- Villano 3: BOOMER -->
             <div class="card c-3" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
                 <div class="img-box"><img src="3.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">BOOMER</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">BOOMER</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/blanca.webp"></div>
             </div>
             <!-- Villano 4: CHARGER -->
             <div class="card c-4" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
                 <div class="img-box"><img src="4.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">CHARGER</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">CHARGER</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/tiktok.webp"></div>
             </div>
             <!-- Villano 5: HUNTER -->
             <div class="card c-5" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
                 <div class="img-box"><img src="9.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">HUNTER</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">HUNTER</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/gg.webp"></div>
             </div>
 
-
             <!-- Villano 6: SMOKER -->
             <div class="card c-6" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1</text></svg>
                 <div class="img-box"><img src="10.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">SMOKER</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">SMOKER</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/increible.webp"></div>
             </div>
-            <!-- Villano 7: TANK X10 -->
-            <div class="card c-7" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
+
+            <!-- Villano 12: TANK X10 -->
+            <div class="card c-12" style="width: 540px; height: 680px;">
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
                 <div class="img-box"><img src="11.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">TANK</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="78px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">TANK</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/corazon.webp"></div>
             </div>
+
             <!-- Villano 8: CHARGER X10 -->
             <div class="card c-8" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
                 <div class="img-box"><img src="12.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">CHARGER</tspan></text></svg>
-                <div class="esq-der-regalo"><img src="regalos/cono.webp"></div>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">CHARGER</tspan></text></svg>
+                <div class="esq-der-regalo"><img src="regalos/globos.webp"></div>
             </div>
 
-
- <!-- Villano 9: JOCKEY X10 -->
+            <!-- Villano 9: JOCKEY X10 -->
             <div class="card c-9" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
                 <div class="img-box"><img src="13.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">JOCKEY</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">JOCKEY</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/lento.webp"></div>
             </div>
+
             <!-- Villano 10: SPITTER X10 -->
             <div class="card c-10" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X10</text></svg>
                 <div class="img-box"><img src="14.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">SPITTER</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">SPITTER</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/pase.webp"></div>
             </div>
-            <!-- Villano 11: WITCH X20 (MODIFICADO CON DOBLE REGALO: QUIÉREME A LA IZQUIERDA DE LA ROSA) -->
+
+            <!-- Villano 11: WITCH X20 -->
             <div class="card c-11" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X20</text></svg>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X20</text></svg>
                 <div class="img-box"><img src="15.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">WITCH</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">WITCH</tspan></text></svg>
                 <div class="esq-der-doble">
                     <div class="sub-box-regalo"><img src="regalos/quiereme.webp"></div>
                     <div class="sub-box-regalo"><img src="regalos/rose.webp"></div>
                 </div>
             </div>
-            <!-- Villano 12: ATAQUE AEREO -->
-            <div class="card c-12" style="width: 540px; height: 680px;">
+            <!-- Villano 7: BOMBARDEO MODIFICADO -->
+            <div class="card c-7" style="width: 540px; height: 680px;">
                 <div class="img-box"><img src="16.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="400" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">ATAQUE</tspan><tspan x="510" dy="0.95em">AEREO</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680">
+                    <text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="78px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill">
+                        <tspan x="510">BOMBARDEO</tspan>
+                    </text>
+                </svg>
                 <div class="esq-der-regalo"><img src="regalos/bosque.webp"></div>
             </div>
+
             <!-- Villano 13: REINICIAR MAPA -->
             <div class="card c-13" style="width: 540px; height: 680px;">
                 <div class="img-box"><img src="17.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="400" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">REINICIAR</tspan><tspan x="510" dy="0.95em">MAPA</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="400" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">REINICIAR</tspan><tspan x="510" dy="0.95em">MAPA</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/capibara.webp"></div>
             </div>
+
             <!-- Villano 14: METEOROS (SIN MARCADOR TOP) -->
             <div class="card c-14" style="width: 540px; height: 680px;">
                 <div class="img-box"><img src="18.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="400" font-family="Bebas Neue" font-weight="900" font-size="80px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">METEOROS</tspan><tspan x="510" dy="0.95em" font-size="55px">(EXTERIORES)</tspan></text></svg>
+                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="400" font-family="Bebas Neue" font-weight="900" font-size="80px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">METEOROS</tspan><tspan x="510" dy="0.95em" font-size="55px">(EXTERIORES)</tspan></text></svg>
                 <div class="esq-der-regalo"><img src="regalos/perfume.webp"></div>
             </div>
-            <!-- Villano 15: WITCH X1000 -->
+
+            <!-- Villano 15: BARRILES X50 -->
             <div class="card c-11" style="width: 540px; height: 680px;">
-                <svg class="svg-wrapper-top" viewBox="0 0 545 160"><text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X1000</text></svg>
-                <div class="img-box"><img src="15.jpg"></div>
-                <svg class="text-villano-svg" viewBox="0 0 540 680"><text x="510" y="450" font-family="Bebas Neue" font-weight="900" font-size="95px" font-style="italic" text-anchor="end" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="510">WITCH</tspan></text></svg>
-                <div class="esq-der-regalo"><img src="regalos/pistola.webp"></div>
+                <svg class="svg-wrapper-top" viewBox="0 0 545 160">
+                    <text x="35" y="115" font-family="Bebas Neue" font-weight="900" font-size="90px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#0a0f1d" stroke-width="24" stroke-linejoin="round" paint-order="stroke fill">X50</text>
+                </svg>
+                <div class="img-box"><img src="19.jpg"></div>
+                <svg class="text-villano-svg" viewBox="0 0 540 680">
+                    <text x="510" y="295" font-family="Bebas Neue" font-weight="900" font-size="64px" font-style="italic" text-anchor="end" class="neon-text-rgb-cambiante" stroke="#0a0f1d" stroke-width="26" stroke-linejoin="round" paint-order="stroke fill">
+                        <tspan x="510" dy="0">DETONACIÓN</tspan>
+                        <tspan x="510" dy="62">BARRILES</tspan>
+                        <tspan x="510" dy="62">INCENDIARIOS</tspan>
+                    </text>
+                </svg>
+                <div class="esq-der-regalo"><img src="regalos/confeti.webp"></div>
             </div>
-                
-                <!-- Nombre arriba grande y grueso -->
-                <svg class="text-heroe-svg" viewBox="0 0 540 320"><text x="50%" y="100" font-family="Bebas Neue" font-weight="900" font-size="115px" font-style="italic" text-anchor="middle" fill="#ffffff" stroke="#040508" stroke-width="36" stroke-linejoin="round" paint-order="stroke fill"><tspan x="50%"></tspan></text></svg>
-                
-                <!-- Marcador X1000 abajo a la izquierda del regalo -->
-                <svg class="text-villano-inf-izq-svg" viewBox="0 0 540 680"><text x="35" y="640" font-family="Bebas Neue" font-weight="900" font-size="82px" font-style="italic" text-anchor="start" fill="#ffffff" stroke="#040508" stroke-width="26" stroke-linejoin="round" paint-order="stroke fill"><tspan x="35">X1000</tspan></text></svg>
-                
-                <!-- Regalo -->
+            
             </div>
         </div>
     </div>
